@@ -1,0 +1,13 @@
+<div class="overlay-container" [class.visible]="isVisible">
+  <div class="overlay-backdrop" (click)="onClose()"></div>
+
+  <div class="overlay-panel">
+    <div class="overlay-header">
+      <h2>{{ title }}</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </div>
+    <div class="overlay-content">
+      <p>Seus itens aparecerão aqui.</p>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,20 +10,18 @@ import { CommonModule } from '@angular/common';
 })
 export class HeroBannerComponent implements OnInit, OnDestroy {
   
-  // ▼▼▼ É AQUI QUE VOCÊ ADICIONA MAIS IMAGENS ▼▼▼
   slides = [
     { 
       imageUrl: 'assets/images/Banner.png', 
       altText: 'Modelo usando joias masculinas' 
     },
-    // Exemplo de como adicionar mais slides:
     { 
       imageUrl: 'assets/images/Banner black friday.png', 
-      altText: 'Destaque para correntes de prata' 
+      altText: 'Banner da Black Friday' 
     },
     { 
-      imageUrl: 'assets/images/Pulseiras.png', 
-      altText: 'Pulseira masculina no pulso' 
+      imageUrl: 'assets/images/Banner mais vendidos.png', 
+      altText: 'Banner dos mais vendidos' 
     }
   ];
 
@@ -31,13 +29,14 @@ export class HeroBannerComponent implements OnInit, OnDestroy {
   currentTransform = 0;
   private intervalId: any;
 
+  // 1. Injetar o ChangeDetectorRef
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngOnInit(): void {
-    // Inicia a troca automática de slides
     this.startAutoPlay();
   }
 
   ngOnDestroy(): void {
-    // Limpa o temporizador para evitar problemas de memória
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
@@ -46,7 +45,11 @@ export class HeroBannerComponent implements OnInit, OnDestroy {
   startAutoPlay(): void {
     this.intervalId = setInterval(() => {
       this.nextSlide();
-    }, 1); // Muda de slide a cada 5 segundos
+      
+      // 2. Dizer ao Angular para detetar as alterações
+      this.cdr.detectChanges(); 
+      
+    }, 5000); // Muda de slide a cada 5 segundos
   }
 
   updateSlideTransform(): void {
@@ -58,13 +61,11 @@ export class HeroBannerComponent implements OnInit, OnDestroy {
     this.updateSlideTransform();
   }
 
-  prevSlide(): void {
-    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
-    this.updateSlideTransform();
-  }
-
   goToSlide(index: number): void {
     this.currentIndex = index;
     this.updateSlideTransform();
+
+    // 3. Detetar alterações também quando o utilizador clica nos pontos
+    this.cdr.detectChanges();
   }
 }

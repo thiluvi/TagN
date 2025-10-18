@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-topbar',
+  standalone: true, // Adicionado
   imports: [],
   templateUrl: './topbar.html',
   styleUrl: './topbar.css'
 })
 export class Topbar {
+  // Emite o título do overlay a ser aberto
+  @Output() openOverlay = new EventEmitter<string>();
 
+  onFavoritesClick(): void {
+    this.openOverlay.emit('Favoritos');
+  }
+
+  onCartClick(): void {
+    this.openOverlay.emit('Sacola');
+  }
 }

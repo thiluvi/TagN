@@ -1,6 +1,14 @@
-<app-topbar></app-topbar>
+<app-topbar (openOverlay)="handleOpenOverlay($event)"></app-topbar>
+
 <main>
   <app-hero-banner></app-hero-banner>
   <app-info-strip></app-info-strip>
   </main>
+
 <app-footer></app-footer>
+
+<app-overlay 
+  [isVisible]="isOverlayVisible" 
+  [title]="overlayTitle" 
+  (close)="handleCloseOverlay()">
+</app-overlay>

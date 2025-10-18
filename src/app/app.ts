@@ -4,13 +4,31 @@ import { Topbar } from './topbar/topbar';
 import { Footer } from './footer/footer';
 import { HeroBannerComponent } from './hero-banner/hero-banner';
 import { InfoStrip } from './info-strip/info-strip';
+import { OverlayComponent } from './overlay/overlay';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip],
+  standalone: true, // Adicionado
+  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip, OverlayComponent, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('TagN');
+
+  // Propriedades para controlar o overlay
+  isOverlayVisible = false;
+  overlayTitle = '';
+
+  // Método para abrir o overlay
+  handleOpenOverlay(title: string): void {
+    this.overlayTitle = title;
+    this.isOverlayVisible = true;
+  }
+
+  // Método para fechar o overlay
+  handleCloseOverlay(): void {
+    this.isOverlayVisible = false;
+  }
 }
