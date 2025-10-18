@@ -1,0 +1,29 @@
+.info-strip {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #255248; /* Mesmo verde do botão do banner */
+  color: white;
+  padding: 15px 10px;
+  flex-wrap: wrap; /* Para telas menores */
+  gap: 20px;
+  font-family: Inter, sans-serif;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espaço entre o ícone e o texto */
+  text-align: left;
+}
+
+.info-item img {
+  width: 40px; /* Ajuste o tamanho do ícone conforme necessário */
+  height: 40px;
+}
+
+.info-item p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}

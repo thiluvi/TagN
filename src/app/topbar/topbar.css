@@ -14,7 +14,7 @@
 /* Container para o conteúdo principal (pesquisa, logo, ícones) */
 .topbar-content {
   width: 100%;
-  max-width: 1400px; /* Largura máxima do conteúdo */
+  max-width: 1800px; /* Largura máxima do conteúdo */
   height: 124px;
   display: flex;
   justify-content: space-between; /* Espaça os itens igualmente */
@@ -58,15 +58,15 @@
 }
 
 .actions-container img {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 28px;
   cursor: pointer;
 }
 
 /* --- Linha Divisória --- */
 .Divider {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1800px;
   border: none;
   border-top: 1px solid #d9d9d9;
   margin: 0;
@@ -75,12 +75,12 @@
 /* --- Menu de Navegação --- */
 .navigation-menu {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1800px;
   height: 56px;
   display: flex;
   justify-content: center; /* Centraliza os links */
   align-items: center;
-  gap: 40px; /* Espaçamento entre os links */
+  gap: 60px; /* Espaçamento entre os links */
 }
 
 .navigation-menu a {
@@ -89,12 +89,12 @@
   font-size: 15px;
   font-family: Inter, sans-serif;
   font-weight: 400;
-  transition: all 0.2s ease-in-out;
+  transition:ease 0.3s;
 }
 
 .navigation-menu a:hover {
   /* Aumenta ligeiramente o tamanho do link */
-
+  transform: scale(1.1);
   
   /* Muda a cor para um tom de destaque - sinta-se à vontade para alterar! */
   color: #255248; 

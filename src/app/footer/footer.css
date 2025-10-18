@@ -1,0 +1,74 @@
+/* Container principal do Footer */
+.Footer {
+  background-color: #f8f9fa; /* Um cinza bem claro para o fundo */
+  color: #212529; /* Cor do texto principal */
+  padding: 40px 20px;
+  border-top: 1px solid #dee2e6; /* Uma linha sutil no topo */
+  font-family: Inter, sans-serif;
+}
+
+/* Container que centraliza o conteúdo */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px; /* Espaço entre as colunas */
+  flex-wrap: wrap; /* Permite que as colunas quebrem em telas menores */
+}
+
+/* Estilo geral para cada coluna */
+.footer-column {
+  flex: 1; /* Faz com que cada coluna tente ocupar o mesmo espaço */
+  min-width: 200px; /* Largura mínima para cada coluna */
+}
+
+.footer-column h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Estilos para as listas de links */
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #495057;
+  transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #007bff; /* Cor de destaque no hover */
+  text-decoration: underline;
+}
+
+/* Coluna específica do logo e redes sociais */
+.logo-social .footer-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Imagem das formas de pagamento */
+.payment-methods {
+  max-width: 200px;
+}
