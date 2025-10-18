@@ -1,0 +1,113 @@
+/* Estilo do container principal do Topbar */
+.Topbar {
+    width: auto;
+    height: 180px;
+    position: relative;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Fundo branco que preenche o Topbar */
+  .Fundodotopbar {
+    width: 100%; /* Usar 100% é melhor que 'auto' para o fundo */
+    height: 180px;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    background: white;
+  }
+  
+  /* Container da barra de pesquisa */
+  .Rectangle2 {
+    width: 215px;
+    height: 43px;
+    left: 64px;
+    top: 54px;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+  }
+  
+  /* Ícone dentro da barra de pesquisa */
+  .SearchIcon {
+    width: 19.84px;
+    height: 20px;
+    left: 77px;
+    top: 66px;
+    position: absolute;
+  }
+  
+  /* Texto dentro da barra de pesquisa */
+  .PesquisePorUmProduto {
+    left: 109px;
+    top: 68px;
+    position: absolute;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 13px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    word-wrap: break-word;
+  }
+  
+  /* Ícones de ação */
+  .Usuario {
+    width: 35px;
+    height: 35px;
+    left: 1413px;
+    top: 54px;
+    position: absolute;
+  }
+  
+  .Sacola {
+    width: 35px;
+    height: 35px;
+    left: 1358px;
+    top: 54px;
+    position: absolute;
+  }
+  
+  .Favoritos {
+    width: 35px;
+    height: 35px;
+    left: 1303px;
+    top: 54px;
+    position: absolute;
+  }
+  
+  /* Logo principal */
+  .Logo1 {
+    width: 190px;
+    height: 68px;
+    left: 661px;
+    top: 42px;
+    position: absolute;
+  }
+  
+  /* Linha divisória */
+  .DivisaoDoTopbar {
+    width: 1384px;
+    height: 2px;
+    left: 64px;
+    top: 124px;
+    position: absolute;
+    background: #d9d9d9;
+  }
+  
+  /* Estilos dos links de navegação */
+  .Correntes, .Pulseiras, .EscapulRio, .Colares, .AnIs, .Brincos, .Pingentes {
+    position: absolute;
+    top: 145px;
+    color: black;
+    font-size: 15px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    word-wrap: break-word;
+  }
+  
+  /* Posição específica de cada link */
+  .Correntes { left: 386px; }
+  .Pulseiras { left: 493px; }
+  .EscapulRio { left: 596px; }
+  .Colares { left: 715px; }
+  .AnIs { left: 822px; }
+  .Brincos { left: 913px; }
+  .Pingentes { left: 1019px; }
