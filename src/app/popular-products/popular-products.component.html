@@ -1,0 +1,18 @@
+<section class="popular-section">
+    <h2 class="section-title">Mais Populares</h2>
+    <div class="products-grid">
+      
+      <div *ngFor="let product of products" class="product-card">
+        <a href="#">
+          <div class="product-image-container">
+            <img [src]="product.imageUrl" [alt]="product.name">
+          </div>
+          <div class="product-info">
+            <p class="product-name">{{ product.name }}</p>
+            <p class="product-price">a partir de R$ {{ product.price }}</p>
+          </div>
+        </a>
+      </div>
+  
+    </div>
+  </section>

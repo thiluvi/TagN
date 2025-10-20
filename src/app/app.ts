@@ -7,11 +7,13 @@ import { InfoStrip } from './info-strip/info-strip';
 import { OverlayComponent } from './overlay/overlay';
 import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories/categories.component';
+import { PopularProductsComponent } from './popular-products/popular-products.component';
 
 @Component({
   selector: 'app-root',
   standalone: true, // Adicionado
-  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip, OverlayComponent, CommonModule, CategoriesComponent],
+  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip,
+     OverlayComponent, CommonModule, CategoriesComponent, PopularProductsComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
