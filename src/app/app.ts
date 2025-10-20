@@ -6,11 +6,12 @@ import { HeroBannerComponent } from './hero-banner/hero-banner';
 import { InfoStrip } from './info-strip/info-strip';
 import { OverlayComponent } from './overlay/overlay';
 import { CommonModule } from '@angular/common';
+import { CategoriesComponent } from './categories/categories.component';
 
 @Component({
   selector: 'app-root',
   standalone: true, // Adicionado
-  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip, OverlayComponent, CommonModule],
+  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip, OverlayComponent, CommonModule, CategoriesComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
