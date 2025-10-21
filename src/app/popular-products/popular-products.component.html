@@ -1,6 +1,10 @@
 <section class="popular-section">
-    <h2 class="section-title">Mais Populares</h2>
-    <div class="products-grid">
+  <h2 class="section-title">Mais Populares</h2>
+  
+  <div class="slider-wrapper">
+    <button class="nav-arrow prev" (click)="scroll(-1)">&#10094;</button>
+    
+    <div class="products-grid-container" #productsGrid>
       
       <div *ngFor="let product of products" class="product-card">
         <a href="#">
@@ -13,6 +17,9 @@
           </div>
         </a>
       </div>
-  
+
     </div>
-  </section>
+
+    <button class="nav-arrow next" (click)="scroll(1)">&#10095;</button>
+  </div>
+</section>
