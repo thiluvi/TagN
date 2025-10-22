@@ -1,19 +1,22 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router'; // Necessário para <router-outlet>
 import { Topbar } from './topbar/topbar';
 import { Footer } from './footer/footer';
-import { HeroBannerComponent } from './hero-banner/hero-banner';
-import { InfoStrip } from './info-strip/info-strip';
 import { OverlayComponent } from './overlay/overlay';
-import { CommonModule } from '@angular/common';
-import { CategoriesComponent } from './categories/categories.component';
-import { PopularProductsComponent } from './popular-products/popular-products.component';
+import { CommonModule } from '@angular/common'; // CommonModule geralmente é útil
+// REMOVA os imports de: HeroBannerComponent, InfoStrip, CategoriesComponent, PopularProductsComponent, ProductDetailComponent daqui
 
 @Component({
   selector: 'app-root',
-  standalone: true, // Adicionado
-  imports: [RouterOutlet, Topbar, Footer, HeroBannerComponent, InfoStrip,
-     OverlayComponent, CommonModule, CategoriesComponent, PopularProductsComponent],
+  standalone: true,
+  imports: [
+      RouterOutlet, // Mantém esse
+      CommonModule, // Mantém esse
+      Topbar,       // Mantém esse (parte fixa do layout)
+      Footer,       // Mantém esse (parte fixa do layout)
+      OverlayComponent // Mantém esse (usado pelo Topbar)
+      // REMOVA HeroBannerComponent, InfoStrip, CategoriesComponent, PopularProductsComponent, ProductDetailComponent daqui
+    ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

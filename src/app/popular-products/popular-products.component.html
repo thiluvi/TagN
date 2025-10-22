@@ -7,7 +7,7 @@
     <div class="products-grid-container" #productsGrid>
       
       <div *ngFor="let product of products" class="product-card">
-        <a href="#">
+        <a [routerLink]="['/products', product.id]">
           <div class="product-image-container">
             <img [src]="product.imageUrl" [alt]="product.name">
           </div>

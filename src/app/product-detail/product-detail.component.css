@@ -1,0 +1,288 @@
+.product-detail-container {
+    display: flex;
+    flex-wrap: wrap; /* Para que a descrição vá para baixo */
+    max-width: 1600px;
+    margin: 40px auto;
+    padding: 20px;
+    gap: 40px;
+    font-family: Inter, sans-serif;
+  }
+  
+  /* Coluna Esquerda: Imagens */
+  .product-images {
+    display: flex;
+    gap: 20px;
+    flex: 1; /* Ocupa metade do espaço disponível */
+    min-width: 300px; /* Largura mínima */
+  }
+  
+  .thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .thumbnail:hover, .thumbnail.active { /* Adicionar classe 'active' via TS depois */
+     border-color: #555;
+  }
+  
+  
+  .main-image {
+     flex: 1; /* Ocupa o restante da coluna esquerda */
+  }
+  
+  .main-image img {
+    width: 100%;
+    max-width: 650px; /* Limita a largura máxima */
+    height: auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    display: block; /* Remove espaço extra abaixo */
+  }
+  
+   .size-guide-image {
+       margin-top: 15px; /* Espaço acima da imagem guia */
+   }
+  
+  /* Coluna Direita: Informações */
+  .product-info-actions {
+    flex: 1; /* Ocupa a outra metade */
+    min-width: 300px;
+  }
+  
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha nome e ícones */
+    margin-bottom: 15px;
+  }
+  
+  .product-info-actions h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+    line-height: 1.3;
+    max-width: calc(100% - 80px); /* Deixa espaço para os ícones */
+  }
+  
+   .product-actions-icons {
+       display: flex;
+       gap: 15px;
+       padding-top: 5px; /* Alinha um pouco melhor com o título */
+   }
+  
+   .icon-button {
+       width: 26px;
+       height: 24px;
+       cursor: pointer;
+       opacity: 0.7;
+       transition: opacity 0.2s;
+   }
+   .icon-button:hover {
+       opacity: 1;
+   }
+  
+  .product-material, .product-seller, .no-reviews {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+   .product-seller strong {
+       color: #333;
+   }
+  
+  .product-rating {
+    margin-bottom: 15px;
+    color: #ccc; /* Cor das estrelas vazias */
+    /* Adicionar estilos para estrelas preenchidas depois */
+  }
+   .no-reviews {
+       margin-left: 5px;
+       font-style: italic;
+   }
+  
+  
+  .product-price {
+    font-size: 28px;
+    font-weight: bold;
+    color: #254252; /* Cor mais escura */
+    margin-bottom: 25px;
+  }
+  
+  .product-options {
+    margin-bottom: 25px;
+  }
+  
+  .product-options label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .size-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .size-button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .size-button:hover, .size-button.selected { /* Adicionar classe 'selected' via TS */
+    border-color: #254252;
+    background-color: #f0f0f0;
+  }
+  
+   .measure-link {
+       display: inline-flex; /* Para alinhar imagem e texto */
+       align-items: center;
+       text-decoration: none;
+       color: #555;
+       font-size: 13px;
+       margin-top: 5px;
+   }
+   .ruler-icon {
+       width: 16px;
+       height: 16px;
+       margin-right: 5px;
+       /* Se a imagem Régua.png for preta, pode precisar de filter: invert(0.5); */
+   }
+   .measure-link:hover {
+       text-decoration: underline;
+   }
+  
+  
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .quantity-button {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .quantity-input {
+    width: 50px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    font-size: 16px;
+    /* Remove setas padrão do input number */
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .quantity-input::-webkit-outer-spin-button,
+  .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  
+  .add-to-cart-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #4CAF50; /* Verde similar ao da imagem */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #45a049;
+  }
+  
+   /* Seção Descrição */
+  .product-description-section {
+       flex-basis: 100%; /* Ocupa toda a largura abaixo das colunas */
+       margin-top: 30px;
+       padding-top: 30px;
+       border-top: 1px solid #eee; /* Linha separadora opcional */
+  }
+   .product-description-section h2 {
+       font-size: 18px;
+       font-weight: bold;
+       color: #333;
+       margin-bottom: 10px;
+       text-align: center;
+   }
+   .product-description-section hr {
+       border: 0;
+       border-top: 2px solid #254252; /* Linha mais grossa */
+       width: 60px; /* Linha curta centralizada */
+       margin: 0 auto 20px auto; /* Centraliza a linha */
+   }
+  
+   .product-description-section p {
+       font-size: 15px;
+       line-height: 1.6;
+       color: #555;
+       text-align: center;
+       max-width: 800px;
+       margin: 0 auto; /* Centraliza o texto */
+   }
+  
+  
+  /* --- Responsividade Básica --- */
+  @media (max-width: 768px) {
+    .product-detail-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .product-images {
+      flex-direction: column-reverse; /* Miniaturas em cima no mobile */
+    }
+     .thumbnails {
+       flex-direction: row;
+       justify-content: center; /* Centraliza as miniaturas */
+     }
+     .thumbnail {
+       width: 60px;
+       height: 60px;
+     }
+     .main-image img {
+       max-width: 100%;
+     }
+      .product-header {
+          flex-direction: column; /* Nome acima dos ícones */
+          gap: 10px;
+          align-items: center; /* Centraliza tudo */
+          text-align: center;
+          margin-bottom: 20px;
+      }
+      .product-info-actions h1 {
+          max-width: 100%;
+      }
+       .product-actions-icons {
+           padding-top: 0;
+       }
+  
+  }
