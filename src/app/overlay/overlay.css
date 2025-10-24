@@ -76,3 +76,53 @@
   overflow-y: auto;
   font-family: Inter, sans-serif;
 }
+
+.overlay-content {
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  font-family: Inter, sans-serif;
+}
+
+/* Estilos para a seção de opções de autenticação */
+.auth-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Espaço entre os elementos */
+  padding-top: 20px;
+}
+
+.auth-options p {
+  margin: 10px 0 0 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.auth-button:hover {
+  background-color: #e9ecef;
+}
+
+/* Estilo específico para o botão de cadastro (opcional) */
+.register-button {
+  background-color: #255248; /* Cor verde (exemplo) */
+  color: white;
+  border-color: #255248;
+}
+
+.register-button:hover {
+  background-color: #1e423a; /* Verde mais escuro no hover */
+}

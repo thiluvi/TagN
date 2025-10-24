@@ -27,13 +27,13 @@ export class ProductDetailComponent implements OnInit {
 
   // Dados de exemplo (substitua por um serviço real depois)
   private allProducts: Product[] = [ //
-    { id: '1', name: 'CORRENTE VENEZIANA MASCULINA FINA EM PRATA 925', description: 'A corrente veneziana masculina de 1 mm é o acessório ideal para quem busca elegância com discrição. Feita em prata 925, ela tem elos retos e bem agrupados, criando um visual fluido, moderno e minimalista. Uma corrente fina, versátil e resistente — perfeita para usar sozinha ou com pingente.', price: '103,50', images: ['assets/images/Corrente Homem.png', 'assets/images/Corrente tam 50.png', 'assets/images/Corrente na mao.png'], sizes: ['45', '50', '60', '70'] }, //
-    { id: '2', name: 'Corrente Grumet Masculina 2 mm Prata 925', description: 'Descrição da corrente Grumet...', price: '135,90', images: ['assets/images/Corrente Grumet Masculina 2 mm.png' /* ... mais imagens */], sizes: ['50', '60', '70'] }, //
-    { id: '3', name: 'Corrente Veneziana Dupla Masculina Prata 925', description: 'Descrição da veneziana dupla...', price: '288,25', images: ['assets/images/Corrente Veneziana Dupla Masculina.png' /* ... */], sizes: ['60', '70'] }, //
-    { id: '4', name: 'Corrente Veneziana Masculina XL 70cm Prata 925', description: 'Descrição da veneziana XL...', price: '209,80', images: ['assets/images/Corrente Veneziana Masculina XL.png' /* ... */], sizes: ['70'] }, //
+    { id: '1', name: 'CORRENTE VENEZIANA MASCULINA FINA EM PRATA 925', description: 'A corrente veneziana masculina de 1 mm é o acessório ideal para quem busca elegância com discrição. Feita em prata 925, ela tem elos retos e bem agrupados, criando um visual fluido, moderno e minimalista. Uma corrente fina, versátil e resistente — perfeita para usar sozinha ou com pingente.', price: '103,50', images: ['assets/images/Corrente PNG.png', 'assets/images/Corrente tam 50.png', 'assets/images/Corrente na mao.png', 'assets/images/Corrente Homem.png'], sizes: ['45', '50', '60', '70'] }, //
+    { id: '2', name: 'Corrente Grumet Masculina 2 mm Prata 925', description: 'Descrição da corrente Grumet...', price: '135,90', images: ['assets/images/Corrente Grumet Masculina 2 mm.png', 'assets/images/Corrente Homem.png'], sizes: ['50', '60', '70'] }, //
+    { id: '3', name: 'Corrente Veneziana Dupla Masculina Prata 925', description: 'Descrição da veneziana dupla...', price: '288,25', images: ['assets/images/Corrente Veneziana Dupla Masculina.png', 'assets/images/Corrente Homem.png'], sizes: ['60', '70'] }, //
+    { id: '4', name: 'Corrente Veneziana Masculina XL 70cm Prata 925', description: 'Descrição da veneziana XL...', price: '209,80', images: ['assets/images/Corrente Veneziana Masculina XL.png', 'assets/images/Corrente Homem.png'], sizes: ['70'] }, //
     // Adicione os outros produtos aqui com seus detalhes
-    { id: '5', name: 'CORRENTE VENEZIANA MASCULINA 60cm PRATA 925',  description: 'Descrição da veneziana XL...', price: '133,90', images: ['assets/images/Corrente PNG.png'], sizes: ['50', '60', '70'] }, //
-    { id: '6', name: 'Corrente Grumet Masculina 2 mm Prata 925', description: 'Descrição da veneziana XL...', price: '135,90', images: ['assets/images/Corrente Grumet Masculina 2 mm.png'], sizes: ['50', '60', '70'] } //
+    { id: '5', name: 'CORRENTE VENEZIANA MASCULINA 60cm PRATA 925',  description: 'Descrição da veneziana XL...', price: '133,90', images: ['assets/images/Corrente PNG.png', 'assets/images/Corrente Homem.png'], sizes: ['50', '60', '70'] }, //
+    { id: '6', name: 'Corrente Grumet Masculina 2 mm Prata 925', description: 'Descrição da veneziana XL...', price: '135,90', images: ['assets/images/Corrente Grumet Masculina 2 mm.png', 'assets/images/Corrente Homem.png'], sizes: ['50', '60', '70'] } //
   ];
 
   constructor(private route: ActivatedRoute) {} //

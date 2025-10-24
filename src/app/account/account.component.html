@@ -1,0 +1,59 @@
+<div class="account-container">
+    <aside class="account-sidebar">
+      <div class="welcome-box">
+        <h2>Bem vindo, usuário!</h2>
+        <p>{{ userEmail() }}</p>
+      </div>
+  
+      <nav class="account-nav">
+        <ul>
+          <li>
+            <button (click)="showView('pedidos')" [class.active]="activeView() === 'pedidos'">
+              <span class="nav-icon"><img src="../../assets/images/Sacola.png" alt=""></span> Meus pedidos
+            </button>
+          </li>
+          <li>
+            <button (click)="showView('dados')" [class.active]="activeView() === 'dados'">
+              <span class="nav-icon"><img src="../../assets/images/Meus dados icone.png" alt=""></span> Meus dados
+            </button>
+          </li>
+          <li>
+            <button (click)="showView('enderecos')" [class.active]="activeView() === 'enderecos'">
+              <span class="nav-icon"><img src="../../assets/images/Meus endereços icone.png" alt=""></span> Meus endereços
+            </button>
+          </li>
+        </ul>
+      </nav>
+  
+      <button class="logout-button" (click)="logout()">
+        <span class="nav-icon"><img src="../../assets/images/Sair icone.png" alt=""></span> Sair
+      </button>
+    </aside>
+  
+    <section class="account-content">
+      @switch (activeView()) {
+        @case ('pedidos') {
+          <h2>Meus pedidos</h2>
+          <div class="placeholder-content">
+            <p>Nenhum pedido encontrado.</p> </div>
+          <div class="placeholder-content">
+            <p>...</p> </div>
+        }
+        @case ('dados') {
+          <h2>Meus dados</h2>
+          <div class="placeholder-content">
+            <p>Formulário para editar dados.</p>
+          </div>
+        }
+        @case ('enderecos') {
+          <h2>Meus endereços</h2>
+          <div class="placeholder-content">
+            <p>Lista de endereços e opção para adicionar novo.</p>
+          </div>
+        }
+        @default {
+           <p>Selecione uma opção no menu lateral.</p>
+        }
+      }
+    </section>
+  </div>

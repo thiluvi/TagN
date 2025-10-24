@@ -1,0 +1,179 @@
+/* Container principal da página da conta */
+.account-container {
+    display: flex; /* Cria o layout de duas colunas */
+    max-width: 1200px; /* Largura máxima na tela */
+    margin: 40px auto; /* Centraliza horizontalmente com margens verticais */
+    padding: 20px;
+    gap: 30px; /* Espaço entre a sidebar e o conteúdo */
+    font-family: Inter, sans-serif; /* Define a fonte padrão */
+    background-color: #f8f9fa; /* Fundo levemente cinza para o container todo */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  }
+  
+  /* Sidebar (Coluna da Esquerda) */
+  .account-sidebar {
+    flex: 0 0 280px; /* Largura fixa para a sidebar, não cresce nem encolhe */
+    display: flex; /* Organiza os itens internos verticalmente */
+    flex-direction: column;
+  }
+  
+  /* Caixa de boas-vindas */
+  .welcome-box {
+    margin-bottom: 30px; /* Espaço abaixo da caixa */
+    padding-bottom: 20px; /* Espaço interno abaixo */
+    border-bottom: 1px solid #dee2e6; /* Linha separadora */
+  }
+  
+  .welcome-box h2 {
+    font-size: 1.2rem; /* Tamanho do título */
+    font-weight: 600; /* Peso da fonte */
+    margin-top: 0; /* Remove margem superior padrão */
+    margin-bottom: 5px; /* Espaço abaixo do título */
+    color: #333; /* Cor do título */
+  }
+  
+  .welcome-box p {
+    font-size: 0.9rem; /* Tamanho do email */
+    color: #666; /* Cor do email */
+    margin: 0; /* Remove margens padrão */
+    word-break: break-all; /* Quebra emails longos para não estourar a caixa */
+  }
+  
+  /* Navegação da conta */
+  .account-nav ul {
+    list-style: none; /* Remove marcadores da lista */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .account-nav li {
+    margin-bottom: 10px; /* Espaço entre os botões de navegação */
+  }
+  
+  /* Estilo comum para botões de navegação e logout */
+  .account-nav button,
+  .logout-button {
+    display: flex; /* Alinha ícone e texto */
+    align-items: center; /* Centraliza verticalmente */
+    width: 100%; /* Ocupa toda a largura da sidebar */
+    padding: 12px 15px; /* Espaçamento interno */
+    background-color: white; /* Fundo branco */
+    border: 1px solid #dee2e6; /* Borda cinza clara */
+    border-radius: 6px; /* Bordas arredondadas */
+    text-align: left; /* Alinha o texto à esquerda */
+    font-size: 1rem; /* Tamanho da fonte */
+    color: #495057; /* Cor do texto */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s; /* Transição suave */
+    font-family: Inter, sans-serif; /* Garante a fonte correta */
+  }
+  
+  /* Efeito hover nos botões */
+  .account-nav button:hover,
+  .logout-button:hover {
+    background-color: #f1f3f5; /* Fundo levemente mais escuro */
+    border-color: #ced4da; /* Borda levemente mais escura */
+  }
+  
+  /* Estilo específico para o botão ativo na navegação */
+  .account-nav button.active {
+    background-color: #e9ecef; /* Fundo cinza claro */
+    border-color: #adb5bd; /* Borda cinza */
+    color: #212529; /* Texto mais escuro */
+    font-weight: 500; /* Fonte um pouco mais grossa */
+  }
+  
+  /* Container do ícone */
+  .nav-icon {
+    margin-right: 12px; /* Espaço entre o ícone e o texto */
+    display: inline-flex; /* Para alinhar a imagem verticalmente */
+    align-items: center;
+    justify-content: center;
+    width: 24px; /* Largura fixa para o ícone */
+    height: 24px; /* Altura fixa para o ícone */
+  }
+  
+  /* Estilo da imagem do ícone */
+  .nav-icon img {
+    max-width: 100%; /* Garante que a imagem não ultrapasse o container */
+    max-height: 100%;
+    object-fit: contain; /* Mantém a proporção da imagem */
+    filter: grayscale(50%) opacity(70%); /* Deixa o ícone um pouco cinza/apagado (opcional) */
+  }
+  
+  /* Ícone do botão ativo (opcional: remover filtro) */
+  .account-nav button.active .nav-icon img {
+      filter: none; /* Remove o filtro no estado ativo */
+  }
+  
+  
+  /* Botão de Sair */
+  .logout-button {
+    margin-top: auto; /* Empurra o botão Sair para o fim da coluna */
+    color: #dc3545; /* Cor vermelha para indicar ação de sair/perigo */
+    border-color: #f8d7da; /* Borda avermelhada */
+    background-color: white; /* Mantém fundo branco */
+  }
+  
+  .logout-button:hover {
+    background-color: #f8d7da; /* Fundo avermelhado no hover */
+    color: #721c24; /* Texto vermelho escuro no hover */
+    border-color: #f5c6cb; /* Borda avermelhada mais escura */
+  }
+  
+  /* Ícone do botão sair (ajusta o filtro se necessário) */
+  .logout-button .nav-icon img {
+    filter: none; /* Remove o filtro para o ícone de sair */
+    /* Ou aplicar um filtro vermelho: filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%); */
+  }
+  
+  
+  /* Conteúdo Principal (Coluna da Direita) */
+  .account-content {
+    flex: 1; /* Ocupa o espaço restante disponível */
+    background-color: white; /* Fundo branco para a área de conteúdo */
+    padding: 25px; /* Espaçamento interno */
+    border-radius: 6px; /* Bordas arredondadas */
+    border: 1px solid #dee2e6; /* Borda cinza clara */
+  }
+  
+  .account-content h2 {
+    font-size: 1.4rem; /* Tamanho do título da seção */
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 25px; /* Espaço abaixo do título */
+    padding-bottom: 15px; /* Espaço interno abaixo */
+    border-bottom: 1px solid #eee; /* Linha separadora abaixo do título */
+  }
+  
+  /* Estilo para os placeholders de conteúdo */
+  .placeholder-content {
+    border: 1px solid #e9ecef; /* Borda dos boxes */
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px; /* Espaço entre os boxes */
+    min-height: 150px; /* Altura mínima */
+    background-color: #f8f9fa; /* Fundo levemente diferente */
+  }
+  
+  .placeholder-content p {
+    color: #6c757d; /* Cor do texto placeholder */
+    font-style: italic; /* Estilo itálico */
+    margin: 0; /* Remove margem padrão */
+  }
+  
+  /* --- Responsividade Básica --- */
+  @media (max-width: 768px) {
+    .account-container {
+      flex-direction: column; /* Coloca sidebar em cima do conteúdo */
+    }
+    .account-sidebar {
+      flex: 0 0 auto; /* Remove largura fixa para ocupar 100% */
+      margin-bottom: 20px; /* Espaço entre sidebar e conteúdo */
+    }
+    .logout-button {
+       margin-top: 20px; /* Adiciona espaço acima do botão sair no mobile */
+    }
+  }

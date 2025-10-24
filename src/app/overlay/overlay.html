@@ -10,13 +10,21 @@
       <div [ngSwitch]="contentType">
         <div *ngSwitchCase="'Favoritos'">
           <p>Seus itens favoritos aparecerão aqui.</p>
-          </div>
+        </div>
         <div *ngSwitchCase="'Sacola'">
           <p>Seus itens da sacola aparecerão aqui.</p>
-          </div>
+        </div>
         <div *ngSwitchCase="'Perfil'">
-          <p>Conteúdo de Login/Cadastro aparecerá aqui.</p>
-          </div>
+          @if (authView() === 'options') {
+            <div class="auth-options">
+              <button class="auth-button" (click)="showLogin()">Entrar</button>
+              <p>Ainda não tem conta?</p>
+              <button class="auth-button register-button" (click)="showRegister()">Cadastre-se</button>
+            </div>
+          } @else if (authView() === 'login') {
+            <app-login (goToRegister)="showRegister()"></app-login> } @else if (authView() === 'register') {
+            <app-register (goToLogin)="showLogin()"></app-register> }
+        </div>
         <div *ngSwitchDefault>
           <p>Conteúdo padrão ou erro.</p>
         </div>
