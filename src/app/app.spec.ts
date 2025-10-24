@@ -1,25 +1,55 @@
-import { provideZonelessChangeDetection } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Topbar } from './topbar/topbar';
+import { Footer } from './footer/footer';
+import { OverlayComponent } from './overlay/overlay';
+import { CommonModule } from '@angular/common';
 
-describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+      RouterOutlet,
+      CommonModule,
+      Topbar,
+      Footer,
+      OverlayComponent
+    ],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class App {
+  protected readonly title = signal('TagN');
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  isOverlayVisible = false;
+  overlayTitle = '';
+  overlayContentType = ''; // Nova propriedade para o tipo de conteúdo
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, TagN');
-  });
-});
+  // Método atualizado para abrir o overlay
+  handleOpenOverlay(type: string): void {
+    this.overlayContentType = type; // Guarda o tipo ('Favoritos', 'Sacola', 'Perfil')
+
+    // Define o título baseado no tipo
+    switch (type) {
+      case 'Favoritos':
+        this.overlayTitle = 'Favoritos';
+        break;
+      case 'Sacola':
+        this.overlayTitle = 'Sacola de Compras';
+        break;
+      case 'Perfil':
+        this.overlayTitle = 'Entrar ou Cadastrar'; // Ou apenas 'Minha Conta'
+        break;
+      default:
+        this.overlayTitle = ''; // Título padrão ou erro
+    }
+
+    this.isOverlayVisible = true;
+  }
+
+  // Método para fechar o overlay
+  handleCloseOverlay(): void {
+    this.isOverlayVisible = false;
+    this.overlayContentType = ''; // Limpa o tipo ao fechar
+  }
+}

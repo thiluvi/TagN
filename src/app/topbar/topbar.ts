@@ -18,4 +18,9 @@ export class Topbar {
   onCartClick(): void {
     this.openOverlay.emit('Sacola');
   }
+
+  // Novo método para o clique no perfil
+  onProfileClick(): void {
+    this.openOverlay.emit('Perfil'); // Emite 'Perfil'
+  }
 }

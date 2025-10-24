@@ -250,6 +250,9 @@
        margin: 0 auto; /* Centraliza o texto */
    }
   
+   .thumbnail:hover, .thumbnail.active { /* O estilo existente já trata o estado ativo */ /* */
+    border-color: #555; /* */
+ }
   
   /* --- Responsividade Básica --- */
   @media (max-width: 768px) {

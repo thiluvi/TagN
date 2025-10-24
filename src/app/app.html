@@ -9,5 +9,5 @@
 <app-overlay
   [isVisible]="isOverlayVisible"
   [title]="overlayTitle"
-  (close)="handleCloseOverlay()">
+  [contentType]="overlayContentType" (close)="handleCloseOverlay()">
 </app-overlay>

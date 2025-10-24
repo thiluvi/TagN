@@ -7,7 +7,20 @@
       <button class="close-btn" (click)="onClose()">×</button>
     </div>
     <div class="overlay-content">
-      <p>Seus itens aparecerão aqui.</p>
+      <div [ngSwitch]="contentType">
+        <div *ngSwitchCase="'Favoritos'">
+          <p>Seus itens favoritos aparecerão aqui.</p>
+          </div>
+        <div *ngSwitchCase="'Sacola'">
+          <p>Seus itens da sacola aparecerão aqui.</p>
+          </div>
+        <div *ngSwitchCase="'Perfil'">
+          <p>Conteúdo de Login/Cadastro aparecerá aqui.</p>
+          </div>
+        <div *ngSwitchDefault>
+          <p>Conteúdo padrão ou erro.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
