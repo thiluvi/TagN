@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core'; // Importe 'signal'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 // Defina uma interface simples para o produto (pode expandir depois)
@@ -23,7 +23,12 @@ interface Product {
 export class ProductDetailComponent implements OnInit {
   product: Product | undefined; // Propriedade para guardar os dados do produto
   // Use signal para o URL da imagem selecionada para melhor deteção de alterações (opcional mas recomendado)
-  selectedImageUrl = signal<string | undefined>(undefined); //
+  selectedImageUrl = signal<string | undefined>(undefined); 
+
+  // ------------------------------------------------------------------------------------------------------
+  selectedSize = signal<string | undefined>(undefined); // Para armazenar o tamanho selecionado
+  quantity = signal<number>(1); // Para armazenar a quantidade (inicia em 1)
+  // ------------------------------------------------------------------------------------------------------
 
   // Dados de exemplo (substitua por um serviço real depois)
   private allProducts: Product[] = [ //
@@ -71,7 +76,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void { //
     // Pega o parâmetro 'productId' da URL
-    this.route.paramMap.subscribe(params => { //
+    this.route.paramMap.subscribe((params: ParamMap) => {//
       const productId = params.get('productId'); //
       if (productId) { //
         // Encontra o produto correspondente nos dados de exemplo
@@ -83,10 +88,33 @@ export class ProductDetailComponent implements OnInit {
         // TODO: Lidar com o caso de produto não encontrado
       }
     });
+
+    // ---------------------------------------------------------------------------------------------
+    if (this.product && this.product.sizes && this.product.sizes.length > 0) {
+      this.selectedSize.set(this.product.sizes[0]);
+    }
+    // ---------------------------------------------------------------------------------------------
+
   }
 
   // Método para mudar a imagem selecionada
   selectImage(imageUrl: string): void { //
     this.selectedImageUrl.set(imageUrl); // Use .set() para signals //
   }
+
+  // -------------------------------------------------------------------------------------------------------
+  // NOVO MÉTODO para selecionar o tamanho
+  selectSize(size: string): void {
+    this.selectedSize.set(size);
+  }
+
+  // NOVO MÉTODO para ajustar a quantidade
+  adjustQuantity(delta: number): void {
+    this.quantity.update(currentQuantity => {
+      // Garante que a quantidade nunca seja menor que 1
+      const newQuantity = currentQuantity + delta;
+      return newQuantity > 0 ? newQuantity : 1;
+    });
+  }
+  // -------------------------------------------------------------------------------------------------------
 }

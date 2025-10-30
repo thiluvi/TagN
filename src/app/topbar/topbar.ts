@@ -1,9 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
   standalone: true, // Adicionado
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './topbar.html',
   styleUrl: './topbar.css'
 })

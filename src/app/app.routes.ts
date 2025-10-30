@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccountComponent } from './account/account.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Rota raiz para a página inicial
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   // Adicione outras rotas aqui se necessário
-  { path: 'conta', component: AccountComponent } // Você pode mudar 'conta' para 'perfil', etc.
+  { path: 'conta', component: AccountComponent }, // Você pode mudar 'conta' para 'perfil', etc.
   // Futuramente, adicionar um CanActivate guard aqui para proteger a rota
+  { path: 'category/:categoryName', component: ProductListComponent }
 ];

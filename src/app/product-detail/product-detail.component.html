@@ -35,20 +35,25 @@
     <div class="product-options" *ngIf="product.sizes && product.sizes.length > 0">
       <label>Selecione um tamanho</label>
       <div class="size-buttons">
-        <button *ngFor="let size of product.sizes" class="size-button">{{ size }}</button>
-      </div>
+        <button 
+          *ngFor="let size of product.sizes" 
+          class="size-button"
+          [class.selected]="selectedSize() === size" 
+          (click)="selectSize(size)">{{ size }}</button>
+        </div>
       <a href="#" class="measure-link">
         <img src="assets/images/Régua.png" alt="Tabela de medidas" class="ruler-icon"> Tabela de medidas
       </a>
     </div>
 
-    <div class="quantity-selector">
-      <button class="quantity-button">-</button>
-      <input type="number" value="1" min="1" class="quantity-input">
-      <button class="quantity-button">+</button>
-    </div>
+    <div class="buy-action-container">
+      <div class="quantity-selector">
+        <input type="number" [value]="quantity()" min="0" class="quantity-input-styled">
+      </div>
 
-    <button class="add-to-cart-button">Adicionar ao carrinho</button>
+      <button class="add-to-cart-button">Adicionar ao carrinho</button>
+
+    </div>
 
   </div>
 

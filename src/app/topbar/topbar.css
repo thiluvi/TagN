@@ -99,3 +99,45 @@
   /* Muda a cor para um tom de destaque - sinta-se à vontade para alterar! */
   color: #255248; 
 }
+
+/* ... (código CSS existente, incluindo a seção .navigation-menu a) ... */
+
+/* --- Estilo para o link ATIVO (Destaque Aumentado) --- */
+.navigation-menu a.active-link {
+  /* Força a cor principal (verde escuro) */
+  color: #255248 !important; 
+  
+  /* Aumenta o peso da fonte para negrito */
+  font-weight: bold !important; 
+  
+  
+  /* Aumenta a escala do texto um pouco mais */
+  transform: scale(1.15); 
+  
+  /* Adiciona uma sombra de texto sutil para separá-lo do fundo */
+  text-shadow: 0 0 5px rgba(37, 82, 72, 0.4); 
+}
+
+/* REVISÃO DO HOVER PADRÃO: 
+   Garantimos que o link ATIVO NÃO perca o destaque quando o mouse passar sobre ele,
+   mesmo que o hover padrão tente sobrescrever (embora o !important acima ajude).
+*/
+.navigation-menu a:hover {
+  /* Aumenta ligeiramente o tamanho do link */
+  transform: scale(1.1);
+  
+  /* Muda a cor para um tom de destaque - sinta-se à vontade para alterar! */
+  color: #255248; 
+}
+
+
+.topbar-content .logo-link {
+    /* Garante que o link funcione como um bloco (se necessário) */
+    display: inline-block; 
+}
+
+.topbar-content .logo-link .Logo {
+    cursor: pointer !important;
+    user-select: none;
+    -webkit-user-drag: none;
+}
