@@ -48,6 +48,7 @@
   width: 190px;
   height: auto; /* Altura automática para manter a proporção */
   /* Posicionado no centro pelo justify-content do container pai */
+  cursor: pointer;
 }
 
 /* --- Seção da Direita: Ícones de Ação --- */

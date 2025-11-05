@@ -5,11 +5,12 @@
 }
 
 .section-title {
-    text-align: center;/* Alinha o título da categoria à esquerda */
-    font-size: 28px;
+    text-align:left;/* Alinha o título da categoria à esquerda */
+    font-size: 24px;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 30px;
+    color: #21443c;
+    margin-bottom: 40px;
+    font-family: Inter;
 }
 /* REGRA DE ALTA ESPECIFICIDADE PARA FORÇAR O LAYOUT DE GRADE */
 /* Estamos usando a classe "list-view" adicionada no HTML (passo anterior) */
@@ -34,6 +35,18 @@
     /* ZERA PROPRIEDADES DE FLEXBOX E LARGURA FIXA COM !important */
     flex: 1 1 0% !important; /* Reseta o comportamento flexível */
     width: auto !important; /* Remove o width: 280px fixo do carrossel */
+}
+
+.product-name {
+    font-size: 15px;
+    font-family: Inter, sans-serif;
+}
+
+.product-price {
+    font-size: 16px;
+  font-weight: bold;
+  color: #212529;
+  font-family: Inter, sans-serif;
 }
 
 /* --- Responsividade --- */

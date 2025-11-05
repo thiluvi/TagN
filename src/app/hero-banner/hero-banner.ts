@@ -20,8 +20,8 @@ export class HeroBannerComponent implements OnInit, OnDestroy {
       altText: 'Banner da Black Friday' 
     },
     { 
-      imageUrl: 'assets/images/Banner mais vendidos.png', 
-      altText: 'Banner dos mais vendidos' 
+      imageUrl: 'assets/images/Banner 3 slide.jpg',
+      altText: 'Banner 3 slide' 
     }
   ];
 
@@ -49,7 +49,7 @@ export class HeroBannerComponent implements OnInit, OnDestroy {
       // 2. Dizer ao Angular para detetar as alterações
       this.cdr.detectChanges(); 
       
-    }, 5000); // Muda de slide a cada 5 segundos
+    }, 7000); // Muda de slide a cada 7 segundos
   }
 
   updateSlideTransform(): void {
