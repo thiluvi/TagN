@@ -1,0 +1,371 @@
+.product-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1600px;
+    margin: 40px auto;
+    padding: 20px;
+    gap: 40px;
+    font-family: Inter, sans-serif;
+}
+  
+  /* Coluna Esquerda: Imagens */
+  .product-images {
+  display: flex;
+  gap: 20px;
+  /* Reduzido de 65% para 55% para achatar a imagem (desktop) */
+  flex: 0 0 55%; 
+  min-width: 300px; 
+}
+  
+  .thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .thumbnail:hover, .thumbnail.active { 
+     border-color: #555;
+  }
+  
+  
+  .main-image {
+   flex: 1; 
+}
+
+/* Alteração para o estilo da imagem principal em desktop */
+.main-image img {
+  width: 100%;
+  height: auto; /* Deixa o aspect ratio do arquivo ditar a altura */
+  max-height: 450px; /* NOVO: Limita a altura máxima para reduzir o tamanho visual */
+  object-fit: contain; /* Volta para 'contain' para evitar cortes (como na imagem de tamanhos) */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  display: block;
+}
+  
+   .size-guide-image {
+       margin-top: 15px; /* Espaço acima da imagem guia */
+   }
+  
+  /* Coluna Direita: Informações */
+  .product-info-actions {
+  /* Aumentado de 30% para 40% (desktop) */
+  flex: 0 0 40%; 
+  min-width: 300px;
+}
+  
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha nome e ícones */
+    margin-bottom: 15px;
+  }
+  
+  .product-info-actions h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+    line-height: 1.3;
+    max-width: calc(100% - 80px); /* Deixa espaço para os ícones */
+  }
+  
+   .product-actions-icons {
+       display: flex;
+       gap: 15px;
+       padding-top: 5px; /* Alinha um pouco melhor com o título */
+   }
+  
+   .icon-button {
+       width: 26px;
+       height: 24px;
+       cursor: pointer;
+       opacity: 0.7;
+       transition: opacity 0.2s;
+   }
+   .icon-button:hover {
+       opacity: 1;
+   }
+  
+  .product-material, .product-seller, .no-reviews {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+   .product-seller strong {
+       color: #333;
+   }
+  
+  .product-rating {
+    margin-bottom: 15px;
+    color: #ccc; /* Cor das estrelas vazias */
+    /* Adicionar estilos para estrelas preenchidas depois */
+  }
+   .no-reviews {
+       margin-left: 5px;
+       font-style: italic;
+   }
+  
+  
+  .product-price {
+    font-size: 28px;
+    font-weight: bold;
+    color: #254252; /* Cor mais escura */
+    margin-bottom: 25px;
+  }
+  
+  .product-options {
+    margin-bottom: 25px;
+  }
+  
+  .product-options label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .size-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .size-buttons .size-button {
+    padding: 12px 18px; /* Aumenta o tamanho do botão */
+    min-width: 45px;
+    height: 45px;
+}
+  
+  .size-button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .size-button:hover, .size-button.selected { 
+  /* Cor de fundo escura, como na imagem de referência */
+  background-color: #212529; 
+  color: white; /* Cor do texto em branco para contraste */
+  border-color: #212529;
+}
+  
+   .measure-link {
+       display: inline-flex; /* Para alinhar imagem e texto */
+       align-items: center;
+       text-decoration: none;
+       color: #555;
+       font-size: 13px;
+       margin-top: 5px;
+   }
+   .ruler-icon {
+       width: 16px;
+       height: 16px;
+       margin-right: 5px;
+       /* Se a imagem Régua.png for preta, pode precisar de filter: invert(0.5); */
+   }
+   .measure-link:hover {
+       text-decoration: underline;
+   }
+  
+  
+  .quantity-selector {
+    display: flex;
+    /* Remove a margem inferior desnecessária aqui, pois o container gerencia */
+    margin-bottom: 0; 
+    /* Altura igual ao botão de compra */
+    height: 50px; 
+    /* Adiciona a borda branca e arredonda (para o formato 3-em-1) */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden; /* Garante que os filhos não vazem do arredondamento */
+}
+  
+  .quantity-input-styled {
+    width: 80px; /* Largura ajustada */
+    height: 50px; /* Altura igual ao botão Adicionar */
+    padding: 0 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    /* Faz o input parecer com o da imagem de referência, com setas verticais nativas */
+    /* Remove a rotação da imagem da imagem que usava antes se tivesse. */
+}
+
+/* Garante que o input number tenha aparência nativa (com setas no Chrome/Firefox) */
+.quantity-input-styled::-webkit-outer-spin-button,
+.quantity-input-styled::-webkit-inner-spin-button {
+    -webkit-appearance: number-input;
+    opacity: 1; /* Garante que as setas apareçam, se estiverem escondidas */
+}
+
+/* Novo layout: Alinha a quantidade e o botão na mesma linha */
+.product-info-actions .quantity-selector,
+.product-info-actions .add-to-cart-button {
+    display: inline-block; /* Permite que ambos fiquem na mesma linha */
+    vertical-align: middle; /* Alinha o centro verticalmente */
+}
+  
+  .quantity-input {
+    width: 50px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    font-size: 16px;
+    /* Remove setas padrão do input number */
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .quantity-input::-webkit-outer-spin-button,
+  .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  
+  .add-to-cart-button {
+    /* Ocupa o espaço restante */
+    flex-grow: 1; 
+    
+    /* Cores e padding conforme o design que você escolheu */
+    padding: 15px;
+    background-color: #4CAF50; 
+    color: white;
+    border: none; 
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 50px; 
+    
+    /* Remove 'display: block' e 'width: 100%' para funcionar no Flexbox */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-to-cart-button:hover {
+  /* Tom de verde mais escuro no hover */
+  background-color: #45a049;
+}
+  
+   /* Seção Descrição */
+  .product-description-section {
+       flex-basis: 100%; /* Ocupa toda a largura abaixo das colunas */
+       margin-top: 30px;
+       padding-top: 30px;
+       border-top: 1px solid #eee; /* Linha separadora opcional */
+  }
+   .product-description-section h2 {
+       font-size: 18px;
+       font-weight: bold;
+       color: #333;
+       margin-bottom: 10px;
+       text-align: center;
+   }
+   .product-description-section hr {
+       border: 0;
+       border-top: 2px solid #254252; /* Linha mais grossa */
+       width: 60px; /* Linha curta centralizada */
+       margin: 0 auto 20px auto; /* Centraliza a linha */
+   }
+  
+   .product-description-section p {
+       font-size: 15px;
+       line-height: 1.6;
+       color: #555;
+       text-align: center;
+       max-width: 800px;
+       margin: 0 auto; /* Centraliza o texto */
+   }
+  
+   .thumbnail:hover, .thumbnail.active { /* O estilo existente já trata o estado ativo */ /* */
+    border-color: #555; /* */
+ }
+
+ .buy-action-container {
+    display: flex; /* Habilita o alinhamento flexível */
+    gap: 15px; /* Espaço entre o seletor de quantidade e o botão */
+    margin-bottom: 25px; /* Mantém o espaçamento inferior */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+  
+  /* --- Responsividade Básica --- */
+  @media (max-width: 768px) {
+    .product-detail-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .product-images {
+      flex-direction: column-reverse; /* Miniaturas em cima no mobile */
+    }
+     .thumbnails {
+       flex-direction: row;
+       justify-content: center; /* Centraliza as miniaturas */
+     }
+     .thumbnail {
+       width: 60px;
+       height: 60px;
+     }
+     .main-image {
+   flex: 1; 
+}
+
+/* Alteração para o estilo da imagem principal em mobile */
+.main-image img {
+  width: 100%;
+  /* REMOVIDO: max-width: 650px (Deixamos a largura ser controlada pelo contêiner pai) */
+  height: 300px; /* Reduzido o fixed height para mobile para ser menor */
+  object-fit: contain; /* Mantém 'contain' para que a imagem inteira seja visível */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  display: block;
+  /* Opcional: Adicionar aspect-ratio para forçar uma proporção mais quadrada ou retangular se a imagem não for quadrada */
+  /* aspect-ratio: 4/5; (Experimente se necessário) */
+}
+      .product-header {
+          flex-direction: column; /* Nome acima dos ícones */
+          gap: 10px;
+          align-items: center; /* Centraliza tudo */
+          text-align: center;
+          margin-bottom: 20px;
+      }
+      .product-info-actions h1 {
+          max-width: 100%;
+      }
+       .product-actions-icons {
+           padding-top: 0;
+       }
+  
+  }
+
+
+
+  .quantity-button {
+    /* Mantém os estilos do botão */
+    width: 35px; 
+    height: 100%; /* Ocupa toda a altura do container */
+    border: none; /* Remove bordas internas */
+    background-color: #f8f9fa;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

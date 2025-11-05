@@ -1,0 +1,17 @@
+<section class="hero-banner">
+  <div class="slides-container" [style.transform]="'translateX(' + currentTransform + '%)'">
+    
+    <div *ngFor="let slide of slides" class="slide">
+      <img [src]="slide.imageUrl" [alt]="slide.altText">
+    </div>
+
+  </div>
+
+  <div class="dots-container">
+    <span *ngFor="let slide of slides; let i = index" 
+          class="dot" 
+          [class.active]="i === currentIndex"
+          (click)="goToSlide(i)">
+    </span>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+.product-list-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;/* Alinha o título da categoria à esquerda */
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+/* REGRA DE ALTA ESPECIFICIDADE PARA FORÇAR O LAYOUT DE GRADE */
+/* Estamos usando a classe "list-view" adicionada no HTML (passo anterior) */
+.products-grid-container.list-view {
+    /* 1. Mudar de 'flex' para 'grid' */
+    display: grid;
+    
+    /* 2. Definir 4 colunas de largura igual */
+    grid-template-columns: repeat(4, 1fr); 
+    
+    /* 3. Remover a rolagem horizontal */
+    overflow-x: unset !important; 
+    
+    /* O espaçamento 'gap: 30px' será herdado do popular-products.component.css */
+    padding-bottom: 0;
+    width: 100%;
+}
+
+
+/* Sobrescreve as larguras fixas e propriedades flex dos cartões de produto */
+.products-grid-container.list-view .product-card {
+    /* ZERA PROPRIEDADES DE FLEXBOX E LARGURA FIXA COM !important */
+    flex: 1 1 0% !important; /* Reseta o comportamento flexível */
+    width: auto !important; /* Remove o width: 280px fixo do carrossel */
+}
+
+/* --- Responsividade --- */
+
+/* 3 colunas em telas médias */
+@media (max-width: 1024px) {
+    .products-grid-container.list-view {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 2 colunas em telas pequenas */
+@media (max-width: 768px) {
+    .products-grid-container.list-view {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+/* 1 coluna em telas muito pequenas */
+@media (max-width: 480px) {
+    .products-grid-container.list-view {
+        grid-template-columns: 1fr;
+    }
+}

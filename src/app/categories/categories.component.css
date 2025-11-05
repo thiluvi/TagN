@@ -1,0 +1,74 @@
+.categories-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #ffffff;
+    font-family: Inter, sans-serif;
+  }
+  
+  .section-title {
+    font-size: 38px;
+    font-weight: bold;
+    color: #254252;
+    margin-bottom: 30px;
+  }
+  
+  .categories-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espaço entre as imagens */
+    flex-wrap: wrap; /* Permite que os itens quebrem em telas menores */
+    max-width: 2000px;
+    margin: 0 auto;
+  }
+  
+  .category-item {
+    flex-basis: 580px; /* Largura base de cada item */
+    text-align: center;
+  }
+  
+  .category-item a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative; /* Torna este o container de referência */
+    overflow: hidden; /* Garante que o gradiente não vaze para fora das bordas arredondadas */
+    border-radius: 5px;
+  }
+
+  /* Gradiente para garantir a legibilidade do texto */
+.category-item a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* Cobre a parte inferior da imagem */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .category-item img {
+    width: 100%;
+    height: 680px; /* Altura fixa para todas as imagens */
+    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+    display: block; /* Remove qualquer espaço extra abaixo da imagem */
+    border-radius: 5px; /* Bordas levemente arredondadas */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  
+  .category-title {
+    /* Posiciona o título sobre a imagem */
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2; /* Garante que o texto fique acima do gradiente */
+  
+    /* Estilos do texto */
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para legibilidade */
+  }

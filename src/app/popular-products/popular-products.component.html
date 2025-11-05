@@ -1,0 +1,25 @@
+<section class="popular-section">
+  <h2 class="section-title">Mais Populares</h2>
+  
+  <div class="slider-wrapper">
+    <button class="nav-arrow prev" (click)="scroll(-1)">&#10094;</button>
+    
+    <div class="products-grid-container" #productsGrid>
+      
+      <div *ngFor="let product of products" class="product-card">
+        <a [routerLink]="['/products', product.id]">
+          <div class="product-image-container">
+            <img [src]="product.imageUrl" [alt]="product.name">
+          </div>
+          <div class="product-info">
+            <p class="product-name">{{ product.name }}</p>
+            <p class="product-price">a partir de R$ {{ product.price }}</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+    <button class="nav-arrow next" (click)="scroll(1)">&#10095;</button>
+  </div>
+</section>

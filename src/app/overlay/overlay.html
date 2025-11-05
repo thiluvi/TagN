@@ -1,0 +1,34 @@
+<div class="overlay-container" [class.visible]="isVisible">
+  <div class="overlay-backdrop" (click)="onClose()"></div>
+
+  <div class="overlay-panel">
+    <div class="overlay-header">
+      <h2>{{ title }}</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </div>
+    <div class="overlay-content">
+      <div [ngSwitch]="contentType">
+        <div *ngSwitchCase="'Favoritos'">
+          <p>Seus itens favoritos aparecerão aqui.</p>
+        </div>
+        <div *ngSwitchCase="'Sacola'">
+          <p>Seus itens da sacola aparecerão aqui.</p>
+        </div>
+        <div *ngSwitchCase="'Perfil'">
+          @if (authView() === 'options') {
+            <div class="auth-options">
+              <button class="auth-button" (click)="showLogin()">Entrar</button>
+              <p>Ainda não tem conta?</p>
+              <button class="auth-button register-button" (click)="showRegister()">Cadastre-se</button>
+            </div>
+          } @else if (authView() === 'login') {
+            <app-login (goToRegister)="showRegister()"></app-login> } @else if (authView() === 'register') {
+            <app-register (goToLogin)="showLogin()"></app-register> }
+        </div>
+        <div *ngSwitchDefault>
+          <p>Conteúdo padrão ou erro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

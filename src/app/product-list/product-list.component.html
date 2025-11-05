@@ -1,0 +1,23 @@
+<div class="product-list-container">
+  <h2 class="section-title">{{ categoryName() }}</h2>
+  
+  <div class="products-grid-container list-view">
+    
+    <div *ngFor="let product of products()" class="product-card">
+      <a [routerLink]="['/products', product.id]">
+        <div class="product-image-container">
+          <img [src]="product.images[0]" [alt]="product.name">
+        </div>
+        <div class="product-info">
+          <p class="product-name">{{ product.name }}</p>
+          <p class="product-price">a partir de R$ {{ product.price }}</p>
+        </div>
+      </a>
+    </div>
+
+    @if (products().length === 0) {
+      <p>Nenhum produto encontrado para esta categoria.</p>
+    }
+
+  </div>
+</div>

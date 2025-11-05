@@ -1,0 +1,13 @@
+<app-topbar (openOverlay)="handleOpenOverlay($event)"></app-topbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>
+
+<app-overlay
+  [isVisible]="isOverlayVisible"
+  [title]="overlayTitle"
+  [contentType]="overlayContentType" (close)="handleCloseOverlay()">
+</app-overlay>

@@ -1,0 +1,70 @@
+<div class="product-detail-container" *ngIf="product">
+
+  <div class="product-images">
+    <div class="thumbnails">
+      <img *ngFor="let img of product.images"
+           [src]="img"
+           alt="Miniatura {{ product.name }}"
+           class="thumbnail"
+           (click)="selectImage(img)"
+           [class.active]="selectedImageUrl() === img">
+    </div>
+    <div class="main-image">
+      <img [src]="selectedImageUrl()" alt="{{ product.name }}">
+    </div>
+  </div>
+
+  <div class="product-info-actions">
+    <div class="product-header">
+      <h1>{{ product.name }}</h1>
+      <div class="product-actions-icons">
+        <img src="assets/images/Favoritos.png" alt="Adicionar aos Favoritos" class="icon-button">
+        <img src="assets/images/compartilhar.png" alt="Compartilhar" class="icon-button">
+      </div>
+    </div>
+
+    <p class="product-material">Corrente de prata</p>
+    <p class="product-seller">Vendido e entregue por <strong>Tag-N</strong></p>
+
+    <div class="product-rating">
+      ☆☆☆☆☆ <span class="no-reviews">Sem avaliações</span>
+    </div>
+
+    <p class="product-price">R$ {{ product.price }}</p>
+
+    <div class="product-options" *ngIf="product.sizes && product.sizes.length > 0">
+      <label>Selecione um tamanho</label>
+      <div class="size-buttons">
+        <button 
+          *ngFor="let size of product.sizes" 
+          class="size-button"
+          [class.selected]="selectedSize() === size" 
+          (click)="selectSize(size)">{{ size }}</button>
+        </div>
+      <a href="#" class="measure-link">
+        <img src="assets/images/Régua.png" alt="Tabela de medidas" class="ruler-icon"> Tabela de medidas
+      </a>
+    </div>
+
+    <div class="buy-action-container">
+      <div class="quantity-selector">
+        <input type="number" [value]="quantity()" min="0" class="quantity-input-styled">
+      </div>
+
+      <button class="add-to-cart-button">Adicionar ao carrinho</button>
+
+    </div>
+
+  </div>
+
+  <div class="product-description-section">
+     <h2>DESCRIÇÃO DO PRODUTO</h2>
+     <hr>
+     <p>{{ product.description }}</p>
+  </div>
+
+</div>
+
+<div *ngIf="!product">
+  <p>Produto não encontrado.</p>
+</div>

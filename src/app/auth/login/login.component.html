@@ -1,0 +1,23 @@
+<div class="auth-container">
+    <h3>Entrar</h3>
+  
+    <form class="auth-form">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="seuemail@exemplo.com" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" placeholder="Sua senha" required>
+        <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+      </div>
+  
+      <button type="submit" class="submit-button">Entrar</button>
+    </form>
+  
+    <div class="switch-auth">
+      <p>Ainda não tem conta?</p>
+      <button class="switch-button" (click)="switchToRegister()">Cadastre-se</button>
+    </div>
+  </div>

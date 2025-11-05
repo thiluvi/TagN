@@ -1,0 +1,143 @@
+/* Container principal do Topbar */
+.Topbar {
+  width: 100%;
+  height: 180px;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza tudo no eixo horizontal */
+  padding: 0 40px; /* Adiciona um espaçamento nas laterais */
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+/* Container para o conteúdo principal (pesquisa, logo, ícones) */
+.topbar-content {
+  width: 100%;
+  max-width: 1800px; /* Largura máxima do conteúdo */
+  height: 124px;
+  display: flex;
+  justify-content: space-between; /* Espaça os itens igualmente */
+  align-items: center; /* Alinha verticalmente ao centro */
+}
+
+/* --- Seção da Esquerda: Barra de Pesquisa --- */
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 30px;
+  padding: 10px 15px;
+  width: 215px;
+}
+
+.SearchIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.SearchText {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 13px;
+  font-family: Inter, sans-serif;
+}
+
+/* --- Seção Central: Logo --- */
+.Logo {
+  width: 190px;
+  height: auto; /* Altura automática para manter a proporção */
+  /* Posicionado no centro pelo justify-content do container pai */
+}
+
+/* --- Seção da Direita: Ícones de Ação --- */
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaçamento entre os ícones */
+}
+
+.actions-container img {
+  width: 30px;
+  height: 28px;
+  cursor: pointer;
+}
+
+/* --- Linha Divisória --- */
+.Divider {
+  width: 100%;
+  max-width: 1800px;
+  border: none;
+  border-top: 1px solid #d9d9d9;
+  margin: 0;
+}
+
+/* --- Menu de Navegação --- */
+.navigation-menu {
+  width: 100%;
+  max-width: 1800px;
+  height: 56px;
+  display: flex;
+  justify-content: center; /* Centraliza os links */
+  align-items: center;
+  gap: 60px; /* Espaçamento entre os links */
+}
+
+.navigation-menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  transition:ease 0.3s;
+}
+
+.navigation-menu a:hover {
+  /* Aumenta ligeiramente o tamanho do link */
+  transform: scale(1.1);
+  
+  /* Muda a cor para um tom de destaque - sinta-se à vontade para alterar! */
+  color: #255248; 
+}
+
+/* ... (código CSS existente, incluindo a seção .navigation-menu a) ... */
+
+/* --- Estilo para o link ATIVO (Destaque Aumentado) --- */
+.navigation-menu a.active-link {
+  /* Força a cor principal (verde escuro) */
+  color: #255248 !important; 
+  
+  /* Aumenta o peso da fonte para negrito */
+  font-weight: bold !important; 
+  
+  
+  /* Aumenta a escala do texto um pouco mais */
+  transform: scale(1.15); 
+  
+  /* Adiciona uma sombra de texto sutil para separá-lo do fundo */
+  text-shadow: 0 0 5px rgba(37, 82, 72, 0.4); 
+}
+
+/* REVISÃO DO HOVER PADRÃO: 
+   Garantimos que o link ATIVO NÃO perca o destaque quando o mouse passar sobre ele,
+   mesmo que o hover padrão tente sobrescrever (embora o !important acima ajude).
+*/
+.navigation-menu a:hover {
+  /* Aumenta ligeiramente o tamanho do link */
+  transform: scale(1.1);
+  
+  /* Muda a cor para um tom de destaque - sinta-se à vontade para alterar! */
+  color: #255248; 
+}
+
+
+.topbar-content .logo-link {
+    /* Garante que o link funcione como um bloco (se necessário) */
+    display: inline-block; 
+}
+
+.topbar-content .logo-link .Logo {
+    cursor: pointer !important;
+    user-select: none;
+    -webkit-user-drag: none;
+}

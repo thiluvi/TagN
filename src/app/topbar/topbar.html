@@ -1,0 +1,28 @@
+<header class="Topbar">
+  <div class="topbar-content">
+    <div class="search-container">
+      <img class="SearchIcon" src="../../assets/images/Lupa.png" alt="Ícone de pesquisa" />
+      <span class="SearchText">Pesquise por um produto</span>
+    </div>
+
+    <img class="Logo" [routerLink]="['/']" src="../../assets/images/Tag-N.png" alt="Logo principal" />
+
+    <div class="actions-container">
+      <img src="../../assets/images/Favoritos.png" alt="Ícone de favoritos" (click)="onFavoritesClick()" />
+      <img src="../../assets/images/Sacola.png" alt="Ícone da sacola de compras" (click)="onCartClick()"/>
+      <img src="../../assets/images/Perfil.png" alt="Ícone do perfil de usuário" (click)="onProfileClick()" />
+    </div>
+  </div>
+
+  <hr class="Divider" />
+
+  <nav class="navigation-menu">
+    <a [routerLink]="['/category', 'correntes']" routerLinkActive="active-link">Correntes</a>
+    <a [routerLink]="['/category', 'pulseiras']" routerLinkActive="active-link">Pulseiras</a>
+    <a [routerLink]="['/category', 'escapulario']" routerLinkActive="active-link">Escapulário</a>
+    <a [routerLink]="['/category', 'colares']" routerLinkActive="active-link">Colares</a>
+    <a [routerLink]="['/category', 'aneis']" routerLinkActive="active-link">Anéis</a>
+    <a [routerLink]="['/category', 'brincos']" routerLinkActive="active-link">Brincos</a>
+    <a [routerLink]="['/category', 'pingentes']" routerLinkActive="active-link">Pingentes</a>
+  </nav>
+</header>

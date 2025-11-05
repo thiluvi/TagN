@@ -1,0 +1,128 @@
+.overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  pointer-events: none; /* Não interage quando escondido */
+  visibility: hidden;
+}
+
+.overlay-container.visible {
+  pointer-events: auto; /* Permite interação quando visível */
+  visibility: visible;
+}
+
+.overlay-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay-container.visible .overlay-backdrop {
+  opacity: 1;
+}
+
+.overlay-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 400px; /* Largura do painel */
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%); /* Começa fora da tela */
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay-container.visible .overlay-panel {
+  transform: translateX(0); /* Desliza para a tela */
+}
+
+.overlay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.overlay-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-family: Inter, sans-serif;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.overlay-content {
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  font-family: Inter, sans-serif;
+}
+
+.overlay-content {
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  font-family: Inter, sans-serif;
+}
+
+/* Estilos para a seção de opções de autenticação */
+.auth-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Espaço entre os elementos */
+  padding-top: 20px;
+}
+
+.auth-options p {
+  margin: 10px 0 0 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.auth-button:hover {
+  background-color: #e9ecef;
+}
+
+/* Estilo específico para o botão de cadastro (opcional) */
+.register-button {
+  background-color: #255248; /* Cor verde (exemplo) */
+  color: white;
+  border-color: #255248;
+}
+
+.register-button:hover {
+  background-color: #1e423a; /* Verde mais escuro no hover */
+}

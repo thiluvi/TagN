@@ -1,0 +1,32 @@
+<div class="auth-container">
+    <h3>Criar Conta</h3>
+  
+    <form class="auth-form">
+      <div class="form-group">
+        <label for="registerName">Nome Completo</label>
+        <input type="text" id="registerName" placeholder="Seu nome" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="registerEmail">Email</label>
+        <input type="email" id="registerEmail" placeholder="seuemail@exemplo.com" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="registerPassword">Senha</label>
+        <input type="password" id="registerPassword" placeholder="Crie uma senha" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="registerConfirmPassword">Confirmar Senha</label>
+        <input type="password" id="registerConfirmPassword" placeholder="Confirme sua senha" required>
+      </div>
+  
+      <button type="submit" class="submit-button">Cadastrar</button>
+    </form>
+  
+    <div class="switch-auth">
+      <p>Já tem conta?</p>
+      <button class="switch-button" (click)="switchToLogin()">Entrar</button>
+    </div>
+  </div>
