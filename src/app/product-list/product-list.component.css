@@ -10,7 +10,7 @@
     font-weight: bold;
     color: #21443c;
     margin-bottom: 40px;
-    font-family: Inter;
+    font-family: Inter, sans-serif;
 }
 /* REGRA DE ALTA ESPECIFICIDADE PARA FORÇAR O LAYOUT DE GRADE */
 /* Estamos usando a classe "list-view" adicionada no HTML (passo anterior) */
