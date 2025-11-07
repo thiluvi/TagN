@@ -1,9 +1,16 @@
-import { Injectable, signal, computed } from '@angular/core'; // Adicione 'computed'
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http'; // 1. Importe o HttpClient
+import { Observable, of } from 'rxjs'; // 2. Importe Observable e 'of' (para o logout)
+import { map, catchError, tap } from 'rxjs/operators'; // 3. Importe operadores RxJS
 
-// (Opcional) Interface para clareza
+// Você pode mover esta interface para um arquivo types.ts, como no PDF [cite: 154]
 export interface AppUser {
+  id: number;
+  nome: string;
   email: string;
+  cpf: string;
   role: 'admin' | 'user';
+  password?: string;
 }
 
 @Injectable({
@@ -11,51 +18,66 @@ export interface AppUser {
 })
 export class AuthService {
   
-  // Trocamos o booleano por um signal que guarda o usuário (ou null)
-  private currentUser = signal<AppUser | null>(null);
+  // Injeta o HttpClient
+  private http = inject(HttpClient); 
+  // URL da nossa API simulada [cite: 292]
+  private apiUrl = 'http://localhost:3000/users'; 
 
-  // Criamos um 'computed' signal para saber se está autenticado
+  private currentUser = signal<AppUser | null>(null);
   public isAuthenticated = computed(() => this.currentUser() !== null);
-  
-  // Sinal para saber a role atual
   public currentUserRole = computed(() => this.currentUser()?.role ?? null);
 
   constructor() { }
 
-  // Modificamos o login para retornar a 'role' ou 'null'
-  login(email: string, password: string): 'admin' | 'user' | null {
+  // 4. O LOGIN AGORA É ASSÍNCRONO (retorna um Observable)
+  login(email: string, password: string): Observable<AppUser | null> {
     
-    // SIMULAÇÃO DE BANCO DE DADOS (JsonServer virá aqui)
-    const mockUserDb: AppUser[] = [
-      { email: 'admin@senac.com', role: 'admin' },
-      { email: 'user@senac.com', role: 'user' }
-    ];
-
-    // Simulação de login de admin (requisito do projeto)
-    if (email === 'admin@senac.com' && password === '1234') {
-      const adminUser = mockUserDb[0];
-      this.currentUser.set(adminUser);
-      console.log('Login como ADMIN bem-sucedido!');
-      return adminUser.role;
-    }
-
-    // Simulação de login de usuário comum
-    if (email === 'user@senac.com' && password === '1234') {
-      const commonUser = mockUserDb[1];
-      this.currentUser.set(commonUser);
-      console.log('Login como USER bem-sucedido!');
-      return commonUser.role;
-    }
-    
-    console.log('Falha no login');
-    this.currentUser.set(null);
-    return null;
+    // O json-server permite filtrar com query params
+    // Vamos buscar por email E senha.
+    // NOTA DE SEGURANÇA: Isso NUNCA deve ser feito em produção (enviar senha na URL).
+    // Mas para o json-server, é como simulamos o login.
+    return this.http.get<AppUser[]>(`${this.apiUrl}?email=${email}&password=${password}`).pipe(
+      map(users => {
+        const user = users[0]; // Se a API retornar um array, pegamos o primeiro
+        if (user) {
+          this.currentUser.set(user); // Define o usuário logado
+          return user;
+        }
+        return null; // Login falhou
+      }),
+      catchError(error => {
+        console.error('Erro no login:', error);
+        return of(null); // Retorna um observable de nulo em caso de erro
+      })
+    );
   }
 
   logout(): void {
     this.currentUser.set(null);
-    // (Opcional) Redirecionar para o login
-    // const router = inject(Router); // precisaria injetar no construtor
-    // router.navigate(['/']);
+    // NOTA: O Angular não vai redirecionar automaticamente
+    // O ideal é o componente que chama o logout fazer o redirecionamento
+  }
+
+  // --- MÉTODOS DE ADMIN (CRUD) ---
+
+  // READ (Listar) [cite: 295-297]
+  loadUsers(): Observable<AppUser[]> {
+    return this.http.get<AppUser[]>(this.apiUrl);
+  }
+
+  // CREATE (Cadastrar) [cite: 426-428]
+  registerUser(user: Omit<AppUser, 'id'>): Observable<AppUser> {
+    return this.http.post<AppUser>(this.apiUrl, user);
+  }
+
+  // DELETE (Excluir) [cite: 471-472]
+  deleteUser(userId: number): Observable<{}> { // Retorna um objeto vazio
+    return this.http.delete<{}>(`${this.apiUrl}/${userId}`);
+  }
+
+  // UPDATE (Alterar Senha - usando PATCH)
+  updatePassword(userId: number, newPassword: string): Observable<AppUser> {
+    // Usamos PATCH para atualizar apenas o campo de senha
+    return this.http.patch<AppUser>(`${this.apiUrl}/${userId}`, { password: newPassword });
   }
 }

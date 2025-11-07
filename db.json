@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "nome": "Admin Senac",
+      "email": "admin@senac.com",
+      "cpf": "11122233344",
+      "role": "admin",
+      "password": "1234"
+    },
+    {
+      "id": "2",
+      "nome": "Usuário Comum",
+      "email": "user@senac.com",
+      "cpf": "55566677788",
+      "role": "user",
+      "password": "1234"
+    },
+    {
+      "id": "bed7",
+      "nome": "Thiago P Luvizutto",
+      "email": "thiluvi@gmail.com",
+      "cpf": "nigga balls",
+      "password": "12345",
+      "role": "user"
+    },
+    {
+      "id": "0c0c",
+      "nome": "Aleh o Destemido",
+      "email": "aleh@gmail.com",
+      "cpf": "12345678900",
+      "password": "123",
+      "role": "user"
+    }
+  ]
+}

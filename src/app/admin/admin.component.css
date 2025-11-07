@@ -56,6 +56,15 @@
     color: #721c24;
     border: 1px solid #f5c6cb;
   }
+  /* --- NOVO ESTILO PARA ERROS DE CAMPO --- */
+.field-error-message {
+  color: #dc3545; /* Vermelho (cor de erro) */
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+.field-error-message p {
+  margin: 0; /* Remove margem de parágrafo */
+}
   
   /* Divisor */
   .divider {

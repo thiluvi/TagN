@@ -1,19 +1,8 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth/auth.service'; // Importe o AuthService
-import { Router } from '@angular/router'; // Importe o Router
-
-// Vamos criar uma interface para o usuário
-interface User {
-  id: number; // O JsonServer vai criar isso
-  nome: string;
-  email: string;
-  cpf: string;
-  role: 'admin' | 'user';
-  // A senha não deve ser trazida para o front, mas precisamos dela para criar
-  password?: string; 
-}
+import { AuthService, AppUser } from '../auth/auth.service'; // Importe AppUser
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -27,81 +16,92 @@ interface User {
 })
 export class AdminComponent implements OnInit {
 
-  // Injeção de dependências
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // --- Sinais (Signals) ---
   feedbackMessage = signal<{type: 'success' | 'error', text: string} | null>(null);
-  
-  // Lista simulada de usuários (virá do JsonServer no futuro)
-  users = signal<User[]>([]);
-
-  // Sinais para o Modal de Alterar Senha
+  users = signal<AppUser[]>([]); 
   isModalOpen = signal(false);
-  selectedUserForPassword = signal<User | null>(null);
+  selectedUserForPassword = signal<AppUser | null>(null);
 
   // --- Formulários ---
   
-  // Formulário para cadastrar novo usuário (atualizado com senha)
+  // Este formulário PRECISA bater com os campos do HTML
   registerForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    cpf: new FormControl('', [Validators.required]), // TODO: Adicionar validador de CPF
+    cpf: new FormControl('', [
+      Validators.required,
+      Validators.minLength(11),
+      Validators.maxLength(11),
+      Validators.pattern(/^[0-9]+$/) // Apenas números
+    ]),
     password: new FormControl('', Validators.required),
     role: new FormControl<'admin' | 'user'>('user', Validators.required) 
   });
 
-  // Novo formulário para alterar a senha
   passwordForm = new FormGroup({
     newPassword: new FormControl('', Validators.required)
   });
 
+  // "Getter" para facilitar o acesso aos controles no HTML
+  get f() {
+    return this.registerForm.controls;
+  }
+
   ngOnInit(): void {
-    // Carrega os usuários simulados ao iniciar o componente
-    this.loadUsers();
+    this.loadUsers(); 
   }
 
   loadUsers(): void {
-    // SIMULAÇÃO (substituir por chamada HTTP GET ao JsonServer)
-    const mockUsers: User[] = [
-      { id: 1, nome: 'Admin Senac', email: 'admin@senac.com', cpf: '11122233344', role: 'admin' },
-      { id: 2, nome: 'Usuário Comum', email: 'user@senac.com', cpf: '55566677788', role: 'user' }
-    ];
-    this.users.set(mockUsers);
+    this.authService.loadUsers().subscribe({
+      next: (usersFromApi) => {
+        this.users.set(usersFromApi);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar usuários:', err);
+        this.feedbackMessage.set({type: 'error', text: 'Não foi possível carregar a lista de usuários.'});
+      }
+    });
   }
-
-  // --- Funções de CRUD ---
 
   handleRegisterUser(): void {
     if (this.registerForm.invalid) {
       this.feedbackMessage.set({type: 'error', text: 'Formulário inválido. Verifique os campos.'});
       return;
     }
+    
+    // Omitimos 'id' porque o json-server vai criá-lo
+    const newUser = this.registerForm.value as Omit<AppUser, 'id'>;
 
-    // LÓGICA DO PROJETO (Futuro: POST no JsonServer)
-    const newUser = { id: Date.now(), ...this.registerForm.value } as User;
-    console.log('Admin cadastrando novo usuário:', newUser);
-    
-    // Simulação de sucesso: Adiciona o usuário na lista local
-    this.users.update(currentUsers => [...currentUsers, newUser]);
-    
-    this.feedbackMessage.set({type: 'success', text: `Usuário ${newUser.nome} cadastrado!`});
-    this.registerForm.reset({ role: 'user' });
+    this.authService.registerUser(newUser).subscribe({
+      next: (createdUser) => {
+        this.users.update(currentUsers => [...currentUsers, createdUser]);
+        this.feedbackMessage.set({type: 'success', text: `Usuário "${createdUser.nome}" cadastrado!`});
+        this.registerForm.reset({ role: 'user' });
+      },
+      error: (err) => {
+        console.error('Erro ao cadastrar:', err);
+        this.feedbackMessage.set({type: 'error', text: 'Erro ao cadastrar usuário.'});
+      }
+    });
   }
 
   handleDeleteUser(userId: number): void {
-    // Confirmação
     if (!confirm('Tem certeza que deseja deletar este usuário?')) {
       return;
     }
 
-    // LÓGICA DO PROJETO (Futuro: DELETE no JsonServer)
-    console.log('Deletando usuário ID:', userId);
-
-    // Simulação de sucesso: Remove o usuário da lista local
-    this.users.update(users => users.filter(u => u.id !== userId));
-    this.feedbackMessage.set({type: 'success', text: 'Usuário deletado com sucesso.'});
+    this.authService.deleteUser(userId).subscribe({
+      next: () => {
+        this.users.update(users => users.filter(u => u.id !== userId));
+        this.feedbackMessage.set({type: 'success', text: 'Usuário deletado com sucesso.'});
+      },
+      error: (err) => {
+        console.error('Erro ao deletar:', err);
+        this.feedbackMessage.set({type: 'error', text: 'Erro ao deletar usuário.'});
+      }
+    });
   }
 
   handleChangePassword(): void {
@@ -109,19 +109,23 @@ export class AdminComponent implements OnInit {
       return;
     }
 
-    const newPassword = this.passwordForm.value.newPassword;
-    const user = this.selectedUserForPassword();
+    const newPassword = this.passwordForm.value.newPassword!;
+    const user = this.selectedUserForPassword()!;
 
-    // LÓGICA DO PROJETO (Futuro: PATCH/PUT no JsonServer)
-    console.log(`Alterando senha do usuário ${user?.email} para: ${newPassword}`);
-    
-    this.feedbackMessage.set({type: 'success', text: `Senha do ${user?.nome} alterada.`});
-    this.closePasswordModal();
+    this.authService.updatePassword(user.id, newPassword).subscribe({
+      next: () => {
+        this.feedbackMessage.set({type: 'success', text: `Senha do ${user.nome} alterada.`});
+        this.closePasswordModal();
+      },
+      error: (err) => {
+        console.error('Erro ao alterar senha:', err);
+        this.feedbackMessage.set({type: 'error', text: 'Erro ao alterar senha.'});
+      }
+    });
   }
 
   // --- Funções do Modal ---
-
-  openPasswordModal(user: User): void {
+  openPasswordModal(user: AppUser): void {
     this.selectedUserForPassword.set(user);
     this.passwordForm.reset();
     this.isModalOpen.set(true);
@@ -133,9 +137,8 @@ export class AdminComponent implements OnInit {
   }
 
   // --- Função de Logout ---
-
   handleLogout(): void {
     this.authService.logout();
-    this.router.navigate(['/']); // Redireciona para o login
+    this.router.navigate(['/']); 
   }
 }
