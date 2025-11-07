@@ -1,4 +1,3 @@
-// Adicione 'signal' aqui
 import { Component, inject, signal } from '@angular/core'; 
 import { Router } from '@angular/router'; 
 import { AuthService } from '../auth.service'; 
@@ -36,12 +35,19 @@ export class LoginComponent {
     const email = this.loginForm.value.email ?? '';
     const password = this.loginForm.value.password ?? '';
 
-    const sucesso = this.authService.login(email, password);
+    // 1. O login agora retorna a 'role' ou 'null'
+    const role = this.authService.login(email, password);
 
-    if (sucesso) {
-      this.router.navigate(['/home']);
-    } else {
-      this.loginError.set('Email ou senha inválidos.');
+    // 2. Redirecionamento baseado na role
+    switch (role) {
+      case 'admin':
+        this.router.navigate(['/admin']); // Admin vai para /admin
+        break;
+      case 'user':
+        this.router.navigate(['/home']); // User vai para /home
+        break;
+      default:
+        this.loginError.set('Email ou senha inválidos.'); // Falha no login
     }
   }
 }

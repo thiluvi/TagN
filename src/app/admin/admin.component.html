@@ -1,0 +1,127 @@
+<div class="account-container">
+  
+    <aside class="account-sidebar">
+      <div class="welcome-box">
+        <h2>Painel Admin</h2>
+        <p>Gerenciamento do Sistema</p>
+      </div>
+      <nav class="account-nav">
+        <ul>
+          <li>
+            <button class="active">
+              <span class="nav-icon"></span> Gerenciar Usuários
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <button class="logout-button" (click)="handleLogout()">Sair</button>
+    </aside>
+  
+    <section class="account-content">
+      
+      @if (feedbackMessage(); as msg) {
+        <div class="feedback-message" [class.success]="msg.type === 'success'" [class.error]="msg.type === 'error'">
+          {{ msg.text }}
+        </div>
+      }
+  
+      <h2>Cadastrar Novo Usuário</h2>
+      
+      <form class="admin-form" [formGroup]="registerForm" (ngSubmit)="handleRegisterUser()">
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" formControlName="nome">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email">
+        </div>
+  
+        <div class="form-group">
+          <label for="cpf">CPF (somente números)</label>
+          <input type="text" id="cpf" formControlName="cpf" placeholder="12345678900">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Senha Inicial</label>
+          <input type="password" id="password" formControlName="password">
+        </div>
+        
+        <div class="form-group">
+          <label for="role">Tipo de Conta</label>
+          <select id="role" formControlName="role">
+            <option value="user">Usuário Comum</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+  
+        <button type="submit" class="submit-button" [disabled]="registerForm.invalid">Cadastrar Usuário</button>
+      </form>
+  
+      <hr class="divider">
+  
+      <h2>Lista de Usuários</h2>
+      <div class="user-list-container">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>CPF</th>
+              <th>Permissão</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users(); track user.id) {
+              <tr>
+                <td>{{ user.nome }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.cpf }}</td>
+                <td>{{ user.role }}</td>
+                <td class="actions-cell">
+                  <button class="action-btn edit" (click)="openPasswordModal(user)">Alterar Senha</button>
+                  
+                  @if (user.email !== 'admin@senac.com') {
+                    <button class="action-btn delete" (click)="handleDeleteUser(user.id)">Deletar</button>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5">Nenhum usuário cadastrado.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+  
+    </section>
+  
+  </div>
+  
+  @if (isModalOpen()) {
+    <div class="modal-backdrop" (click)="closePasswordModal()"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h3>Alterar Senha</h3>
+        <button class="close-btn" (click)="closePasswordModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <p>Alterando senha para: <strong>{{ selectedUserForPassword()?.email }}</strong></p>
+        
+        <form class="admin-form" [formGroup]="passwordForm" (ngSubmit)="handleChangePassword()">
+          <div class="form-group">
+            <label for="newPassword">Nova Senha</label>
+            <input type="password" id="newPassword" formControlName="newPassword">
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="action-btn" (click)="closePasswordModal()">Cancelar</button>
+            <button type="submit" class="submit-button" [disabled]="passwordForm.invalid">Salvar Senha</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }

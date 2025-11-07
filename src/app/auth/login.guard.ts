@@ -7,10 +7,17 @@ export const loginGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // Se o usuário já está autenticado, redirecione para a home
   if (authService.isAuthenticated()) {
-    console.log('Usuário já logado. Redirecionando para /home.');
-    router.navigate(['/home']);
+    const role = authService.currentUserRole();
+    
+    // Se já está logado...
+    if (role === 'admin') {
+      console.log('Admin já logado. Redirecionando para /admin.');
+      router.navigate(['/admin']); // Admin vai para /admin
+    } else {
+      console.log('Usuário já logado. Redirecionando para /home.');
+      router.navigate(['/home']); // User vai para /home
+    }
     return false; // Impede o acesso à rota de login
   }
 

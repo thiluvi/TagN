@@ -4,39 +4,46 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { AdminComponent } from './admin/admin.component'; // 1. Importe o AdminComponent
 
 // Importe os guards
 import { authGuard } from './auth/auth.guard';
 import { loginGuard } from './auth/login.guard';
+import { adminGuard } from './auth/admin.guard'; // 2. Importe o AdminGuard
 
 export const routes: Routes = [
-  // 1. Rota de login agora usa o loginGuard
   { 
     path: '', 
     component: LoginComponent,
-    canActivate: [loginGuard] // Se já está logado, vai para /home
+    canActivate: [loginGuard] 
   }, 
   
-  // 2. Rotas protegidas usam o authGuard
+  // 3. Adicione a nova rota /admin protegida
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [adminGuard] // Apenas admins podem acessar
+  },
+
   { 
     path: 'home', 
     component: HomeComponent,
-    canActivate: [authGuard] // Só acessa se estiver logado
+    canActivate: [authGuard] 
   }, 
   { 
     path: 'products/:productId', 
     component: ProductDetailComponent,
-    canActivate: [authGuard] // Só acessa se estiver logado
+    canActivate: [authGuard] 
   },
   { 
     path: 'conta', 
     component: AccountComponent, 
-    canActivate: [authGuard] // Só acessa se estiver logado
+    canActivate: [authGuard] 
   },
   { 
     path: 'category/:categoryName', 
     component: ProductListComponent,
-    canActivate: [authGuard] // Só acessa se estiver logado
+    canActivate: [authGuard] 
   },
   
   { path: 'login', redirectTo: '', pathMatch: 'full' } 
