@@ -1,9 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core'; // Adicione 'inject'
 import { RouterOutlet } from '@angular/router';
 import { Topbar } from './topbar/topbar';
 import { Footer } from './footer/footer';
 import { OverlayComponent } from './overlay/overlay';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './auth/auth.service'; // IMPORTAR O SERVIÇO
 
 @Component({
   selector: 'app-root',
@@ -21,13 +22,14 @@ import { CommonModule } from '@angular/common';
 export class App {
   protected readonly title = signal('TagN');
 
-  // --- Propriedades do Overlay ---
-  // Certifique-se de que estas propriedades estão aqui, no nível da classe
+  // Injete o serviço de autenticação
+  // Tornamos público (public) para que o template (app.html) possa acessá-lo
+  public authService = inject(AuthService); 
+
   isOverlayVisible = false;
   overlayTitle = '';
-  overlayContentType = ''; // Deve estar acessível aqui
+  overlayContentType = ''; 
 
-  // Método atualizado para abrir o overlay
   handleOpenOverlay(type: string): void {
     this.overlayContentType = type;
 
@@ -38,9 +40,7 @@ export class App {
       case 'Sacola':
         this.overlayTitle = 'Sacola de Compras';
         break;
-      case 'Perfil':
-        this.overlayTitle = 'Entrar ou Cadastrar';
-        break;
+      // O caso 'Perfil' foi removido do overlay
       default:
         this.overlayTitle = '';
     }
@@ -48,7 +48,6 @@ export class App {
     this.isOverlayVisible = true;
   }
 
-  // Método para fechar o overlay
   handleCloseOverlay(): void {
     this.isOverlayVisible = false;
     this.overlayContentType = '';

@@ -1,14 +1,17 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { RouterModule, Router } from '@angular/router'; // Importe Router
 
 @Component({
   selector: 'app-topbar',
-  standalone: true, // Adicionado
+  standalone: true, 
   imports: [RouterModule],
   templateUrl: './topbar.html',
   styleUrl: './topbar.css'
 })
 export class Topbar {
+  // Injeção do Router
+  private router = inject(Router);
+
   // Emite o título do overlay a ser aberto
   @Output() openOverlay = new EventEmitter<string>();
 
@@ -20,8 +23,9 @@ export class Topbar {
     this.openOverlay.emit('Sacola');
   }
 
-  // Novo método para o clique no perfil
+  // Método ATUALIZADO para o clique no perfil
   onProfileClick(): void {
-    this.openOverlay.emit('Perfil'); // Emite 'Perfil'
+    // this.openOverlay.emit('Perfil'); // Removemos isso
+    this.router.navigate(['/conta']); // Navega para a página de conta
   }
 }

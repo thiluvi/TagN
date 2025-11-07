@@ -1,20 +1,43 @@
 import { Routes } from '@angular/router';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { HomeComponent } from './home/home.component';
-// Importe os componentes de login e cadastro
 import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { AccountComponent } from './account/account.component';
 import { ProductListComponent } from './product-list/product-list.component';
 
+// Importe os guards
+import { authGuard } from './auth/auth.guard';
+import { loginGuard } from './auth/login.guard';
+
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // Rota raiz para a página inicial
-  { path: 'products/:productId', component: ProductDetailComponent },
-  // Adicione as rotas para login e cadastro
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  // Adicione outras rotas aqui se necessário
-  { path: 'conta', component: AccountComponent }, // Você pode mudar 'conta' para 'perfil', etc.
-  // Futuramente, adicionar um CanActivate guard aqui para proteger a rota
-  { path: 'category/:categoryName', component: ProductListComponent }
+  // 1. Rota de login agora usa o loginGuard
+  { 
+    path: '', 
+    component: LoginComponent,
+    canActivate: [loginGuard] // Se já está logado, vai para /home
+  }, 
+  
+  // 2. Rotas protegidas usam o authGuard
+  { 
+    path: 'home', 
+    component: HomeComponent,
+    canActivate: [authGuard] // Só acessa se estiver logado
+  }, 
+  { 
+    path: 'products/:productId', 
+    component: ProductDetailComponent,
+    canActivate: [authGuard] // Só acessa se estiver logado
+  },
+  { 
+    path: 'conta', 
+    component: AccountComponent, 
+    canActivate: [authGuard] // Só acessa se estiver logado
+  },
+  { 
+    path: 'category/:categoryName', 
+    component: ProductListComponent,
+    canActivate: [authGuard] // Só acessa se estiver logado
+  },
+  
+  { path: 'login', redirectTo: '', pathMatch: 'full' } 
 ];

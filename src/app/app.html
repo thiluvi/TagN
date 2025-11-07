@@ -1,10 +1,14 @@
-<app-topbar (openOverlay)="handleOpenOverlay($event)"></app-topbar>
+@if (authService.isAuthenticated()) {
+  <app-topbar (openOverlay)="handleOpenOverlay($event)"></app-topbar>
+}
 
 <main>
   <router-outlet></router-outlet>
 </main>
 
-<app-footer></app-footer>
+@if (authService.isAuthenticated()) {
+  <app-footer></app-footer>
+}
 
 <app-overlay
   [isVisible]="isOverlayVisible"

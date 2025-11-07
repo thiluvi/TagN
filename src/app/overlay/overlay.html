@@ -14,17 +14,7 @@
         <div *ngSwitchCase="'Sacola'">
           <p>Seus itens da sacola aparecerão aqui.</p>
         </div>
-        <div *ngSwitchCase="'Perfil'">
-          @if (authView() === 'options') {
-            <div class="auth-options">
-              <button class="auth-button" (click)="showLogin()">Entrar</button>
-              <p>Ainda não tem conta?</p>
-              <button class="auth-button register-button" (click)="showRegister()">Cadastre-se</button>
-            </div>
-          } @else if (authView() === 'login') {
-            <app-login (goToRegister)="showRegister()"></app-login> } @else if (authView() === 'register') {
-            <app-register (goToLogin)="showLogin()"></app-register> }
-        </div>
+        
         <div *ngSwitchDefault>
           <p>Conteúdo padrão ou erro.</p>
         </div>
