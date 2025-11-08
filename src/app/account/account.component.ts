@@ -1,41 +1,39 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+// 1. Adicione 'computed' à esta linha de importação
+import { Component, signal, inject, computed } from '@angular/core'; 
+import { CommonModule } from '@angular/common'; 
+import { AuthService } from '../auth/auth.service'; 
+import { Router } from '@angular/router'; 
 
-// --- Importe os subcomponentes que criaremos a seguir ---
-// import { OrdersComponent } from './orders/orders.component';
-// import { ProfileDataComponent } from './profile-data/profile-data.component';
-// import { AddressesComponent } from './addresses/addresses.component';
-
+import { ProfileDataComponent } from './profile-data/profile-data.component';
+import { AddressListComponent } from './address-list/address-list.component';
 
 @Component({
   selector: 'app-account',
   standalone: true,
   imports: [
     CommonModule,
-    // Adicione os subcomponentes aqui quando criados
-    // OrdersComponent,
-    // ProfileDataComponent,
-    // AddressesComponent,
+    ProfileDataComponent,
+    AddressListComponent,
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
 export class AccountComponent {
-  // Dados do usuário (substituir por dados reais do serviço de autenticação)
-  userEmail = signal('emailDoUsuario@gmail.com');
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  // Signal para controlar a view ativa
+  // 2. Esta linha agora funcionará, pois 'computed' foi importado
+  //    e 'authService.currentUser' agora é público (da Correção 2)
+  userEmail = computed(() => this.authService.currentUser()?.email ?? 'email@...com');
+
   activeView = signal<'pedidos' | 'dados' | 'enderecos'>('pedidos');
 
-  // Métodos para mudar a view ativa
   showView(view: 'pedidos' | 'dados' | 'enderecos'): void {
     this.activeView.set(view);
   }
 
-  // Método para logout (implementar a lógica real depois)
   logout(): void {
-    console.log('Usuário deslogado!');
-    // Adicionar lógica de logout e redirecionamento
-    // Ex: this.authService.logout(); this.router.navigate(['/']);
+    this.authService.logout();
+    this.router.navigate(['/']); 
   }
 }

@@ -3,21 +3,24 @@
     flex-direction: column;
     align-items: center; /* Centraliza o título */
     width: 600px;
-    margin: 100px auto; /* Centraliza horizontalmente e adiciona espaço superior */
+    margin: 150px auto; /* Centraliza horizontalmente e adiciona espaço superior */
     padding: 10px; /* Adiciona um respiro interno */
     box-sizing: border-box;
   }
   
   .auth-container h3 {
-    color: #333;
-    margin-bottom: 25px;
+    color: #272727;
+    margin-bottom: 20px;
     font-weight: 600;
+    font-family: Inter, sans-serif;
+    font-size: 25px;
   }
   
   .auth-form {
     width: 100%;
     display: flex;
     flex-direction: column;
+    font-family: Inter, sans-serif;
   }
   
   .form-group {
@@ -53,6 +56,7 @@
     text-decoration: none;
     margin-top: 5px;
     text-align: right;
+    font-family: Inter, sans-serif;
   }
   
   .forgot-password:hover {
@@ -82,6 +86,7 @@
     margin-top: -10px; /* Aproxima da input anterior */
     margin-bottom: 10px;
     text-align: center;
+    font-family: Inter, sans-serif;
   }
   
   .switch-auth {

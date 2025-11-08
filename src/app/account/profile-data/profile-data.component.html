@@ -1,0 +1,18 @@
+@if (user(); as loggedUser) {
+  <div class="profile-data-container">
+    <div class="data-item">
+      <label>Nome Completo</label>
+      <p>{{ loggedUser.nome }}</p>
+    </div>
+    <div class="data-item">
+      <label>Email</label>
+      <p>{{ loggedUser.email }}</p>
+    </div>
+    <div class="data-item">
+      <label>CPF</label>
+      <p>{{ loggedUser.cpf }}</p>
+    </div>
+    </div>
+} @else {
+  <p>Não foi possível carregar os dados do usuário.</p>
+}

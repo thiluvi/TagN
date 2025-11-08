@@ -1,0 +1,95 @@
+/* Reutilização dos estilos do Admin */
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+}
+.form-group, .form-group-small, .form-group-large {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label, .form-group-small label, .form-group-large label {
+  font-size: 0.9rem; color: #555; margin-bottom: 5px; font-weight: 500;
+}
+.form-group input, .form-group-small input, .form-group-large input {
+  padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;
+}
+.submit-button {
+  padding: 12px; background-color: #255248; color: white; border: none;
+  border-radius: 4px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px;
+  transition: background-color 0.2s;
+}
+.submit-button:hover { background-color: #1e423a; }
+.submit-button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+.form-row { display: flex; gap: 15px; }
+.form-group-small { flex: 1; }
+.form-group-large { flex: 3; }
+
+/* --- NOVOS ESTILOS --- */
+
+/* Mensagens de Validação */
+.field-error-message {
+  color: #dc3545; /* Vermelho */
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+.field-error-message p { margin: 0; }
+
+/* Mensagens de Feedback (Sucesso/Erro) */
+.feedback-message { margin-top: 10px; font-weight: 500; }
+.feedback-message.success { color: #155724; } /* Verde */
+.feedback-message.error { color: #dc3545; } /* Vermelho */
+
+/* Card de Endereço */
+.address-card {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background-color: #fcfcfc;
+  display: flex; /* Para alinhar botões à direita */
+  justify-content: space-between;
+  align-items: center;
+}
+.address-card p { margin: 2px 0; }
+.address-details { flex-grow: 1; }
+.address-actions { display: flex; gap: 10px; }
+
+/* Botões de Ação (Editar/Excluir) */
+.btn-action {
+  background: none;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-edit { color: #007bff; border-color: #007bff; }
+.btn-edit:hover { background-color: #007bff; color: white; }
+.btn-delete { color: #dc3545; border-color: #dc3545; }
+.btn-delete:hover { background-color: #dc3545; color: white; }
+
+/* Layout dos botões do formulário */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.cancel-button {
+  padding: 12px;
+  background-color: #6c757d; /* Cinza */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+.cancel-button:hover { background-color: #5a6268; }
+
+.empty-message { color: #777; font-style: italic; }
+.divider { border: 0; border-top: 1px solid #eee; margin: 30px 0; }

@@ -1,0 +1,115 @@
+<div class="address-list-container">
+  
+  <h4>Meus Endereços Salvos</h4>
+  
+  @for (address of addresses(); track address.id) {
+    <div class="address-card">
+      <div class="address-details">
+        <p><strong>{{ address.rua }}, {{ address.numero }}</strong> - {{ address.complemento }}</p>
+        <p>{{ address.bairro }}, {{ address.cidade }} - {{ address.estado }}</p>
+        <p>CEP: {{ address.cep }}</p>
+      </div>
+      <div class="address-actions">
+        <button class="btn-action btn-edit" (click)="handleEditClick(address)">Editar</button>
+        <button class="btn-action btn-delete" (click)="handleDeleteAddress(address.id)">Excluir</button>
+      </div>
+    </div>
+  } @empty {
+    <p class="empty-message">Nenhum endereço cadastrado.</p>
+  }
+
+  <hr class="divider">
+
+  <h4>{{ editingAddressId() ? 'Editar Endereço' : 'Adicionar Novo Endereço' }}</h4>
+
+  <form class="address-form" [formGroup]="addressForm" (ngSubmit)="handleSubmitAddress()">
+    
+    <div class="form-group">
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" formControlName="cep" placeholder="00000-000">
+      @if (a.cep.invalid && (a.cep.dirty || a.cep.touched)) {
+        <div class="field-error-message">
+          @if (a.cep.hasError('required')) { <p>CEP é obrigatório.</p> }
+          @if (a.cep.hasError('pattern')) { <p>Formato de CEP inválido (use 00000-000 ou 00000000).</p> }
+        </div>
+      }
+      </div>
+    
+    <div class="form-group">
+      <label for="rua">Rua / Logradouro</label>
+      <input type="text" id="rua" formControlName="rua">
+      @if (a.rua.invalid && (a.rua.dirty || a.rua.touched)) {
+        <div class="field-error-message">
+          @if (a.rua.hasError('required')) { <p>Rua é obrigatório.</p> }
+        </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <div class="form-group-small">
+        <label for="numero">Número</label>
+        <input type="text" id="numero" formControlName="numero">
+        @if (a.numero.invalid && (a.numero.dirty || a.numero.touched)) {
+          <div class="field-error-message">
+            @if (a.numero.hasError('required')) { <p>Número é obrigatório.</p> }
+          </div>
+        }
+      </div>
+      <div class="form-group-large">
+        <label for="complemento">Complemento (Opcional)</label>
+        <input type="text" id="complemento" formControlName="complemento">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="bairro">Bairro</label>
+      <input type="text" id="bairro" formControlName="bairro">
+      @if (a.bairro.invalid && (a.bairro.dirty || a.bairro.touched)) {
+        <div class="field-error-message">
+          @if (a.bairro.hasError('required')) { <p>Bairro é obrigatório.</p> }
+        </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <div class="form-group-large">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" formControlName="cidade">
+        @if (a.cidade.invalid && (a.cidade.dirty || a.cidade.touched)) {
+          <div class="field-error-message">
+            @if (a.cidade.hasError('required')) { <p>Cidade é obrigatória.</p> }
+          </div>
+        }
+      </div>
+      <div class="form-group-small">
+        <label for="estado">Estado (UF)</label>
+        <input type="text" id="estado" formControlName="estado" placeholder="SP">
+        @if (a.estado.invalid && (a.estado.dirty || a.estado.touched)) {
+          <div class="field-error-message">
+            @if (a.estado.hasError('required')) { <p>UF é obrigatório.</p> }
+            @if (a.estado.hasError('minlength') || a.estado.hasError('maxlength')) { <p>UF deve ter 2 letras.</p> }
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (feedbackMessage(); as msg) {
+      <p class="feedback-message" [class.success]="msg.type === 'success'" [class.error]="msg.type === 'error'">
+        {{ msg.text }}
+      </p>
+    }
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button" [disabled]="addressForm.invalid">
+        {{ editingAddressId() ? 'Atualizar Endereço' : 'Salvar Endereço' }}
+      </button>
+      
+      @if (editingAddressId()) {
+        <button type="button" class="cancel-button" (click)="handleCancelEdit()">
+          Cancelar
+        </button>
+      }
+    </div>
+  </form>
+
+</div>

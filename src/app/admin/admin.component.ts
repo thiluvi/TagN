@@ -1,7 +1,8 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService, AppUser } from '../auth/auth.service'; // Importe AppUser
+import { AuthService } from '../auth/auth.service'; 
+import { AppUser } from '../core/types/types'; // Importe 'AppUser' do novo local
 import { Router } from '@angular/router';
 
 @Component({

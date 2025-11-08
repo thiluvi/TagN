@@ -1,0 +1,19 @@
+.profile-data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.data-item {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.data-item label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+.data-item p {
+  font-size: 1rem;
+  color: #333;
+  margin: 4px 0 0 0;
+}

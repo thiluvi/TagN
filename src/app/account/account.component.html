@@ -1,7 +1,7 @@
 <div class="account-container">
     <aside class="account-sidebar">
       <div class="welcome-box">
-        <h2>Bem vindo, usuário!</h2>
+        <h2>Bem vindo!</h2>
         <p>{{ userEmail() }}</p>
       </div>
   
@@ -35,21 +35,16 @@
         @case ('pedidos') {
           <h2>Meus pedidos</h2>
           <div class="placeholder-content">
-            <p>Nenhum pedido encontrado.</p> </div>
-          <div class="placeholder-content">
-            <p>...</p> </div>
+            <p>Nenhum pedido encontrado.</p> 
+          </div>
         }
         @case ('dados') {
           <h2>Meus dados</h2>
-          <div class="placeholder-content">
-            <p>Formulário para editar dados.</p>
-          </div>
+          <app-profile-data></app-profile-data>
         }
         @case ('enderecos') {
           <h2>Meus endereços</h2>
-          <div class="placeholder-content">
-            <p>Lista de endereços e opção para adicionar novo.</p>
-          </div>
+          <app-address-list></app-address-list>
         }
         @default {
            <p>Selecione uma opção no menu lateral.</p>
