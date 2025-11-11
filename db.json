@@ -44,6 +44,17 @@
       "bairro": "Sé",
       "cidade": "São Paulo",
       "estado": "SP"
+    },
+    {
+      "id": "0d15",
+      "cep": "66666666",
+      "rua": "Cabaré",
+      "numero": "157",
+      "complemento": "Abatedouro",
+      "bairro": "Jardim Cabaré",
+      "cidade": "Balls",
+      "estado": "CU",
+      "userId": "0c0c"
     }
   ]
 }

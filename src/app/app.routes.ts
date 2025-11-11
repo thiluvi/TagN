@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { AdminComponent } from './admin/admin.component'; // 1. Importe o AdminComponent
+import { SearchResultsComponent } from './search-results/search-results.component'; // 1. IMPORTE AQUI
 
 // Importe os guards
 import { authGuard } from './auth/auth.guard';
@@ -46,5 +47,14 @@ export const routes: Routes = [
     canActivate: [authGuard] 
   },
   
-  { path: 'login', redirectTo: '', pathMatch: 'full' } 
+  { path: 'login', redirectTo: '', pathMatch: 'full' },
+
+  // 2. ADICIONE A NOVA ROTA DE BUSCA AQUI
+  {
+    path: 'search',
+    component: SearchResultsComponent,
+    canActivate: [authGuard]
+  },
+  
+  { path: 'login', redirectTo: '', pathMatch: 'full' }
 ];

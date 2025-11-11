@@ -32,7 +32,7 @@ export class ProductDetailComponent implements OnInit {
 
   // Dados de exemplo (substitua por um serviço real depois)
   private allProducts: Product[] = [ //
-    { id: '1', name: 'Corrente Veneziana Masculina 60cm Prata 925', 
+    { id: '1', name: 'Corrente Veneziana Masculina Prata 925', 
       description: 'A corrente veneziana masculina de 1 mm é o acessório ideal para quem busca elegância com discrição.' + 
       'Feita em prata 925, ela tem elos retos e bem agrupados, criando um visual fluido, moderno e minimalista. Uma corrente fina, versátil e resistente — perfeita para usar sozinha ou com pingente.', 
       price: '103,50', 

@@ -1,0 +1,28 @@
+<div class="product-list-container">
+  
+    @if (searchTerm()) {
+      <h2 class="section-title">Resultados da busca por: "{{ searchTerm() }}"</h2>
+    } @else {
+      <h2 class="section-title">Nenhum termo de busca fornecido</h2>
+    }
+    
+    <div class="products-grid-container list-view">
+      
+      @for (product of products(); track product.id) {
+        <div class="product-card">
+          <a [routerLink]="['/products', product.id]">
+            <div class="product-image-container">
+              <img [src]="product.images[0]" [alt]="product.name">
+            </div>
+            <div class="product-info">
+              <p class="product-name">{{ product.name }}</p>
+              <p class="product-price">a partir de R$ {{ product.price }}</p>
+            </div>
+          </a>
+        </div>
+      } @empty {
+        <p class="product-na">Nenhum produto encontrado para "{{ searchTerm() }}".</p>
+      }
+  
+    </div>
+  </div>

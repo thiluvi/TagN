@@ -31,17 +31,27 @@
   width: 215px;
 }
 
+/* NOVO ESTILO PARA O INPUT REAL */
+.SearchInput {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  color: #333;
+  font-size: 13px;
+  font-family: Inter, sans-serif;
+  padding-left: 5px; /* Pequeno ajuste de espaço */
+}
+.SearchInput::placeholder {
+  color: rgba(0, 0, 0, 0.65);
+}
+
 .SearchIcon {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
+  margin-right: 5px; /* Ajuste da margem */
 }
 
-.SearchText {
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 13px;
-  font-family: Inter, sans-serif;
-}
 
 /* --- Seção Central: Logo --- */
 .Logo {

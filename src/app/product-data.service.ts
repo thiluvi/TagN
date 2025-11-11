@@ -19,7 +19,7 @@ export class ProductDataService {
   private allProducts: Product[] = [
     {
       id: '1',
-      name: 'Corrente Veneziana Masculina 60cm Prata 925',
+      name: 'Corrente Veneziana Masculina Prata 925',
       description: 'A corrente veneziana masculina de 1 mm é o acessório ideal para quem busca elegância com discrição...',
       price: '103,50',
       images: ['assets/images/Corrente PNG.png', 'assets/images/Corrente tam 50.png', 'assets/images/Corrente na mao.png', 'assets/images/Corrente Homem.png'],
@@ -74,7 +74,7 @@ export class ProductDataService {
  
  
  
-    // PULCEIRAS -----------------------------------------------------------------------------------------
+    // PULSEIRAS -----------------------------------------------------------------------------------------
     {
       id: '20',
       name: 'Pulseira Esteira Masculina em Prata 925',
@@ -387,5 +387,18 @@ export class ProductDataService {
   // Se for necessário, pode manter o método de buscar um único produto
   getProductById(id: string): Product | undefined {
     return this.allProducts.find(p => p.id === id);
+  }
+
+  // --- NOVO MÉTODO DE BUSCA ---
+  searchProductsByName(searchTerm: string): Product[] {
+    if (!searchTerm || searchTerm.trim() === '') {
+      return []; // Retorna vazio se a busca for nula ou vazia
+    }
+
+    const lowerCaseTerm = searchTerm.toLowerCase();
+
+    return this.allProducts.filter(product => 
+      product.name.toLowerCase().includes(lowerCaseTerm)
+    );
   }
 }

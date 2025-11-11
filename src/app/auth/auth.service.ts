@@ -8,30 +8,53 @@ import { AppUser } from '../core/types/types'; // Isto está correto
   providedIn: 'root'
 })
 export class AuthService {
-  
-  private http = inject(HttpClient); 
-  private apiUrl = 'http://localhost:3000/users'; 
 
-  // 1. Renomeie o signal para ser privado (convenção com _)
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/users';
+  
+  // NOVO: Chave para o localStorage
+  private readonly storageKey = 'tagn-user';
+
   private _currentUser = signal<AppUser | null>(null);
 
-  // 2. Sinais computados públicos
   public isAuthenticated = computed(() => this._currentUser() !== null);
   public currentUserRole = computed(() => this._currentUser()?.role ?? null);
-  
-  // 3. CRIE ESTE SINAL PÚBLICO para os outros componentes lerem
   public currentUser = computed(() => this._currentUser());
 
 
-  constructor() { }
+  constructor() {
+    // NOVO: Carregar o usuário do localStorage ao iniciar
+    this.loadUserFromStorage();
+  }
 
+  // NOVO: Função auxiliar para verificar se está no navegador (importante para SSR)
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
+  // NOVO: Função que carrega o usuário do localStorage
+  private loadUserFromStorage(): void {
+    if (this.isBrowser()) {
+      const storedUser = localStorage.getItem(this.storageKey);
+      if (storedUser) {
+        this._currentUser.set(JSON.parse(storedUser));
+      }
+    }
+  }
+
+  // ATUALIZADO: Método de login
   login(email: string, password: string): Observable<AppUser | null> {
     return this.http.get<AppUser[]>(`${this.apiUrl}?email=${email}&password=${password}`).pipe(
       map(users => {
         const user = users[0];
         if (user) {
-          // 4. Use o signal privado para definir o valor
-          this._currentUser.set(user); 
+          this._currentUser.set(user);
+          
+          // NOVO: Salvar no localStorage
+          if (this.isBrowser()) {
+            localStorage.setItem(this.storageKey, JSON.stringify(user));
+          }
+          
           return user;
         }
         return null;
@@ -43,10 +66,16 @@ export class AuthService {
     );
   }
 
+  // ATUALIZADO: Método de logout
   logout(): void {
-    // 5. Use o signal privado para definir o valor
-    this._currentUser.set(null); 
+    this._currentUser.set(null);
+    
+    // NOVO: Remover do localStorage
+    if (this.isBrowser()) {
+      localStorage.removeItem(this.storageKey);
+    }
   }
+
   
   // ... (O restante dos métodos CRUD (loadUsers, registerUser, etc) está correto) ...
   loadUsers(): Observable<AppUser[]> {

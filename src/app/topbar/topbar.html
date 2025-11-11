@@ -1,9 +1,18 @@
 <header class="Topbar">
   <div class="topbar-content">
-    <div class="search-container">
+    
+    <form class="search-container" (ngSubmit)="onSearchSubmit()">
       <img class="SearchIcon" src="../../assets/images/Lupa.png" alt="Ícone de pesquisa" />
-      <span class="SearchText">Pesquise por um produto</span>
-    </div>
+      
+      <input type="text" 
+             class="SearchInput" 
+             placeholder="Pesquise por um produto" 
+             [(ngModel)]="searchTerm"
+             name="search-term"
+      />
+      
+      <button type="submit" style="display: none;"></button>
+    </form>
 
     <img class="Logo" [routerLink]="['/']" src="../../assets/images/Tag-N.png" alt="Logo principal" />
 
