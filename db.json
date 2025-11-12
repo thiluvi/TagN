@@ -9,26 +9,34 @@
       "password": "1234"
     },
     {
-      "id": "2",
-      "nome": "Usuário Comum",
-      "email": "user@senac.com",
-      "cpf": "55566677788",
-      "role": "user",
-      "password": "1234"
-    },
-    {
-      "id": "bed7",
-      "nome": "Thiago P Luvizutto",
-      "email": "thiluvi@gmail.com",
-      "cpf": "nigga balls",
-      "password": "12345",
+      "id": "5acb",
+      "nome": "Gabriel de Paula Pereira",
+      "email": "gppereira2004@gmail.com",
+      "cpf": "50793774888",
+      "password": "234",
       "role": "user"
     },
     {
-      "id": "0c0c",
-      "nome": "Aleh o Comedor",
-      "email": "aleh@gmail.com",
-      "cpf": "12345678900",
+      "id": "2bc6",
+      "nome": "Alexandre Oliveira Magalhães",
+      "email": "alexandremaga2020@gmail.com",
+      "cpf": "53786654859",
+      "password": "12234",
+      "role": "user"
+    },
+    {
+      "id": "44db",
+      "nome": "Thiago Pinkoway Luvizutto",
+      "email": "thiagoluvizutto11@gmail.com",
+      "cpf": "48883574800",
+      "password": "123",
+      "role": "user"
+    },
+    {
+      "id": "b1e2",
+      "nome": "Nigorila",
+      "email": "nigo@gmail.com",
+      "cpf": "UH HA HA UH UH",
       "password": "123",
       "role": "user"
     }
@@ -46,15 +54,26 @@
       "estado": "SP"
     },
     {
-      "id": "0d15",
-      "cep": "66666666",
-      "rua": "Cabaré",
-      "numero": "157",
-      "complemento": "Abatedouro",
-      "bairro": "Jardim Cabaré",
-      "cidade": "Balls",
-      "estado": "CU",
-      "userId": "0c0c"
+      "cep": "09876251",
+      "rua": "Bananeira",
+      "numero": "5",
+      "complemento": "Casa do Nicolas",
+      "bairro": "Selva",
+      "cidade": "Amazonas",
+      "estado": "AM",
+      "userId": null,
+      "id": "0d15"
+    },
+    {
+      "id": "010e",
+      "cep": "04776100",
+      "rua": "Av. Engenheiro José Salles",
+      "numero": "200",
+      "complemento": "Bl 5 Ap 107",
+      "bairro": "Socorro",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "userId": "5acb"
     }
   ]
 }

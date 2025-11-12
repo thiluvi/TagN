@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { AuthService } from '../auth/auth.service'; 
 import { AppUser } from '../core/types/types'; // Importe 'AppUser' do novo local
 import { Router } from '@angular/router';
+import { cpfValidator } from '../core/validators/cpf.validator';
 
 @Component({
   selector: 'app-admin',
@@ -35,7 +36,8 @@ export class AdminComponent implements OnInit {
       Validators.required,
       Validators.minLength(11),
       Validators.maxLength(11),
-      Validators.pattern(/^[0-9]+$/) // Apenas números
+      Validators.pattern(/^[0-9]+$/), // Apenas números
+      cpfValidator()
     ]),
     password: new FormControl('', Validators.required),
     role: new FormControl<'admin' | 'user'>('user', Validators.required) 

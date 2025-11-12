@@ -59,6 +59,7 @@
         <div class="form-group">
           <label for="cpf">CPF (somente números)</label>
           <input type="text" id="cpf" formControlName="cpf" placeholder="12345678900">
+        
           @if (f.cpf.invalid && (f.cpf.dirty || f.cpf.touched)) {
             <div class="field-error-message">
               @if (f.cpf.hasError('required')) {
@@ -69,6 +70,9 @@
               }
               @if (f.cpf.hasError('minlength') || f.cpf.hasError('maxlength')) {
                 <p>CPF deve ter exatamente 11 dígitos.</p>
+              }
+              @if (f.cpf.hasError('cpfInvalido')) {
+                <p>Este CPF não é válido. Verifique os dígitos.</p>
               }
             </div>
           }
