@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Efeitos de Scrollfade
+ * A diretiva [appScrollFade] vai aplicar a classe .is-visible
+ * quando o elemento entrar na tela.
+*/
+
+[appScrollFade] {
+    /* Estado inicial: invisível e levemente para baixo */
+    opacity: 0;
+    transform: translateY(20px);
+    
+    /* Transição suave */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  [appScrollFade].is-visible {
+    /* Estado final: totalmente visível e na posição original */
+    opacity: 1;
+    transform: translateY(0);
+  }
