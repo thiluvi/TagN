@@ -21,3 +21,14 @@ export interface Address {
   cidade: string;
   estado: string;
 }
+
+// +++ ADICIONE A INTERFACE DO PRODUTO AQUI +++
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  images: string[];
+  sizes?: string[];
+  category: string; 
+}

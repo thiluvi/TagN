@@ -84,6 +84,60 @@
   font-family: Inter, sans-serif;
 }
 
+/* +++ ADICIONE OS ESTILOS DA LISTA DE FAVORITOS +++ */
+.favorite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.favorite-item-image {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.favorite-item-details {
+  flex-grow: 1; /* Ocupa o espaço disponível */
+}
+
+.favorite-item-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+}
+
+.favorite-item-price {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+.favorite-item-remove {
+  background: none;
+  border: none;
+  font-size: 1.2rem; /* Tamanho do ícone de lixeira */
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s;
+}
+
+.favorite-item-remove:hover {
+  color: #dc3545; /* Vermelho ao passar o mouse */
+}
+/* +++ FIM DOS NOVOS ESTILOS +++ */
+
 /* Estilos para a seção de opções de autenticação */
 .auth-options {
   display: flex;
@@ -125,4 +179,48 @@
 
 .register-button:hover {
   background-color: #1e423a; /* Verde mais escuro no hover */
+}
+
+
+/* --- ATUALIZE A PARTIR DAQUI --- */
+
+/* Estilo do botão da lixeira */
+.favorite-item-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  /* Remove estilos de texto (font-size, color) */
+}
+
+/* Estilo da IMAGEM da lixeira */
+.favorite-item-remove img {
+  width: 18px;  /* Defina o tamanho desejado */
+  height: 18px; /* Defina o tamanho desejado */
+  opacity: 0.6; /* Deixa o ícone um pouco mais suave */
+  transition: opacity 0.2s;
+  display: block; /* Remove qualquer espaçamento extra */
+}
+
+.favorite-item-remove:hover img {
+  opacity: 1; /* Opacidade total no hover */
+  filter: invert(15%) sepia(80%) saturate(5000%) hue-rotate(350deg) brightness(90%) contrast(110%);
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  /* O gap agora é entre o link e o botão de remover */
+  gap: 15px; 
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.favorite-item-link {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* O gap entre a imagem e o texto agora fica aqui */
+  flex-grow: 1; /* Faz o link ocupar o espaço disponível */
+  text-decoration: none; /* Remove o sublinhado */
+  color: inherit; /* Garante que o texto não fique azul */
 }

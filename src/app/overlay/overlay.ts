@@ -1,17 +1,15 @@
-import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Remova as importações de Login e Register
-// import { LoginComponent } from '../auth/login/login.component';
-// import { RegisterComponent } from '../auth/register/register.component';
+import { RouterModule } from '@angular/router'; // +++ IMPORTE AQUI +++
+import { FavoritesService } from '../core/services/favorites.service';
+import { Product } from '../core/types/types';
 
 @Component({
   selector: 'app-overlay',
   standalone: true,
   imports: [
-    CommonModule
-    // Remova Login e Register dos imports
-    // LoginComponent,
-    // RegisterComponent 
+    CommonModule,
+    RouterModule // +++ ADICIONE AQUI +++
   ],
   templateUrl: './overlay.html',
   styleUrls: ['./overlay.css']
@@ -22,28 +20,16 @@ export class OverlayComponent {
   @Input() contentType = '';
   @Output() close = new EventEmitter<void>();
 
-  // REMOVA tudo relacionado a 'authView'
-  // authView = signal<'options' | 'login' | 'register'>('options');
-  /*
-  @Input()
-  set contentTypeInput(value: string) {
-    this.contentType = value;
-    if (value === 'Perfil') {
-      this.authView.set('options'); 
-    }
-  }
-  */
+  private favoritesService = inject(FavoritesService);
 
+  public favoriteItems = this.favoritesService.favorites;
+
+  public handleRemoveFavorite(event: MouseEvent, productId: string): void {
+    event.stopPropagation(); 
+    this.favoritesService.removeFavorite(productId);
+  }
+  
   onClose(): void {
-    // this.authView.set('options'); // Removido
     this.close.emit();
   }
-
-  // REMOVA showLogin(), showRegister() e showOptions()
-  /*
-  showLogin(): void {
-    this.authView.set('login');
-  }
-  ...etc
-  */
 }

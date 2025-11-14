@@ -7,10 +7,36 @@
       <button class="close-btn" (click)="onClose()">×</button>
     </div>
     <div class="overlay-content">
+      
       <div [ngSwitch]="contentType">
+        
         <div *ngSwitchCase="'Favoritos'">
-          <p>Seus itens favoritos aparecerão aqui.</p>
+          @if (favoriteItems().length > 0) {
+            <div class="favorite-list">
+              
+              @for (item of favoriteItems(); track item.id) {
+                <div class="favorite-item">
+
+                  <a [routerLink]="['/products', item.id]" (click)="onClose()" class="favorite-item-link">
+                    <img [src]="item.images[0]" alt="{{ item.name }}" class="favorite-item-image">
+                    <div class="favorite-item-details">
+                      <p class="favorite-item-name">{{ item.name }}</p>
+                      <p class="favorite-item-price">R$ {{ item.price }}</p>
+                    </div>
+                  </a>
+                  <button class="favorite-item-remove" (click)="handleRemoveFavorite($event, item.id)">
+                    <img src="../../assets/images/coracao-partido.png" alt="Remover">
+                  </button>
+                  
+                </div>
+              }
+
+            </div>
+          } @else {
+            <p>Seus itens favoritos aparecerão aqui.</p>
+          }
         </div>
+
         <div *ngSwitchCase="'Sacola'">
           <p>Seus itens da sacola aparecerão aqui.</p>
         </div>
@@ -19,6 +45,7 @@
           <p>Conteúdo padrão ou erro.</p>
         </div>
       </div>
+
     </div>
   </div>
 </div>

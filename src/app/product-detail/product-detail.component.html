@@ -18,7 +18,13 @@
     <div class="product-header">
       <h1>{{ product.name }}</h1>
       <div class="product-actions-icons">
-        <img src="assets/images/Favoritos.png" alt="Adicionar aos Favoritos" class="icon-button">
+        <img 
+          src="assets/images/Favoritos.png" 
+          alt="Adicionar aos Favoritos" 
+          class="icon-button"
+          [class.is-favorite]="favoritesService.isFavorite()(product.id)"
+          (click)="handleToggleFavorite()">
+        
         <img src="assets/images/compartilhar.png" alt="Compartilhar" class="icon-button">
       </div>
     </div>

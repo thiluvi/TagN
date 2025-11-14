@@ -80,7 +80,7 @@ export class ProductDataService {
       name: 'Pulseira Esteira Masculina em Prata 925',
       description: 'A pulseira esteira de prata que une textura, brilho e versatilida. Com sua trama entrelaçada e acabamento cintilante, a Pulseira Esteira é a escolha ideal para quem busca um acessório sofisticado e confortável.',
       price: '197,00',
-      images: ['assets/images/pulseira01.png', 'assets/images/pulseira01.png'],
+      images: ['assets/images/pulseira01.png', 'assets/images/dapulceira01.png'],
       category: 'pulseiras' // CATEGORIA
     },
     {
@@ -88,7 +88,7 @@ export class ProductDataService {
       name: 'Pulseira Grumet 4 mm em Prata 925',
       description: 'Seu design mais robusto transmite força, estilo e personalidade — perfeita para compor um visual ousado e elegante ao mesmo tempo.',
       price: '157,00',
-      images: ['assets/images/pulseira02.png', 'assets/images/pulseira02.png'],
+      images: ['assets/images/pulseira02.png', 'assets/images/dapulceira02.png'],
       category: 'pulseiras' // CATEGORIA
     },
     {
@@ -96,7 +96,7 @@ export class ProductDataService {
       name: 'Pingente de Prata Pedra Cristal Verde Cravejado',
       description: 'O Pingente Pedra Cristal Verde Cravejado em Prata 925 combina intensidade e elegância em um design atemporal. A zircônia verde central simboliza equilíbrio e renovação, enquanto o contorno de zircônias cristalinas reflete a luz com sutileza e destaque. Uma peça que une força, espiritualidade e sofisticação em cada detalhe.',
       price: '109,00',
-      images: ['assets/images/pulseira4.png', 'assets/images/pulseira4.png'],
+      images: ['assets/images/pulseira4.png', 'assets/images/dapulceira4.png'],
       category: 'pulseiras' // CATEGORIA
     },
     {
@@ -104,7 +104,7 @@ export class ProductDataService {
       name: 'Pulseira de Prata elo cartier',
       description: 'Ao adquirir essa joia, você recebe o seu produto em uma caixa personalizada da Argennti, protegida por veludo, uma flanela de limpeza, acompanhada da nota fiscal e do cartão de garantia com os cuidados necessários para maior durabilidade da sua joia.',
       price: '169,90',
-      images: ['assets/images/pulseira5.png', 'assets/images/pulseira5.png'],
+      images: ['assets/images/pulseira5.png', 'assets/images/dapulceira5.png'],
       category: 'pulseiras' // CATEGORIA
     },
    
@@ -113,7 +113,7 @@ export class ProductDataService {
       name: 'Pulseira Grumet Cubana 3 mm em Prata 925',
       description: 'Com presença marcante e acabamento refinado, a Pulseira Cubana 3 mm em Prata 925 é um acessório robusto que traduz atitude e sofisticação. ',
       price: '276,00',
-      images: ['assets/images/pulseira3.png', 'assets/images/pulseira3.png'],
+      images: ['assets/images/pulseira3.png', 'assets/images/dapulceira3.png'],
       category: 'pulseiras' // CATEGORIA
     },
  
@@ -122,7 +122,7 @@ export class ProductDataService {
       name: 'Pulseira Fígaro 4 mm Masculina em Prata 925',
       description: 'Com elos alternados que criam ritmo visual, a Pulseira Fígaro 4 mm é a escolha ideal para quem deseja um acessório tradicional com toque de personalidade. A combinação de um elo longo seguido de três curtos cria um design elegante, mas com presença no pulso.',
       price: '149,00',
-      images: ['assets/images/pulseira6.png', 'assets/images/pulseira6.png'],
+      images: ['assets/images/pulseira6.png', 'assets/images/dapulceira6.png'],
       category: 'pulseiras' // CATEGORIA
     },
  
