@@ -6,6 +6,7 @@
       <h2>{{ title }}</h2>
       <button class="close-btn" (click)="onClose()">×</button>
     </div>
+    
     <div class="overlay-content">
       
       <div [ngSwitch]="contentType">
@@ -25,7 +26,7 @@
                     </div>
                   </a>
                   <button class="favorite-item-remove" (click)="handleRemoveFavorite($event, item.id)">
-                    <img src="../../assets/images/coracao-partido.png" alt="Remover">
+                    <img src="../../assets/images/coracao-partido.png" alt="Remover dos favoritos">
                   </button>
                   
                 </div>
@@ -38,7 +39,60 @@
         </div>
 
         <div *ngSwitchCase="'Sacola'">
-          <p>Seus itens da sacola aparecerão aqui.</p>
+          @if (cartService.cartItems().length > 0) {
+            <div class="cart-list">
+              
+              @for (item of cartService.cartItems(); track $index) {
+                <div class="cart-item">
+                  
+                  <div class="cart-item-img-wrapper">
+                    <img [src]="item.product.images[0]" [alt]="item.product.name">
+                  </div>
+
+                  <div class="cart-item-info">
+                    <p class="cart-item-name">{{ item.product.name }}</p>
+                    
+                    <div class="cart-item-specs">
+                      @if (item.selectedSize) {
+                        <span class="spec-tag">Tam: {{ item.selectedSize }}</span>
+                      }
+                      <span class="spec-tag">Qtd: {{ item.quantity }}</span>
+                    </div>
+                    
+                    <p class="cart-item-price">R$ {{ item.product.price }}</p>
+                  </div>
+
+                  <button class="cart-item-remove" (click)="handleRemoveFromCart($event, item.product.id, item.selectedSize)">
+                    <img src="../../assets/images/lixeira-de-reciclagem.png" alt="Remover do carrinho">
+                  </button>
+
+                </div>
+              }
+
+              <div class="cart-footer">
+                <div class="cart-subtotal">
+                  <span>Subtotal:</span>
+                  <strong>{{ cartService.subtotalFormatted() }}</strong>
+                </div>
+
+                <button class="checkout-btn" (click)="finalizePurchase()">
+                  Finalizar Compra
+                  <img src="../../assets/images/Caminhao de entrega.png" class="btn-icon-small" alt=""> 
+                </button>
+                
+                <button class="continue-btn" (click)="onClose()">
+                  Continuar Comprando
+                </button>
+              </div>
+
+            </div>
+          } @else {
+            <div class="empty-cart">
+              <img src="../../assets/images/Sacola.png" alt="Sacola Vazia" class="empty-icon">
+              <p>Sua sacola está vazia.</p>
+              <button class="continue-btn" (click)="onClose()">Começar a comprar</button>
+            </div>
+          }
         </div>
         
         <div *ngSwitchDefault>

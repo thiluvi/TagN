@@ -9,7 +9,6 @@ export interface AppUser {
   password?: string;
 }
 
-// NOVA INTERFACE
 export interface Address {
   id: number;
   userId: number;
@@ -22,7 +21,6 @@ export interface Address {
   estado: string;
 }
 
-// +++ ADICIONE A INTERFACE DO PRODUTO AQUI +++
 export interface Product {
   id: string;
   name: string;
@@ -31,4 +29,10 @@ export interface Product {
   images: string[];
   sizes?: string[];
   category: string; 
+}
+
+export interface CartItem {
+  product: Product;
+  selectedSize?: string;
+  quantity: number;
 }

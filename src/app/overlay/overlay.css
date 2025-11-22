@@ -224,3 +224,154 @@
   text-decoration: none; /* Remove o sublinhado */
   color: inherit; /* Garante que o texto não fique azul */
 }
+
+/* --- ESTILOS DA SACOLA (CARRINHO) --- */
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 160px; /* Espaço para o rodapé fixo não cobrir o último item */
+}
+
+.cart-item {
+  display: flex;
+  gap: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.cart-item-img-wrapper img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.cart-item-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+  line-height: 1.2;
+}
+
+.cart-item-specs {
+  font-size: 0.8rem;
+  color: #777;
+  display: flex;
+  gap: 10px;
+}
+
+.cart-item-price {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #254252;
+  margin: 5px 0 0 0;
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  align-self: flex-start; /* Alinha no topo */
+}
+
+.cart-item-remove img {
+  width: 18px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.cart-item-remove:hover img {
+  opacity: 1;
+  filter: invert(18%) sepia(90%) saturate(6000%) hue-rotate(350deg) brightness(95%) contrast(110%);
+}
+
+/* Rodapé do Carrinho */
+.cart-footer {
+  margin-top: 20px;
+  border-top: 2px solid #eee;
+  padding-top: 20px;
+  /* Dica: Você pode querer deixar isso fixo no fundo do overlay se a lista for longa */
+}
+
+.cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #255248; /* Verde da marca */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s;
+}
+
+.checkout-btn:hover {
+  background-color: #1e423a;
+}
+
+.btn-icon-small {
+  width: 20px;
+  filter: brightness(0) invert(1); /* Torna o ícone branco */
+}
+
+.continue-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  color: #555;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.continue-btn:hover {
+  border-color: #333;
+  color: #333;
+}
+
+/* Estado Vazio */
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  text-align: center;
+  color: #777;
+}
+
+.empty-icon {
+  width: 60px;
+  opacity: 0.3;
+  margin-bottom: 15px;
+}

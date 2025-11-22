@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../core/types/types';
 import { ProductDataService } from '../product-data.service';
 import { FavoritesService } from '../core/services/favorites.service';
+import { CartService } from '../core/services/cart.service';
+
 
 
 @Component({
@@ -23,6 +25,9 @@ export class ProductDetailComponent implements OnInit {
   selectedSize = signal<string | undefined>(undefined); // Para armazenar o tamanho selecionado
   quantity = signal<number>(1); // Para armazenar a quantidade (inicia em 1)
   // ------------------------------------------------------------------------------------------------------
+
+  private cartService = inject(CartService);
+
 
   private route = inject(ActivatedRoute);
   private productDataService = inject(ProductDataService); // Usado para buscar o produto
@@ -73,4 +78,25 @@ export class ProductDetailComponent implements OnInit {
       this.favoritesService.toggleFavorite(this.product);
     }
   }
+
+  addToCart(): void {
+    if (this.product) {
+      const size = this.selectedSize();
+      
+      // Validação: Se o produto tem tamanhos, o usuário PRECISA escolher um
+      if (this.product.sizes && this.product.sizes.length > 0 && !size) {
+        alert('Por favor, selecione um tamanho.');
+        return;
+      }
+
+      this.cartService.addToCart(this.product, size, this.quantity());
+      
+      // Feedback visual simples (opcional) ou abrir o overlay automaticamente
+      // Vamos fazer um alerta simples por enquanto ou você pode emitir um evento para abrir o overlay
+      alert('Produto adicionado à sacola!');
+    }
+  }
+
+  
+
 }

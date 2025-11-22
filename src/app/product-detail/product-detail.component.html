@@ -53,13 +53,13 @@
     </div>
 
     <div class="buy-action-container">
-      <div class="quantity-selector">
-        <input type="number" [value]="quantity()" min="0" class="quantity-input-styled">
-      </div>
-
-      <button class="add-to-cart-button">Adicionar ao carrinho</button>
-
+    <div class="quantity-selector">
+      <input type="number" [value]="quantity()" min="1" class="quantity-input-styled">
     </div>
+
+    <button class="add-to-cart-button" (click)="addToCart()">Adicionar ao carrinho</button>
+
+  </div>
 
   </div>
 
