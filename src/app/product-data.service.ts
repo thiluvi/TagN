@@ -80,7 +80,7 @@ export class ProductDataService {
       name: 'Pulseira Esteira Masculina em Prata 925',
       description: 'A pulseira esteira de prata que une textura, brilho e versatilida. Com sua trama entrelaçada e acabamento cintilante, a Pulseira Esteira é a escolha ideal para quem busca um acessório sofisticado e confortável.',
       price: '197,00',
-      images: ['assets/images/pulseira01.png', 'assets/images/dapulceira01.png'],
+      images: ['assets/images/pulseira01.png'],
       category: 'pulseiras' // CATEGORIA
     },
     {
@@ -88,7 +88,7 @@ export class ProductDataService {
       name: 'Pulseira Grumet 4 mm em Prata 925',
       description: 'Seu design mais robusto transmite força, estilo e personalidade — perfeita para compor um visual ousado e elegante ao mesmo tempo.',
       price: '157,00',
-      images: ['assets/images/pulseira02.png', 'assets/images/dapulceira02.png'],
+      images: ['assets/images/pulseira02.png', 'assets/images/dapulceira2.png'],
       category: 'pulseiras' // CATEGORIA
     },
     {
@@ -104,7 +104,7 @@ export class ProductDataService {
       name: 'Pulseira de Prata elo cartier',
       description: 'Ao adquirir essa joia, você recebe o seu produto em uma caixa personalizada da Argennti, protegida por veludo, uma flanela de limpeza, acompanhada da nota fiscal e do cartão de garantia com os cuidados necessários para maior durabilidade da sua joia.',
       price: '169,90',
-      images: ['assets/images/pulseira5.png', 'assets/images/dapulceira5.png'],
+      images: ['assets/images/pulseira5.png', 'assets/images/dapulceira4.png'],
       category: 'pulseiras' // CATEGORIA
     },
    
@@ -122,7 +122,7 @@ export class ProductDataService {
       name: 'Pulseira Fígaro 4 mm Masculina em Prata 925',
       description: 'Com elos alternados que criam ritmo visual, a Pulseira Fígaro 4 mm é a escolha ideal para quem deseja um acessório tradicional com toque de personalidade. A combinação de um elo longo seguido de três curtos cria um design elegante, mas com presença no pulso.',
       price: '149,00',
-      images: ['assets/images/pulseira6.png', 'assets/images/dapulceira6.png'],
+      images: ['assets/images/pulseira6.png', 'assets/images/dapulceira7.png'],
       category: 'pulseiras' // CATEGORIA
     },
  
@@ -157,7 +157,7 @@ export class ProductDataService {
       name: 'Escapulário Medalha Pai Nosso em Prata 925',
       description: 'O escapulário masculino de prata com a oração do Pai Nosso une espiritualidade e elegância. Gravado com uma das orações mais poderosas da fé cristã, ele carrega proteção, conexão interior e uma estética minimalista que combina com qualquer estilo.',
       price: '378,00',
-      images: ['assets/images/escapulario4.png', 'assets/images/doescapulari04.png'],
+      images: ['assets/images/escapulario4.png', 'assets/images/doescapulario4.png'],
       category: 'escapulario' // CATEGORIA
     },
     {
@@ -184,7 +184,7 @@ export class ProductDataService {
       name: 'Colar de Prata com Pedra Cristal Cravejado',
       description: 'O pingente redondo é composto por uma zircônia incolor central, envolvida por um contorno de zircônias cristalinas, criando um efeito de luz intenso e refinado. A corrente veneziana confere um acabamento delicado, tornando o colar ideal para compor desde visuais discretos até produções mais marcantes. Uma peça versátil e encantadora para todos os estilos.',
       price: '138,00',
-      images: ['assets/images/colar2.png', 'docolar2.png'],
+      images: ['assets/images/colar2.png', 'assets/images/docolar2.png'],
       category: 'colares' // CATEGORIA
     },
     {
@@ -272,7 +272,7 @@ export class ProductDataService {
       name: 'Brinco de Prata Argola Cravejada Square',
       description: 'Ao adquirir essa joia, você recebe o seu produto em uma caixa personalizada, protegida por veludo, uma flanela de limpeza, acompanhada da nota fiscal e do cartão de garantia com os cuidados necessários para maior durabilidade da sua joia.',
       price: '117,75',
-      images: ['assets/images/brinco1.png', 'dobrinco1.png'],
+      images: ['assets/images/brinco1.png', 'assets/images/dobrinco1.png'],
       category: 'brincos' // CATEGORIA
     },
     {
@@ -280,7 +280,7 @@ export class ProductDataService {
       name: 'Brinco de Prata Argola Torcida',
       description: 'Ao adquirir essa joia, você recebe o seu produto em uma caixa personalizada, protegida por veludo, uma flanela de limpeza, acompanhada da nota fiscal e do cartão de garantia com os cuidados necessários para maior durabilidade da sua joia.O material utilizado na fabricação das nossas joias é prata 925. Nossas peças são 100% de prata 925 de lei.',
       price: '89,25',
-      images: ['assets/images/brinco2.png', 'brinco2.png'],
+      images: ['assets/images/brinco2.png', 'assets/images/dobrinco2.png'],
       category: 'brincos' // CATEGORIA
     },
     {
@@ -288,7 +288,7 @@ export class ProductDataService {
       name: 'Brinco de Prata Argola Cravejada Slim',
       description: 'Ao adquirir essa joia, você recebe o seu produto em uma caixa personalizada, protegida por veludo, uma flanela de limpeza, acompanhada da nota fiscal e do cartão de garantia com os cuidados necessários para maior durabilidade da sua joia.',
       price: '109,00',
-      images: ['assets/images/brinco3.png', 'dobrinco3.png'],
+      images: ['assets/images/brinco3.png', 'assets/images/dobrinco3.png'],
       category: 'brincos' // CATEGORIA
     },
     {
@@ -324,7 +324,7 @@ export class ProductDataService {
       name: 'Pingente Pedra Cristal Slim Verde em Prata 925',
       description: 'O Pingente Cristal Slim Verde em prata 925 combina design moderno e simbolismo em uma peça única. Sua zircônia verde retangular, de lapidação precisa, reflete intensidade e sofisticação, transformando o pingente em um acessório cheio de personalidade.',
       price: '102,00',
-      images: ['assets/images/pingente1.png', 'dopingente1.png'],
+      images: ['assets/images/pingente1.png', 'assets/images/dopingente1.png'],
       category: 'pingentes' // CATEGORIA
     },
    
@@ -341,7 +341,7 @@ export class ProductDataService {
       name: 'Pingente de Prata Pedra Cristal Slim Turquesa',
       description: 'O Pingente Cristal Slim Turquesa em prata 925 é a escolha certa para quem busca estilo discreto, mas cheio de personalidade. A pedra em zircônia turquesa, em formato retangular slim, traz cor vibrante e autenticidade, transformando o pingente em um acessório leve e inesquecível.',
       price: '102,00',
-      images: ['assets/images/pingente2.png', 'dopingente2.png'],
+      images: ['assets/images/pingente2.png', 'assets/images/dopingente2.png'],
       category: 'pingentes' // CATEGORIA
     },
     {

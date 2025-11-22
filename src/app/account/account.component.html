@@ -34,9 +34,43 @@
       @switch (activeView()) {
         @case ('pedidos') {
           <h2>Meus pedidos</h2>
-          <div class="placeholder-content">
-            <p>Nenhum pedido encontrado.</p> 
-          </div>
+          
+          @if (userOrders().length > 0) {
+            <div class="orders-list">
+              @for (order of userOrders(); track order.id) {
+                <div class="order-card">
+                  <div class="order-header">
+                    <span class="order-id">Pedido {{ order.id }}</span>
+                    <span class="order-date">{{ order.date | date:'dd/MM/yyyy HH:mm' }}</span>
+                    <span class="order-status status-processing">{{ order.status }}</span>
+                  </div>
+                  
+                  <div class="order-items">
+                    @for (item of order.items; track $index) {
+                      <div class="order-item-row">
+                        <img [src]="item.product.images[0]" alt="" class="item-thumb">
+                        <div class="item-text">
+                          <p>{{ item.quantity }}x {{ item.product.name }}</p>
+                          @if (item.selectedSize) {
+                            <small>Tam: {{ item.selectedSize }}</small>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="order-footer">
+                    <span>Total:</span>
+                    <strong>R$ {{ order.total.toFixed(2).replace('.', ',') }}</strong>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="placeholder-content">
+              <p>Você ainda não fez nenhum pedido.</p> 
+            </div>
+          }
         }
         @case ('dados') {
           <h2>Meus dados</h2>

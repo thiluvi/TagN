@@ -1,8 +1,8 @@
-// 1. Adicione 'computed' à esta linha de importação
 import { Component, signal, inject, computed } from '@angular/core'; 
 import { CommonModule } from '@angular/common'; 
 import { AuthService } from '../auth/auth.service'; 
 import { Router } from '@angular/router'; 
+import { OrderService } from '../core/services/order.service'; // 1. Importe
 
 import { ProfileDataComponent } from './profile-data/profile-data.component';
 import { AddressListComponent } from './address-list/address-list.component';
@@ -20,11 +20,13 @@ import { AddressListComponent } from './address-list/address-list.component';
 })
 export class AccountComponent {
   private authService = inject(AuthService);
+  private orderService = inject(OrderService); // 2. Injete
   private router = inject(Router);
 
-  // 2. Esta linha agora funcionará, pois 'computed' foi importado
-  //    e 'authService.currentUser' agora é público (da Correção 2)
   userEmail = computed(() => this.authService.currentUser()?.email ?? 'email@...com');
+  
+  // 3. Exponha a lista de pedidos para o HTML
+  userOrders = this.orderService.orders;
 
   activeView = signal<'pedidos' | 'dados' | 'enderecos'>('pedidos');
 

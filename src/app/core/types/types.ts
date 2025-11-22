@@ -36,3 +36,11 @@ export interface CartItem {
   selectedSize?: string;
   quantity: number;
 }
+
+export interface Order {
+  id: string;
+  date: Date;
+  items: CartItem[];
+  total: number;
+  status: 'Processando' | 'Enviado' | 'Entregue';
+}
