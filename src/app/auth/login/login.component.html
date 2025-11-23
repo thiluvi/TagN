@@ -11,7 +11,8 @@
     <div class="form-group">
       <label for="loginPassword">Senha</label>
       <input type="password" id="loginPassword" placeholder="Sua senha" formControlName="password">
-      <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+      
+      <a href="javascript:void(0)" class="forgot-password" (click)="openForgotPasswordModal()">Esqueceu sua senha?</a>
     </div>
     
     @if (loginError()) {
@@ -22,3 +23,47 @@
   </form>
 
 </div>
+
+@if (showForgotPasswordModal()) {
+  <div class="modal-backdrop" (click)="closeForgotPasswordModal()"></div>
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h3>Redefinir Senha</h3>
+      <button class="close-btn" (click)="closeForgotPasswordModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="instruction-text">Para sua segurança, você precisa confirmar sua senha antiga para definir uma nova.</p>
+
+      <form class="auth-form" [formGroup]="forgotPasswordForm" (ngSubmit)="handleChangePassword()">
+        
+        <div class="form-group">
+          <label for="forgotEmail">Email</label>
+          <input type="email" id="forgotEmail" formControlName="email" placeholder="Confirme seu email">
+        </div>
+
+        <div class="form-group">
+          <label for="oldPass">Senha Antiga</label>
+          <input type="password" id="oldPass" formControlName="oldPassword" placeholder="Digite sua senha atual">
+        </div>
+
+        <div class="form-group">
+          <label for="newPass">Nova Senha</label>
+          <input type="password" id="newPass" formControlName="newPassword" placeholder="Crie uma nova senha">
+        </div>
+
+        @if (forgotPasswordMessage(); as msg) {
+          <div class="feedback-message" [class.success]="msg.type === 'success'" [class.error]="msg.type === 'error'">
+            {{ msg.text }}
+          </div>
+        }
+
+        <div class="admin-contact-box">
+          <small>Não lembra a senha antiga? Contate: <strong>admin@senac.com</strong></small>
+        </div>
+
+        <button type="submit" class="submit-button">Alterar Senha</button>
+      </form>
+    </div>
+  </div>
+}
