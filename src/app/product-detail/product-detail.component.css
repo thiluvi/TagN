@@ -186,62 +186,53 @@
    }
   
   
-  .quantity-selector {
-    display: flex;
-    /* Remove a margem inferior desnecessária aqui, pois o container gerencia */
-    margin-bottom: 0; 
-    /* Altura igual ao botão de compra */
-    height: 50px; 
-    /* Adiciona a borda branca e arredonda (para o formato 3-em-1) */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden; /* Garante que os filhos não vazem do arredondamento */
-}
-  
-  .quantity-input-styled {
-    width: 80px; /* Largura ajustada */
-    height: 50px; /* Altura igual ao botão Adicionar */
-    padding: 0 10px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
-    /* Faz o input parecer com o da imagem de referência, com setas verticais nativas */
-    /* Remove a rotação da imagem da imagem que usava antes se tivesse. */
+/* O container principal */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden; /* Para as bordas arredondadas funcionarem nos botões */
+  background-color: #fff;
 }
 
-/* Garante que o input number tenha aparência nativa (com setas no Chrome/Firefox) */
+/* Estilo dos botões + e - */
+.quantity-btn {
+  width: 40px;
+  height: 100%;
+  border: none;
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Estilo do Input central */
+.quantity-input-styled {
+  width: 50px; /* Reduzi um pouco pois agora tem botões */
+  height: 100%;
+  border: none; /* Remove a borda do input pois o container já tem */
+  text-align: center;
+  font-size: 16px;
+  outline: none;
+  /* Remove as setinhas nativas do navegador para ficar limpo */
+  -moz-appearance: textfield;
+}
+
 .quantity-input-styled::-webkit-outer-spin-button,
 .quantity-input-styled::-webkit-inner-spin-button {
-    -webkit-appearance: number-input;
-    opacity: 1; /* Garante que as setas apareçam, se estiverem escondidas */
+  -webkit-appearance: none;
+  margin: 0;
 }
-
-/* Novo layout: Alinha a quantidade e o botão na mesma linha */
-.product-info-actions .quantity-selector,
-.product-info-actions .add-to-cart-button {
-    display: inline-block; /* Permite que ambos fiquem na mesma linha */
-    vertical-align: middle; /* Alinha o centro verticalmente */
-}
-  
-  .quantity-input {
-    width: 50px;
-    height: 35px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-left: none;
-    border-right: none;
-    font-size: 16px;
-    /* Remove setas padrão do input number */
-    -moz-appearance: textfield;
-    appearance: textfield;
-  }
-  .quantity-input::-webkit-outer-spin-button,
-  .quantity-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
   
   
   .add-to-cart-button {

@@ -1,14 +1,14 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 /**
- * Validador customizado para o formato e lógica (dígitos verificadores) do CPF.
+ * Validador customizado para a lógica (dígitos verificadores) do CPF.
  */
 export function cpfValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     
     const cpf = control.value as string;
 
-    // Se o campo estiver vazio, não validamos (o 'required' cuida disso)
+    // Se o campo estiver vazio, não validamos (required)
     if (!cpf) {
       return null;
     }
@@ -16,7 +16,7 @@ export function cpfValidator(): ValidatorFn {
     // Remove caracteres não numéricos
     const cpfNumerico = cpf.replace(/\D/g, '');
 
-    // Se não tiver 11 dígitos, não validamos (o minLength/maxLength cuida disso)
+    // Se não tiver 11 dígitos, não validamos (minLength/maxLength)
     if (cpfNumerico.length !== 11) {
       return null; 
     }

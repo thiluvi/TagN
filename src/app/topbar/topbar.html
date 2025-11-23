@@ -14,12 +14,26 @@
       <button type="submit" style="display: none;"></button>
     </form>
 
-    <img class="Logo" [routerLink]="['/']" src="../../assets/images/Tag-N.png" alt="Logo principal" />
+    <a [routerLink]="['/']" class="logo-link">
+      <img class="Logo" src="../../assets/images/Tag-N.png" alt="Logo principal" />
+    </a>
 
     <div class="actions-container">
-      <img src="../../assets/images/Favoritos.png" alt="Ícone de favoritos" (click)="onFavoritesClick()" />
-      <img src="../../assets/images/Sacola.png" alt="Ícone da sacola de compras" (click)="onCartClick()"/>
-      <img src="../../assets/images/Perfil.png" alt="Ícone do perfil de usuário" (click)="onProfileClick()" />
+      
+      <div class="icon-wrapper" (click)="onFavoritesClick()">
+        <img src="../../assets/images/Favoritos.png" alt="Ícone de favoritos" />
+        <span class="badge" *ngIf="favoritesCount() > 0">{{ favoritesCount() }}</span>
+      </div>
+
+      <div class="icon-wrapper" (click)="onCartClick()">
+        <img src="../../assets/images/Sacola.png" alt="Ícone da sacola de compras"/>
+        <span class="badge" *ngIf="cartService.totalItemsCount() > 0">{{ cartService.totalItemsCount() }}</span>
+      </div>
+
+      <div class="icon-wrapper" (click)="onProfileClick()">
+        <img src="../../assets/images/Perfil.png" alt="Ícone do perfil de usuário" />
+      </div>
+
     </div>
   </div>
 

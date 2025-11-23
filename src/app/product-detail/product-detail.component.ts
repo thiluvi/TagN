@@ -72,6 +72,19 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  updateQuantityFromInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    
+    if (!isNaN(value) && value > 0) {
+      this.quantity.set(value);
+    } else {
+      // Se o usuário apagar tudo ou digitar 0, volta para 1
+      this.quantity.set(1);
+      input.value = '1'; 
+    }
+  }
+
   // +++ ADICIONE O MÉTODO PARA FAVORITAR +++
   handleToggleFavorite(): void {
     if (this.product) {
@@ -97,6 +110,17 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  
+  shareProduct(): void {
+    // Pega a URL completa do navegador
+    const url = window.location.href;
+
+    // Usa a API do navegador para copiar o texto
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copiado para a área de transferência!');
+    }).catch(err => {
+      console.error('Erro ao copiar: ', err);
+      alert('Erro ao copiar o link.');
+    });
+  }
 
 }

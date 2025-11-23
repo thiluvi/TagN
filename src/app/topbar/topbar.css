@@ -65,14 +65,50 @@
 .actions-container {
   display: flex;
   align-items: center;
-  gap: 20px; /* Espaçamento entre os ícones */
+  gap: 20px; /* Espaçamento entre os blocos de ícones */
 }
 
-.actions-container img {
-  width: 30px;
-  height: 28px;
+/* NOVO: Container relativo para cada ícone */
+.icon-wrapper {
+  position: relative; /* Permite posicionar o badge absoluto dentro dele */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
+
+/* Ajuste para garantir que a imagem fique correta dentro do wrapper */
+.icon-wrapper img {
+  width: 30px;
+  height: 28px;
+  display: block;
+}
+
+/* NOVO: Estilo da bolinha vermelha (Badge) */
+.badge {
+  position: absolute;
+  top: -8px;    /* Sobe um pouco para fora do ícone */
+  right: -10px;  /* Vai para a direita */
+  
+  background-color: #dc3545; /* Vermelho de alerta/destaque */
+  color: white;
+  
+  font-size: 11px;
+  font-weight: bold;
+  
+  /* Tamanho fixo para ficar redondinho */
+  min-width: 14px; 
+  height: 20px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  border-radius: 100%; /* Faz virar um círculo */
+  border: 2px solid white; /* Borda branca para separar do ícone */
+  padding: 0 4px; /* Um pouco de padding lateral se o número for grande (ex: 10+) */
+}
+
 
 /* --- Linha Divisória --- */
 .Divider {

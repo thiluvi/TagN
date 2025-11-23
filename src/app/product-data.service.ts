@@ -20,7 +20,7 @@ export class ProductDataService {
     {
       id: '1',
       name: 'Corrente Veneziana Masculina Prata 925',
-      description: 'A corrente veneziana masculina de 1 mm é o acessório ideal para quem busca elegância com discrição...',
+      description: 'A corrente veneziana de prata que combina com tudo. A corrente veneziana masculina de 1 mm é o acessório ideal para quem busca elegância com discrição. Feita em prata 925, ela tem elos retos e bem agrupados, criando um visual fluido, moderno e minimalista. Uma corrente fina, versátil e resistente — perfeita para usar sozinha ou com pingente.',
       price: '103,50',
       images: ['assets/images/Corrente PNG.png', 'assets/images/Corrente tam 50.png', 'assets/images/Corrente na mao.png', 'assets/images/Corrente Homem.png'],
       sizes: ['45', '50', '60', '70'],
@@ -29,7 +29,7 @@ export class ProductDataService {
     {
       id: '2',
       name: 'Corrente Grumet Masculina 2 mm Prata 925',
-      description: 'Descrição da corrente Grumet...',
+      description: 'A corrente de prata masculina com visual marcante e leveza no uso. A corrente grumet de 2 mm masculina é perfeita para quem procura uma joia elegante, moderna e com presença. Seus elos arredondados e unidos em uma trama justa criam um colar masculino leve ao toque, mas com visual encorpado. Uma peça versátil, feita em prata 925, ideal para usar sozinha ou com um pingente discreto.',
       price: '135,90',
       images: ['assets/images/Corrente Grumet Masculina 2 mm.png', 'assets/images/Corrente Homem.png'],
       sizes: ['50', '60', '70'],
@@ -38,7 +38,7 @@ export class ProductDataService {
     {
       id: '3',
       name: 'Corrente Veneziana Dupla Masculina Prata 925',
-      description: 'Descrição da veneziana dupla...',
+      description: 'A corrente veneziana em prata ideal para homens que buscam elegância com destaque. A Corrente Veneziana Masculina Dupla em Prata 925 é o acessório perfeito para quem deseja reforçar o estilo com sofisticação. Composta por duas malhas venezianas entrelaçadas, essa corrente é ideal para quem procura um colar versátil, resistente e de alta durabilidade. Seu acabamento brilhante e minimalista valoriza qualquer look masculino, do casual ao social.',
       price: '288,25',
       images: ['assets/images/Corrente Veneziana Dupla Masculina.png', 'assets/images/Corrente Homem.png'],
       sizes: ['60', '70'],
@@ -47,7 +47,7 @@ export class ProductDataService {
     {
       id: '4',
       name: 'Corrente Veneziana Masculina XL 70cm Prata 925',
-      description: 'Descrição da veneziana XL...',
+      description: 'A corrente veneziana de prata com presença e estilo. A Corrente Veneziana Masculina XL é uma joia que se destaca. Com elos mais largos e espaçados, ela oferece um visual robusto e moderno, sem perder a elegância. Confeccionada em prata 925, é a escolha certa para quem quer um acessório marcante, que valoriza o visual mesmo sem pingentes.',
       price: '209,80',
       images: ['assets/images/Corrente Veneziana Masculina XL.png', 'assets/images/Corrente Homem.png'],
       sizes: ['70'],
@@ -56,7 +56,7 @@ export class ProductDataService {
     {
       id: '5',
       name: 'Corrente Cordão Baiano Fina Masculina Prata 925',  
-      description: 'Descrição do cordão baiano ...',
+      description: 'O colar cordão baiano fino que une brilho, leveza e tradição. Com seu trançado delicado e visual marcante, a Corrente Cordão Baiano Fina é perfeita para quem quer expressar estilo com leveza. A malha espiralada é clássica, cheia de significado e extremamente versátil — ideal para composições elegantes ou com pingentes religiosos.',
       price: '237,00',
       images: ['assets/images/Corrente cordao baiano.png', 'assets/images/Corrente Homem.png'],
       sizes: ['50', '60', '70'],
@@ -65,7 +65,7 @@ export class ProductDataService {
     {
       id: '6',
       name: 'Corrente Fígaro Masculina 2MM Prata 925',
-      description: 'Descrição da veneziana XL...',
+      description: 'A corrente 3x1 de prata que une tradição e estilo. A Corrente Fígaro Masculina 2 mm em Prata 925, também conhecida como corrente 3x1, é um clássico da joalheria masculina. Composta por um padrão alternado de três elos curtos e um elo longo, a malha fígaro é marcante e elegante, perfeita para quem valoriza sofisticação atemporal em acessórios. Confeccionada em prata legítima, essa corrente masculina é resistente, versátil e ideal para uso diário, seja sozinha ou combinada com pingentes leves.',
       price: '167,00',
       images: ['assets/images/Corrente figaro.png', 'assets/images/Corrente Homem.png'],
       sizes: ['50', '60', '70'],

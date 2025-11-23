@@ -25,7 +25,11 @@
           [class.is-favorite]="favoritesService.isFavorite()(product.id)"
           (click)="handleToggleFavorite()">
         
-        <img src="assets/images/compartilhar.png" alt="Compartilhar" class="icon-button">
+        <img 
+          src="assets/images/compartilhar.png" 
+          alt="Compartilhar" 
+          class="icon-button"
+          (click)="shareProduct()">
       </div>
     </div>
 
@@ -54,7 +58,16 @@
 
     <div class="buy-action-container">
     <div class="quantity-selector">
-      <input type="number" [value]="quantity()" min="1" class="quantity-input-styled">
+      <button class="quantity-btn" (click)="adjustQuantity(-1)">-</button>
+      
+      <input 
+        type="number" 
+        [value]="quantity()" 
+        (input)="updateQuantityFromInput($event)"
+        min="1" 
+        class="quantity-input-styled">
+        
+      <button class="quantity-btn" (click)="adjustQuantity(1)">+</button>
     </div>
 
     <button class="add-to-cart-button" (click)="addToCart()">Adicionar ao carrinho</button>
