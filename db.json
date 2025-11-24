@@ -39,14 +39,6 @@
       "cpf": "UH HA HA UH UH",
       "password": "123",
       "role": "user"
-    },
-    {
-      "id": "8dc5",
-      "nome": "test",
-      "email": "test@gmail",
-      "cpf": "53786654859",
-      "password": "123",
-      "role": "user"
     }
   ],
   "addresses": [
@@ -70,7 +62,7 @@
       "bairro": "Sé",
       "cidade": "São Paulo",
       "estado": "SP",
-      "userId": "8dc5"
+      "userId": null
     }
   ],
   "products": [
@@ -540,18 +532,32 @@
       "category": "pingentes"
     },
     {
-      "id": "edb2",
       "name": "Anel do Pinloway",
-      "description": "Anel top",
-      "price": "20,00",
+      "description": "Anel top 18k",
+      "price": "1000,99",
       "category": "aneis",
       "images": [
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1UbhxAWmZ004ktZyt0raTvUjVoqCzUGB5lA&s",
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1UbhxAWmZ004ktZyt0raTvUjVoqCzUGB5lA&s"
       ],
       "sizes": [
-        "Unico"
-      ]
+        "GG"
+      ],
+      "id": "edb2"
+    },
+    {
+      "name": "Bibba balls",
+      "description": "Apenas os reais manos podem usa-la. Somente os Bibba balls",
+      "price": "157,00",
+      "category": "correntes",
+      "images": [
+        "https://lastfm.freetls.fastly.net/i/u/ar0/8e2d16152bd0a723224e8cb3123c3da2",
+        "https://i1.sndcdn.com/avatars-LXlmqCwHszz5LWOw-jekgUA-t1080x1080.jpg"
+      ],
+      "sizes": [
+        "GG"
+      ],
+      "id": "896e"
     }
   ]
 }

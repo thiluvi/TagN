@@ -2,7 +2,7 @@ import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service'; 
-import { ProductDataService } from '../product-data.service'; // Importe o serviço de produtos
+import { ProductDataService } from '../product-data.service';
 import { AppUser, Product } from '../core/types/types'; 
 import { Router } from '@angular/router';
 import { cpfValidator } from '../core/validators/cpf.validator';
@@ -23,20 +23,19 @@ export class AdminComponent implements OnInit {
   private productService = inject(ProductDataService);
   private router = inject(Router);
 
-  // Controle de visualização da tela
   activeView = signal<'users' | 'products'>('users');
-
   feedbackMessage = signal<{type: 'success' | 'error', text: string} | null>(null);
   
-  // Sinais (Estados)
   users = signal<AppUser[]>([]); 
   products = signal<Product[]>([]);
   isModalOpen = signal(false);
   selectedUserForPassword = signal<AppUser | null>(null);
 
-  // --- Formulários ---
+  editingProductId = signal<string | null>(null); 
   
-  // 1. Formulário de Usuário (Antigo)
+  availableSizes = ['Unico', 'PP', 'P', 'M', 'G', 'GG', '12', '14', '16', '18', '20', '22', '24', '35cm', '40cm', '45cm', '50cm', '60cm', '70cm'];
+  selectedSizes = signal<string[]>(['Unico']); 
+
   registerForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -51,96 +50,68 @@ export class AdminComponent implements OnInit {
     role: new FormControl<'admin' | 'user'>('user', Validators.required) 
   });
 
-  // 2. Formulário de Senha (Antigo)
   passwordForm = new FormGroup({
     newPassword: new FormControl('', Validators.required)
   });
 
-  // 3. Formulário de Produto (Novo)
+  // --- MUDANÇA AQUI: Regex atualizado para aceitar vírgula ---
   productForm = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    price: new FormControl('', Validators.required),
+    // Regex: Aceita números, opcionalmente seguidos de virgula e 1 ou 2 casas (ex: 100 ou 100,50)
+    price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(,\d{1,2})?$/)]), 
     category: new FormControl('correntes', Validators.required),
     imageMain: new FormControl('', Validators.required),
     imageExtra: new FormControl('') 
   });
 
-  // Getters para facilitar uso no HTML
   get f() { return this.registerForm.controls; }
   get p() { return this.productForm.controls; } 
 
   ngOnInit(): void {
-    // Carrega ambos ao iniciar
     this.loadUsers(); 
     this.loadProducts();
   }
 
-  // --- Alternar Visualização ---
   switchView(view: 'users' | 'products'): void {
     this.activeView.set(view);
-    this.feedbackMessage.set(null); // Limpa mensagens ao trocar de tela
+    this.feedbackMessage.set(null);
+    this.cancelEditProduct(); 
   }
-
-  // =========================================================
-  // LÓGICA DE USUÁRIOS (Preservada do código antigo)
-  // =========================================================
 
   loadUsers(): void {
     this.authService.loadUsers().subscribe({
-      next: (usersFromApi) => {
-        this.users.set(usersFromApi);
-      },
-      error: (err) => {
-        console.error('Erro ao carregar usuários:', err);
-        this.feedbackMessage.set({type: 'error', text: 'Não foi possível carregar a lista de usuários.'});
-      }
+      next: (u) => this.users.set(u),
+      error: (e) => console.error(e)
     });
   }
 
   handleRegisterUser(): void {
-    if (this.registerForm.invalid) {
-      this.feedbackMessage.set({type: 'error', text: 'Formulário inválido. Verifique os campos.'});
-      return;
-    }
-    
+    if (this.registerForm.invalid) return;
     const newUser = this.registerForm.value as Omit<AppUser, 'id'>;
-
     this.authService.registerUser(newUser).subscribe({
-      next: (createdUser) => {
-        this.users.update(currentUsers => [...currentUsers, createdUser]);
-        this.feedbackMessage.set({type: 'success', text: `Usuário "${createdUser.nome}" cadastrado!`});
+      next: (created) => {
+        this.users.update(u => [...u, created]);
+        this.feedbackMessage.set({type: 'success', text: 'Usuário criado!'});
         this.registerForm.reset({ role: 'user' });
       },
-      error: (err) => {
-        console.error('Erro ao cadastrar:', err);
-        this.feedbackMessage.set({type: 'error', text: 'Erro ao cadastrar usuário.'});
-      }
+      error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao criar usuário.'})
     });
   }
 
-  handleDeleteUser(userId: number): void {
-    if (!confirm('Tem certeza que deseja deletar este usuário?')) {
-      return;
-    }
-
-    this.authService.deleteUser(userId).subscribe({
-      next: () => {
-        this.users.update(users => users.filter(u => u.id !== userId));
-        this.feedbackMessage.set({type: 'success', text: 'Usuário deletado com sucesso.'});
-      },
-      error: (err) => {
-        console.error('Erro ao deletar:', err);
-        this.feedbackMessage.set({type: 'error', text: 'Erro ao deletar usuário.'});
-      }
+  handleDeleteUser(id: number): void {
+    if (!confirm('Deletar usuário?')) return;
+    this.authService.deleteUser(id).subscribe({
+      next: () => this.users.update(u => u.filter(x => x.id !== id)),
+      error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao deletar.'})
     });
   }
-
-  handleChangePassword(): void {
-    if (this.passwordForm.invalid || !this.selectedUserForPassword()) {
-      return;
-    }
-
+  
+  openPasswordModal(u: AppUser) { this.selectedUserForPassword.set(u); this.isModalOpen.set(true); }
+  closePasswordModal() { this.isModalOpen.set(false); this.selectedUserForPassword.set(null); }
+  
+  handleChangePassword() { 
+    if (this.passwordForm.invalid || !this.selectedUserForPassword()) return;
     const newPassword = this.passwordForm.value.newPassword!;
     const user = this.selectedUserForPassword()!;
 
@@ -150,26 +121,10 @@ export class AdminComponent implements OnInit {
         this.closePasswordModal();
       },
       error: (err) => {
-        console.error('Erro ao alterar senha:', err);
         this.feedbackMessage.set({type: 'error', text: 'Erro ao alterar senha.'});
       }
     });
   }
-
-  openPasswordModal(user: AppUser): void {
-    this.selectedUserForPassword.set(user);
-    this.passwordForm.reset();
-    this.isModalOpen.set(true);
-  }
-
-  closePasswordModal(): void {
-    this.isModalOpen.set(false);
-    this.selectedUserForPassword.set(null);
-  }
-
-  // =========================================================
-  // LÓGICA DE PRODUTOS (Nova funcionalidade)
-  // =========================================================
 
   loadProducts(): void {
     this.productService.getAllProducts().subscribe({
@@ -178,45 +133,107 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  handleRegisterProduct(): void {
+  toggleSize(size: string, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.selectedSizes.update(current => {
+      if (isChecked) {
+        return [...current, size];
+      } else {
+        return current.filter(s => s !== size);
+      }
+    });
+  }
+
+  isSizeSelected(size: string): boolean {
+    return this.selectedSizes().includes(size);
+  }
+
+  handleEditProduct(product: Product): void {
+    this.editingProductId.set(product.id);
+    
+    this.productForm.patchValue({
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      category: product.category,
+      imageMain: product.images[0] || '',
+      imageExtra: product.images[1] || ''
+    });
+
+    if (product.sizes && product.sizes.length > 0) {
+      this.selectedSizes.set(product.sizes);
+    } else {
+      this.selectedSizes.set(['Unico']);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.feedbackMessage.set({ type: 'success', text: `Editando: ${product.name}` });
+  }
+
+  cancelEditProduct(): void {
+    this.editingProductId.set(null);
+    this.productForm.reset({ category: 'correntes' });
+    this.selectedSizes.set(['Unico']);
+    this.feedbackMessage.set(null);
+  }
+
+  handleSubmitProduct(): void {
+    // Validação com mensagem mais clara sobre a vírgula
     if (this.productForm.invalid) {
-      this.feedbackMessage.set({type: 'error', text: 'Preencha todos os campos obrigatórios do produto.'});
+      this.feedbackMessage.set({type: 'error', text: 'Formulário inválido. O preço deve usar VÍRGULA (ex: 99,90).'});
+      return;
+    }
+
+    if (this.selectedSizes().length === 0) {
+      this.feedbackMessage.set({type: 'error', text: 'Selecione pelo menos um tamanho.'});
       return;
     }
 
     const formVal = this.productForm.value;
-
-    // Monta o array de imagens (main + extra se existir)
     const images: string[] = [];
     if (formVal.imageMain) images.push(formVal.imageMain);
     if (formVal.imageExtra) images.push(formVal.imageExtra);
 
-    const newProduct: Omit<Product, 'id'> = {
+    const productData = {
       name: formVal.name!,
       description: formVal.description!,
       price: formVal.price!, 
       category: formVal.category!,
       images: images,
-      sizes: ['Unico'] // Valor padrão
+      sizes: this.selectedSizes()
     };
 
-    this.productService.addProduct(newProduct).subscribe({
-      next: (createdProduct) => {
-        this.products.update(curr => [...curr, createdProduct]);
-        this.feedbackMessage.set({type: 'success', text: 'Produto cadastrado com sucesso!'});
-        this.productForm.reset({ category: 'correntes' });
-      },
-      error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao cadastrar produto.'})
-    });
+    if (this.editingProductId()) {
+      const updatedProduct: Product = { ...productData, id: this.editingProductId()! };
+      
+      this.productService.updateProduct(updatedProduct).subscribe({
+        next: (res) => {
+          this.products.update(curr => curr.map(p => p.id === res.id ? res : p));
+          this.feedbackMessage.set({type: 'success', text: 'Produto atualizado com sucesso!'});
+          this.cancelEditProduct(); 
+        },
+        error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao atualizar produto.'})
+      });
+
+    } else {
+      this.productService.addProduct(productData).subscribe({
+        next: (created) => {
+          this.products.update(curr => [...curr, created]);
+          this.feedbackMessage.set({type: 'success', text: 'Produto cadastrado!'});
+          this.cancelEditProduct(); 
+        },
+        error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao cadastrar produto.'})
+      });
+    }
   }
 
   handleDeleteProduct(id: string): void {
     if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         this.products.update(curr => curr.filter(p => p.id !== id));
         this.feedbackMessage.set({type: 'success', text: 'Produto removido.'});
+        if (this.editingProductId() === id) this.cancelEditProduct();
       },
       error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao remover produto.'})
     });
