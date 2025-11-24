@@ -628,6 +628,19 @@
         "GG"
       ],
       "id": "896e"
+    },
+    {
+      "id": "41ef",
+      "name": "Pingente gorila",
+      "description": "Pingente cravejado em homenagem ao Nigorila",
+      "price": "1799,99",
+      "category": "pingentes",
+      "images": [
+        "https://m.media-amazon.com/images/I/71x-LKl89BL._AC_SX569_.jpg"
+      ],
+      "sizes": [
+        "GG"
+      ]
     }
   ]
 }
