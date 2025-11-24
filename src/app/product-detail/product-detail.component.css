@@ -168,16 +168,17 @@
 }
   
    .measure-link {
-       display: inline-flex; /* Para alinhar imagem e texto */
-       align-items: center;
-       text-decoration: none;
-       color: #555;
-       font-size: 13px;
-       margin-top: 5px;
-   }
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #555;
+    font-size: 13px;
+    margin-top: 5px;
+    cursor: pointer; /* GARANTE A MÃOZINHA NO MOUSE */
+  }
    .ruler-icon {
-       width: 16px;
-       height: 16px;
+       width: 24px;
+       height: 24px;
        margin-right: 5px;
        /* Se a imagem Régua.png for preta, pode precisar de filter: invert(0.5); */
    }
@@ -353,7 +354,6 @@
   }
 
 
-
   .quantity-button {
     /* Mantém os estilos do botão */
     width: 35px; 
@@ -365,4 +365,105 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* --- ESTILOS DO MODAL DE MEDIDAS --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+  z-index: 1000; /* Garante que fique acima de tudo */
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centraliza exatamente no meio */
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1001; /* Acima do backdrop */
+  max-width: 90%; /* Responsivo: não ultrapassa a largura da tela */
+  max-height: 90vh; /* Responsivo: não ultrapassa a altura da tela */
+  overflow-y: auto; /* Permite rolar se a imagem for muito alta */
+  text-align: center;
+  animation: zoomIn 0.3s ease;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #3d3d3d;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-family: sans-serif;
+  font: bolder;
+}
+
+.size-guide-img {
+  max-width: 100%; /* A imagem se adapta à largura do modal */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: #000;
+}
+
+/* Animações simples */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Títulos das seções dentro do modal */
+.guide-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #3d3d3d;
+  margin: 15px 0 10px 0;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+/* Linha divisória entre as imagens */
+.guide-divider {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+}
+
+/* Ajuste na imagem para garantir espaçamento */
+.size-guide-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+  /* Sombra suave para destacar a imagem branca no fundo branco */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
 }

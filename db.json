@@ -163,175 +163,256 @@
       "category": "correntes"
     },
     {
-      "id": "20",
       "name": "Pulseira Esteira Masculina em Prata 925",
       "description": "A pulseira esteira de prata que une textura, brilho e versatilida. Com sua trama entrelaçada e acabamento cintilante, a Pulseira Esteira é a escolha ideal para quem busca um acessório sofisticado e confortável.",
       "price": "197,00",
+      "category": "pulseiras",
       "images": [
         "assets/images/pulseira01.png"
       ],
-      "category": "pulseiras"
+      "sizes": [
+        "16",
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "id": "20"
     },
     {
-      "id": "21",
       "name": "Pulseira Grumet 4 mm em Prata 925",
       "description": "Seu design mais robusto transmite força, estilo e personalidade — perfeita para compor um visual ousado e elegante ao mesmo tempo.",
       "price": "157,00",
+      "category": "pulseiras",
       "images": [
         "assets/images/pulseira02.png",
         "assets/images/dapulceira2.png"
       ],
-      "category": "pulseiras"
+      "sizes": [
+        "16",
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "id": "21"
     },
     {
-      "id": "22",
       "name": "Pingente de Prata Pedra Cristal Verde Cravejado",
       "description": "O Pingente Pedra Cristal Verde Cravejado em Prata 925 combina intensidade e elegância em um design atemporal. A zircônia verde central simboliza equilíbrio e renovação, enquanto o contorno de zircônias cristalinas reflete a luz com sutileza e destaque. Uma peça que une força, espiritualidade e sofisticação em cada detalhe.",
       "price": "109,00",
+      "category": "pulseiras",
       "images": [
         "assets/images/pulseira4.png",
         "assets/images/dapulceira4.png"
       ],
-      "category": "pulseiras"
+      "sizes": [
+        "16",
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "id": "22"
     },
     {
-      "id": "23",
       "name": "Pulseira de Prata elo cartier",
       "description": "Ao adquirir essa joia, você recebe o seu produto em uma caixa personalizada da Argennti, protegida por veludo, uma flanela de limpeza, acompanhada da nota fiscal e do cartão de garantia com os cuidados necessários para maior durabilidade da sua joia.",
       "price": "169,90",
+      "category": "pulseiras",
       "images": [
         "assets/images/pulseira5.png",
         "assets/images/dapulceira4.png"
       ],
-      "category": "pulseiras"
+      "sizes": [
+        "16",
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "id": "23"
     },
     {
-      "id": "24",
       "name": "Pulseira Grumet Cubana 3 mm em Prata 925",
       "description": "Com presença marcante e acabamento refinado, a Pulseira Cubana 3 mm em Prata 925 é um acessório robusto que traduz atitude e sofisticação. ",
       "price": "276,00",
+      "category": "pulseiras",
       "images": [
         "assets/images/pulseira3.png",
         "assets/images/dapulceira3.png"
       ],
-      "category": "pulseiras"
+      "sizes": [
+        "16",
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "id": "24"
     },
     {
-      "id": "25",
       "name": "Pulseira Fígaro 4 mm Masculina em Prata 925",
       "description": "Com elos alternados que criam ritmo visual, a Pulseira Fígaro 4 mm é a escolha ideal para quem deseja um acessório tradicional com toque de personalidade. A combinação de um elo longo seguido de três curtos cria um design elegante, mas com presença no pulso.",
       "price": "149,00",
+      "category": "pulseiras",
       "images": [
         "assets/images/pulseira6.png",
         "assets/images/dapulceira7.png"
       ],
-      "category": "pulseiras"
+      "sizes": [
+        "16",
+        "18",
+        "20",
+        "22",
+        "24"
+      ],
+      "id": "25"
     },
     {
-      "id": "40",
       "name": "Escapulário Medalha São Bento - Corrente Veneziana",
       "description": "O escapulário masculino São Bento na corrente veneziana fina é mais do que uma joia: é um amuleto de proteção espiritual aliado à estética refinada da prata 925. Com duas medalhas de São Bento e corrente de elos finos e delicados, essa peça transmite fé e estilo com discrição e sofisticação.",
       "price": "197,00",
+      "category": "escapulario",
       "images": [
         "assets/images/escapulario1.png",
         "assets/images/doescapulario1.png"
       ],
-      "category": "escapulario"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "40"
     },
     {
-      "id": "41",
       "name": "Escapulário de Prata 60 cm - Corrente Veneziana",
       "description": "O escapulário masculino em prata com corrente veneziana de 60 cm é uma joia discreta e poderosa, que carrega o valor espiritual da fé cristã. Com placas fixas e a imagem tradicional do escapulário católico, é ideal para uso diário e combina com diferentes estilos.",
       "price": "187,00",
+      "category": "escapulario",
       "images": [
         "assets/images/escapulario2.png",
         "assets/images/doescapulario2.png"
       ],
-      "category": "escapulario"
+      "sizes": [
+        "60cm"
+      ],
+      "id": "41"
     },
     {
-      "id": "42",
       "name": "Escapulário de Prata - Corrente Grumet",
       "description": "Com uma estética mais marcante e tradicional, o escapulário masculino em corrente grumet de 1 mm em prata 925 une a simbologia espiritual à identidade clássica da joalheria masculina. Uma peça versátil, atemporal e ideal para quem busca expressar sua devoção com elegância e personalidade.",
       "price": "345,00",
+      "category": "escapulario",
       "images": [
         "assets/images/escapulario3.png",
         "assets/images/doescapulario3.png"
       ],
-      "category": "escapulario"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "42"
     },
     {
-      "id": "43",
       "name": "Escapulário Medalha Pai Nosso em Prata 925",
       "description": "O escapulário masculino de prata com a oração do Pai Nosso une espiritualidade e elegância. Gravado com uma das orações mais poderosas da fé cristã, ele carrega proteção, conexão interior e uma estética minimalista que combina com qualquer estilo.",
       "price": "378,00",
+      "category": "escapulario",
       "images": [
         "assets/images/escapulario4.png",
         "assets/images/doescapulario4.png"
       ],
-      "category": "escapulario"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "43"
     },
     {
-      "id": "44",
       "name": "Escapulário de Prata Cravejado Nossa S. Aparecida",
       "description": "O escapulário masculino de Nossa Senhora Aparecida em prata 925 é um símbolo de fé, proteção e tradição religiosa. Uma peça que carrega espiritualidade em cada detalhe, com duas placas fixas que representam a devoção e o cuidado da padroeira do Brasil.",
       "price": "250,00",
+      "category": "escapulario",
       "images": [
         "assets/images/escapulario5.png"
       ],
-      "category": "escapulario"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "44"
     },
     {
-      "id": "60",
       "name": "Colar de Prata com Pedra Cristal Turquesa Cravejado",
       "description": "O Colar de Prata com Pedra Cristal Turquesa Cravejada é uma peça que une beleza vibrante com um toque simbólico especial. O pingente arredondado traz ao centro uma zircônia turquesa, cercada por um aro de zircônias cristalinas, criando uma composição elegante e cheia de luz. Ideal para homens que desejam carregar estilo e significado em um acessório sofisticado.",
       "price": "187,00",
+      "category": "colares",
       "images": [
         "assets/images/colar1.png",
         "assets/images/docolar1.png"
       ],
-      "category": "colares"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "60"
     },
     {
-      "id": "61",
       "name": "Colar de Prata com Pedra Cristal Cravejado",
       "description": "O pingente redondo é composto por uma zircônia incolor central, envolvida por um contorno de zircônias cristalinas, criando um efeito de luz intenso e refinado. A corrente veneziana confere um acabamento delicado, tornando o colar ideal para compor desde visuais discretos até produções mais marcantes. Uma peça versátil e encantadora para todos os estilos.",
       "price": "138,00",
+      "category": "colares",
       "images": [
         "assets/images/colar2.png",
         "assets/images/docolar2.png"
       ],
-      "category": "colares"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "61"
     },
     {
-      "id": "62",
       "name": "Colar de Prata com Pedra Cristal Verde Cravejado",
       "description": "Com um design que transmite elegância e personalidade, o Colar Masculino de Prata com Pedra Cristal Verde Cravejada é uma escolha marcante para homens que apreciam joias refinadas com presença. O pingente arredondado em zircônia verde é rodeado por zircônias cristalinas, formando uma peça que atrai olhares e complementa com estilo tanto looks casuais quanto mais elegantes.",
       "price": "167,00",
+      "category": "colares",
       "images": [
         "assets/images/colar3.png"
       ],
-      "category": "colares"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "62"
     },
     {
-      "id": "63",
       "name": "Colar Masculino Cristal Slim em Prata 925.",
       "description": "O colar masculino cristal slim em prata 925 traz a delicadeza da corrente veneziana e o brilho sutil do pingente em zircônia. Um acessório pensado para homens que valorizam sofisticação, leveza e presença, tudo na medida certa.",
       "price": "167,00",
+      "category": "colares",
       "images": [
         "assets/images/colar4.png"
       ],
-      "category": "colares"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "63"
     },
     {
-      "id": "64",
       "name": "Colar de Prata Crucifixo Cravejado Preto Pequeno..",
       "description": "O Colar Crucifixo Cravejado Preto Pequeno é uma peça em prata 925 masculina, que une espiritualidade e sofisticação. Com zircônias cristalinas cravejadas ao redor e zircônias pretas em seu interior, essa joia traz uma leitura moderna e ousada do clássico crucifixo, sem perder sua essência de fé e proteção.",
       "price": "199,00",
+      "category": "colares",
       "images": [
         "assets/images/colar5.png"
       ],
-      "category": "colares"
+      "sizes": [
+        "60cm",
+        "70cm"
+      ],
+      "id": "64"
     },
     {
       "id": "80",
