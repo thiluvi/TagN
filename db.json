@@ -52,17 +52,6 @@
       "cidade": "São Paulo",
       "estado": "SP",
       "userId": "5acb"
-    },
-    {
-      "id": "229c",
-      "cep": "16516511",
-      "rua": "Praça da Sé",
-      "numero": "1",
-      "complemento": "casa",
-      "bairro": "Sé",
-      "cidade": "São Paulo",
-      "estado": "SP",
-      "userId": null
     }
   ],
   "products": [
