@@ -1,89 +1,97 @@
-<div class="product-detail-container" *ngIf="product">
+@if (product(); as prod) {
+  <div class="product-detail-container">
 
-  <div class="product-images">
-    <div class="thumbnails">
-      <img *ngFor="let img of product.images"
-           [src]="img"
-           alt="Miniatura {{ product.name }}"
-           class="thumbnail"
-           (click)="selectImage(img)"
-           [class.active]="selectedImageUrl() === img">
-    </div>
-    <div class="main-image">
-      <img [src]="selectedImageUrl()" alt="{{ product.name }}">
-    </div>
-  </div>
-
-  <div class="product-info-actions">
-    <div class="product-header">
-      <h1>{{ product.name }}</h1>
-      <div class="product-actions-icons">
-        <img 
-          src="assets/images/Favoritos.png" 
-          alt="Adicionar aos Favoritos" 
-          class="icon-button"
-          [class.is-favorite]="favoritesService.isFavorite()(product.id)"
-          (click)="handleToggleFavorite()">
-        
-        <img 
-          src="assets/images/compartilhar.png" 
-          alt="Compartilhar" 
-          class="icon-button"
-          (click)="shareProduct()">
+    <div class="product-images">
+      <div class="thumbnails">
+        @for (img of prod.images; track img) {
+          <img 
+            [src]="img"
+            alt="Miniatura {{ prod.name }}"
+            class="thumbnail"
+            (click)="selectImage(img)"
+            [class.active]="selectedImageUrl() === img">
+        }
+      </div>
+      <div class="main-image">
+        <img [src]="selectedImageUrl()" alt="{{ prod.name }}">
       </div>
     </div>
 
-    <p class="product-material">Acessório de prata</p>
-    <p class="product-seller">Vendido e entregue por <strong>Tag-N</strong></p>
-
-    <div class="product-rating">
-      ☆☆☆☆☆ <span class="no-reviews">Sem avaliações</span>
-    </div>
-
-    <p class="product-price">R$ {{ product.price }}</p>
-
-    <div class="product-options" *ngIf="product.sizes && product.sizes.length > 0">
-      <label>Selecione um tamanho</label>
-      <div class="size-buttons">
-        <button 
-          *ngFor="let size of product.sizes" 
-          class="size-button"
-          [class.selected]="selectedSize() === size" 
-          (click)="selectSize(size)">{{ size }}</button>
+    <div class="product-info-actions">
+      <div class="product-header">
+        <h1>{{ prod.name }}</h1>
+        <div class="product-actions-icons">
+          <img 
+            src="assets/images/Favoritos.png" 
+            alt="Adicionar aos Favoritos" 
+            class="icon-button"
+            [class.is-favorite]="favoritesService.isFavorite()(prod.id)"
+            (click)="handleToggleFavorite()">
+          
+          <img 
+            src="assets/images/compartilhar.png" 
+            alt="Compartilhar" 
+            class="icon-button"
+            (click)="shareProduct()">
         </div>
-      <a href="#" class="measure-link">
-        <img src="assets/images/Régua.png" alt="Tabela de medidas" class="ruler-icon"> Tabela de medidas
-      </a>
+      </div>
+
+      <p class="product-material">Acessório de prata</p>
+      <p class="product-seller">Vendido e entregue por <strong>Tag-N</strong></p>
+
+      <div class="product-rating">
+        ☆☆☆☆☆ <span class="no-reviews">Sem avaliações</span>
+      </div>
+
+      <p class="product-price">R$ {{ prod.price }}</p>
+
+      @if (prod.sizes && prod.sizes.length > 0) {
+        <div class="product-options">
+          <label>Selecione um tamanho</label>
+          <div class="size-buttons">
+            @for (size of prod.sizes; track size) {
+              <button 
+                class="size-button"
+                [class.selected]="selectedSize() === size" 
+                (click)="selectSize(size)">{{ size }}</button>
+            }
+          </div>
+          <a href="#" class="measure-link">
+            <img src="assets/images/Régua.png" alt="Tabela de medidas" class="ruler-icon"> Tabela de medidas
+          </a>
+        </div>
+      }
+
+      <div class="buy-action-container">
+        <div class="quantity-selector">
+          <button class="quantity-btn" (click)="adjustQuantity(-1)">-</button>
+          
+          <input 
+            type="number" 
+            [value]="quantity()" 
+            (input)="updateQuantityFromInput($event)"
+            min="1" 
+            class="quantity-input-styled">
+            
+          <button class="quantity-btn" (click)="adjustQuantity(1)">+</button>
+        </div>
+
+        <button class="add-to-cart-button" (click)="addToCart()">Adicionar ao carrinho</button>
+      </div>
+
     </div>
 
-    <div class="buy-action-container">
-    <div class="quantity-selector">
-      <button class="quantity-btn" (click)="adjustQuantity(-1)">-</button>
-      
-      <input 
-        type="number" 
-        [value]="quantity()" 
-        (input)="updateQuantityFromInput($event)"
-        min="1" 
-        class="quantity-input-styled">
-        
-      <button class="quantity-btn" (click)="adjustQuantity(1)">+</button>
+    <div class="product-description-section">
+       <h2>DESCRIÇÃO DO PRODUTO</h2>
+       <hr>
+       <p>{{ prod.description }}</p>
     </div>
 
-    <button class="add-to-cart-button" (click)="addToCart()">Adicionar ao carrinho</button>
-
   </div>
-
+} 
+@else {
+  <div style="text-align: center; padding: 50px;">
+    <p>Carregando produto ou produto não encontrado...</p>
+    <small>Verifique se o ID na URL está correto.</small>
   </div>
-
-  <div class="product-description-section">
-     <h2>DESCRIÇÃO DO PRODUTO</h2>
-     <hr>
-     <p>{{ product.description }}</p>
-  </div>
-
-</div>
-
-<div *ngIf="!product">
-  <p>Produto não encontrado.</p>
-</div>
+}

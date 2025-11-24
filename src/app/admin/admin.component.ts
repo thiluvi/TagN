@@ -2,7 +2,8 @@ import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service'; 
-import { AppUser } from '../core/types/types'; // Importe 'AppUser' do novo local
+import { ProductDataService } from '../product-data.service'; // Importe o serviço de produtos
+import { AppUser, Product } from '../core/types/types'; 
 import { Router } from '@angular/router';
 import { cpfValidator } from '../core/validators/cpf.validator';
 
@@ -13,22 +14,29 @@ import { cpfValidator } from '../core/validators/cpf.validator';
   templateUrl: './admin.component.html',
   styleUrls: [
     './admin.component.css',
-    '../account/account.component.css' // Reutilizando estilos
+    '../account/account.component.css'
   ]
 })
 export class AdminComponent implements OnInit {
 
   private authService = inject(AuthService);
+  private productService = inject(ProductDataService);
   private router = inject(Router);
 
+  // Controle de visualização da tela
+  activeView = signal<'users' | 'products'>('users');
+
   feedbackMessage = signal<{type: 'success' | 'error', text: string} | null>(null);
+  
+  // Sinais (Estados)
   users = signal<AppUser[]>([]); 
+  products = signal<Product[]>([]);
   isModalOpen = signal(false);
   selectedUserForPassword = signal<AppUser | null>(null);
 
   // --- Formulários ---
   
-  // Este formulário PRECISA bater com os campos do HTML
+  // 1. Formulário de Usuário (Antigo)
   registerForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -36,25 +44,47 @@ export class AdminComponent implements OnInit {
       Validators.required,
       Validators.minLength(11),
       Validators.maxLength(11),
-      Validators.pattern(/^[0-9]+$/), // Apenas números
+      Validators.pattern(/^[0-9]+$/),
       cpfValidator()
     ]),
     password: new FormControl('', Validators.required),
     role: new FormControl<'admin' | 'user'>('user', Validators.required) 
   });
 
+  // 2. Formulário de Senha (Antigo)
   passwordForm = new FormGroup({
     newPassword: new FormControl('', Validators.required)
   });
 
-  // "Getter" para facilitar o acesso aos controles no HTML
-  get f() {
-    return this.registerForm.controls;
-  }
+  // 3. Formulário de Produto (Novo)
+  productForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    category: new FormControl('correntes', Validators.required),
+    imageMain: new FormControl('', Validators.required),
+    imageExtra: new FormControl('') 
+  });
+
+  // Getters para facilitar uso no HTML
+  get f() { return this.registerForm.controls; }
+  get p() { return this.productForm.controls; } 
 
   ngOnInit(): void {
+    // Carrega ambos ao iniciar
     this.loadUsers(); 
+    this.loadProducts();
   }
+
+  // --- Alternar Visualização ---
+  switchView(view: 'users' | 'products'): void {
+    this.activeView.set(view);
+    this.feedbackMessage.set(null); // Limpa mensagens ao trocar de tela
+  }
+
+  // =========================================================
+  // LÓGICA DE USUÁRIOS (Preservada do código antigo)
+  // =========================================================
 
   loadUsers(): void {
     this.authService.loadUsers().subscribe({
@@ -74,7 +104,6 @@ export class AdminComponent implements OnInit {
       return;
     }
     
-    // Omitimos 'id' porque o json-server vai criá-lo
     const newUser = this.registerForm.value as Omit<AppUser, 'id'>;
 
     this.authService.registerUser(newUser).subscribe({
@@ -127,7 +156,6 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  // --- Funções do Modal ---
   openPasswordModal(user: AppUser): void {
     this.selectedUserForPassword.set(user);
     this.passwordForm.reset();
@@ -139,7 +167,61 @@ export class AdminComponent implements OnInit {
     this.selectedUserForPassword.set(null);
   }
 
-  // --- Função de Logout ---
+  // =========================================================
+  // LÓGICA DE PRODUTOS (Nova funcionalidade)
+  // =========================================================
+
+  loadProducts(): void {
+    this.productService.getAllProducts().subscribe({
+      next: (p) => this.products.set(p),
+      error: (err) => console.error(err)
+    });
+  }
+
+  handleRegisterProduct(): void {
+    if (this.productForm.invalid) {
+      this.feedbackMessage.set({type: 'error', text: 'Preencha todos os campos obrigatórios do produto.'});
+      return;
+    }
+
+    const formVal = this.productForm.value;
+
+    // Monta o array de imagens (main + extra se existir)
+    const images: string[] = [];
+    if (formVal.imageMain) images.push(formVal.imageMain);
+    if (formVal.imageExtra) images.push(formVal.imageExtra);
+
+    const newProduct: Omit<Product, 'id'> = {
+      name: formVal.name!,
+      description: formVal.description!,
+      price: formVal.price!, 
+      category: formVal.category!,
+      images: images,
+      sizes: ['Unico'] // Valor padrão
+    };
+
+    this.productService.addProduct(newProduct).subscribe({
+      next: (createdProduct) => {
+        this.products.update(curr => [...curr, createdProduct]);
+        this.feedbackMessage.set({type: 'success', text: 'Produto cadastrado com sucesso!'});
+        this.productForm.reset({ category: 'correntes' });
+      },
+      error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao cadastrar produto.'})
+    });
+  }
+
+  handleDeleteProduct(id: string): void {
+    if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        this.products.update(curr => curr.filter(p => p.id !== id));
+        this.feedbackMessage.set({type: 'success', text: 'Produto removido.'});
+      },
+      error: () => this.feedbackMessage.set({type: 'error', text: 'Erro ao remover produto.'})
+    });
+  }
+
   handleLogout(): void {
     this.authService.logout();
     this.router.navigate(['/']); 

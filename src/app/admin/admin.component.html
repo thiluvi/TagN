@@ -8,8 +8,13 @@
       <nav class="account-nav">
         <ul>
           <li>
-            <button class="active">
-              <span class="nav-icon"></span> Gerenciar Usuários
+            <button (click)="switchView('users')" [class.active]="activeView() === 'users'">
+              <span class="nav-icon">👤</span> Gerenciar Usuários
+            </button>
+          </li>
+          <li>
+            <button (click)="switchView('products')" [class.active]="activeView() === 'products'">
+              <span class="nav-icon">💎</span> Gerenciar Produtos
             </button>
           </li>
         </ul>
@@ -25,122 +30,207 @@
         </div>
       }
   
-      <h2>Cadastrar Novo Usuário</h2>
-      
-      <form class="admin-form" [formGroup]="registerForm" (ngSubmit)="handleRegisterUser()">
+      @if (activeView() === 'users') {
+        <h2>Cadastrar Novo Usuário</h2>
         
-        <div class="form-group">
-          <label for="nome">Nome Completo</label>
-          <input type="text" id="nome" formControlName="nome">
-          @if (f.nome.invalid && (f.nome.dirty || f.nome.touched)) {
-            <div class="field-error-message">
-              @if (f.nome.hasError('required')) {
-                <p>Nome é obrigatório.</p>
-              }
-            </div>
-          }
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" formControlName="email">
-          @if (f.email.invalid && (f.email.dirty || f.email.touched)) {
-            <div class="field-error-message">
-              @if (f.email.hasError('required')) {
-                <p>Email é obrigatório.</p>
-              }
-              @if (f.email.hasError('email')) {
-                <p>Formato de email inválido (ex: nome@dominio.com).</p>
-              }
-            </div>
-          }
-        </div>
-  
-        <div class="form-group">
-          <label for="cpf">CPF (somente números)</label>
-          <input type="text" id="cpf" formControlName="cpf" placeholder="12345678900">
-        
-          @if (f.cpf.invalid && (f.cpf.dirty || f.cpf.touched)) {
-            <div class="field-error-message">
-              @if (f.cpf.hasError('required')) {
-                <p>CPF é obrigatório.</p>
-              }
-              @if (f.cpf.hasError('pattern')) {
-                <p>CPF deve conter apenas números.</p>
-              }
-              @if (f.cpf.hasError('minlength') || f.cpf.hasError('maxlength')) {
-                <p>CPF deve ter exatamente 11 dígitos.</p>
-              }
-              @if (f.cpf.hasError('cpfInvalido')) {
-                <p>Este CPF não é válido. Verifique os dígitos.</p>
-              }
-            </div>
-          }
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Senha Inicial</label>
-          <input type="password" id="password" formControlName="password">
-          @if (f.password.invalid && (f.password.dirty || f.password.touched)) {
-            <div class="field-error-message">
-              @if (f.password.hasError('required')) {
-                <p>Senha é obrigatória.</p>
-              }
-            </div>
-          }
-        </div>
-        
-        <div class="form-group">
-          <label for="role">Tipo de Conta</label>
-          <select id="role" formControlName="role">
-            <option value="user">Usuário Comum</option>
-            <option value="admin">Administrador</option>
-          </select>
-        </div>
-  
-        <button type="submit" class="submit-button" [disabled]="registerForm.invalid">Cadastrar Usuário</button>
-      </form>
-  
-      <hr class="divider">
-  
-      <h2>Lista de Usuários</h2>
-      <div class="user-list-container">
-        <table class="user-table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>CPF</th>
-              <th>Permissão</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (user of users(); track user.id) {
-              <tr>
-                <td>{{ user.nome }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.cpf }}</td>
-                <td>{{ user.role }}</td>
-                <td class="actions-cell">
-                  <button class="action-btn edit" (click)="openPasswordModal(user)">Alterar Senha</button>
-                  
-                  @if (user.email !== 'admin@senac.com') {
-                    <button class="action-btn delete" (click)="handleDeleteUser(user.id)">Deletar</button>
-                  }
-                </td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="5">Nenhum usuário cadastrado.</td>
-              </tr>
+        <form class="admin-form" [formGroup]="registerForm" (ngSubmit)="handleRegisterUser()">
+          
+          <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" formControlName="nome">
+            @if (f.nome.invalid && (f.nome.dirty || f.nome.touched)) {
+              <div class="field-error-message">
+                @if (f.nome.hasError('required')) {
+                  <p>Nome é obrigatório.</p>
+                }
+              </div>
             }
-          </tbody>
-        </table>
-      </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email">
+            @if (f.email.invalid && (f.email.dirty || f.email.touched)) {
+              <div class="field-error-message">
+                @if (f.email.hasError('required')) {
+                  <p>Email é obrigatório.</p>
+                }
+                @if (f.email.hasError('email')) {
+                  <p>Formato de email inválido (ex: nome@dominio.com).</p>
+                }
+              </div>
+            }
+          </div>
+    
+          <div class="form-group">
+            <label for="cpf">CPF (somente números)</label>
+            <input type="text" id="cpf" formControlName="cpf" placeholder="12345678900">
+          
+            @if (f.cpf.invalid && (f.cpf.dirty || f.cpf.touched)) {
+              <div class="field-error-message">
+                @if (f.cpf.hasError('required')) {
+                  <p>CPF é obrigatório.</p>
+                }
+                @if (f.cpf.hasError('pattern')) {
+                  <p>CPF deve conter apenas números.</p>
+                }
+                @if (f.cpf.hasError('minlength') || f.cpf.hasError('maxlength')) {
+                  <p>CPF deve ter exatamente 11 dígitos.</p>
+                }
+                @if (f.cpf.hasError('cpfInvalido')) {
+                  <p>Este CPF não é válido. Verifique os dígitos.</p>
+                }
+              </div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Senha Inicial</label>
+            <input type="password" id="password" formControlName="password">
+            @if (f.password.invalid && (f.password.dirty || f.password.touched)) {
+              <div class="field-error-message">
+                @if (f.password.hasError('required')) {
+                  <p>Senha é obrigatória.</p>
+                }
+              </div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="role">Tipo de Conta</label>
+            <select id="role" formControlName="role">
+              <option value="user">Usuário Comum</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+    
+          <button type="submit" class="submit-button" [disabled]="registerForm.invalid">Cadastrar Usuário</button>
+        </form>
+  
+        <hr class="divider">
+  
+        <h2>Lista de Usuários</h2>
+        <div class="user-list-container">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>CPF</th>
+                <th>Permissão</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users(); track user.id) {
+                <tr>
+                  <td>{{ user.nome }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.cpf }}</td>
+                  <td>{{ user.role }}</td>
+                  <td class="actions-cell">
+                    <button class="action-btn edit" (click)="openPasswordModal(user)">Alterar Senha</button>
+                    
+                    @if (user.email !== 'admin@senac.com') {
+                      <button class="action-btn delete" (click)="handleDeleteUser(user.id)">Deletar</button>
+                    }
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5">Nenhum usuário cadastrado.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+  
+      @if (activeView() === 'products') {
+        <h2>Cadastrar Novo Produto</h2>
+        
+        <form class="admin-form" [formGroup]="productForm" (ngSubmit)="handleRegisterProduct()">
+          
+          <div class="form-group">
+            <label for="prodName">Nome do Produto</label>
+            <input type="text" id="prodName" formControlName="name" placeholder="Ex: Corrente de Prata">
+          </div>
+  
+          <div class="form-group">
+            <label for="prodDesc">Descrição</label>
+            <input type="text" id="prodDesc" formControlName="description" placeholder="Detalhes da joia...">
+          </div>
+  
+          <div class="form-row" style="display: flex; gap: 15px;">
+            <div class="form-group" style="flex: 1;">
+              <label for="prodPrice">Preço (R$)</label>
+              <input type="text" id="prodPrice" formControlName="price" placeholder="00,00">
+            </div>
+            
+            <div class="form-group" style="flex: 1;">
+              <label for="prodCat">Categoria</label>
+              <select id="prodCat" formControlName="category">
+                <option value="correntes">Correntes</option>
+                <option value="pulseiras">Pulseiras</option>
+                <option value="escapulario">Escapulários</option>
+                <option value="colares">Colares</option>
+                <option value="aneis">Anéis</option>
+                <option value="brincos">Brincos</option>
+                <option value="pingentes">Pingentes</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Foto de Capa (URL ou Caminho)</label>
+            <input type="text" formControlName="imageMain" placeholder="assets/images/exemplo.png">
+            <small style="color: #777; font-size: 0.8rem;">Cole o link da imagem ou caminho local</small>
+          </div>
+  
+          <div class="form-group">
+            <label>Foto Secundária (Opcional)</label>
+            <input type="text" formControlName="imageExtra">
+          </div>
+  
+          <button type="submit" class="submit-button" [disabled]="productForm.invalid">Postar Produto</button>
+        </form>
+  
+        <hr class="divider">
+  
+        <h2>Produtos Cadastrados</h2>
+        <div class="user-list-container">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>Img</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (prod of products(); track prod.id) {
+                <tr>
+                  <td>
+                    <img [src]="prod.images[0]" alt="" style="width: 40px; height: 40px; object-fit: contain;">
+                  </td>
+                  <td>{{ prod.name }}</td>
+                  <td>{{ prod.category }}</td>
+                  <td>R$ {{ prod.price }}</td>
+                  <td>
+                    <button class="action-btn delete" (click)="handleDeleteProduct(prod.id)">Excluir</button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr><td colspan="5">Nenhum produto encontrado.</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
   
     </section>
-  
   </div>
   
   @if (isModalOpen()) {

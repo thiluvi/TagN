@@ -1,72 +1,73 @@
 import { Component, OnInit, signal, inject } from '@angular/core'; 
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router'; // Adicionei Router caso precise redirecionar
 import { CommonModule } from '@angular/common';
 import { Product } from '../core/types/types';
 import { ProductDataService } from '../product-data.service';
 import { FavoritesService } from '../core/services/favorites.service';
 import { CartService } from '../core/services/cart.service';
 
-
-
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule], // Adicione CommonModule aqui
+  imports: [CommonModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
-
 export class ProductDetailComponent implements OnInit {
-  product: Product | undefined; // Propriedade para guardar os dados do produto
-  // Use signal para o URL da imagem selecionada para melhor deteção de alterações (opcional mas recomendado)
+  
+  // MUDANÇA 1: Transformar product em Signal para garantir a atualização da tela
+  product = signal<Product | null>(null);
+  
+  // Signals para estado local
   selectedImageUrl = signal<string | undefined>(undefined); 
-
-  // ------------------------------------------------------------------------------------------------------
-  selectedSize = signal<string | undefined>(undefined); // Para armazenar o tamanho selecionado
-  quantity = signal<number>(1); // Para armazenar a quantidade (inicia em 1)
-  // ------------------------------------------------------------------------------------------------------
+  selectedSize = signal<string | undefined>(undefined); 
+  quantity = signal<number>(1); 
 
   private cartService = inject(CartService);
-
-
   private route = inject(ActivatedRoute);
-  private productDataService = inject(ProductDataService); // Usado para buscar o produto
+  private productDataService = inject(ProductDataService);
   public favoritesService = inject(FavoritesService); 
 
   ngOnInit(): void { 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const productId = params.get('productId'); 
-      if (productId) { 
-        // +++ BUSQUE O PRODUTO DO SERVIÇO +++
-        this.product = this.productDataService.getProductById(productId); 
-        
-        if (this.product && this.product.images.length > 0) { 
-          this.selectedImageUrl.set(this.product.images[0]); 
-        }
+      
+      console.log('ID capturado na URL:', productId); // DEBUG 1
 
-        // +++ INICIALIZE O TAMANHO SELECIONADO +++
-        if (this.product && this.product.sizes && this.product.sizes.length > 0) {
-          this.selectedSize.set(this.product.sizes[0]);
-        }
+      if (productId) { 
+        this.productDataService.getProductById(productId).subscribe({
+          next: (data) => {
+            console.log('Dados recebidos da API:', data); // DEBUG 2
+
+            // MUDANÇA 2: Atualizando o Signal
+            this.product.set(data);
+            
+            // Define a imagem inicial
+            if (data.images && data.images.length > 0) { 
+              this.selectedImageUrl.set(data.images[0]); 
+            }
+
+            // Define o tamanho inicial
+            if (data.sizes && data.sizes.length > 0) {
+              this.selectedSize.set(data.sizes[0]);
+            }
+          },
+          error: (err) => console.error('Erro ao carregar produto:', err)
+        });
       }
     });
   }
 
-  // Método para mudar a imagem selecionada
-  selectImage(imageUrl: string): void { //
-    this.selectedImageUrl.set(imageUrl); // Use .set() para signals //
+  selectImage(imageUrl: string): void {
+    this.selectedImageUrl.set(imageUrl);
   }
 
-  // -------------------------------------------------------------------------------------------------------
-  // NOVO MÉTODO para selecionar o tamanho
   selectSize(size: string): void {
     this.selectedSize.set(size);
   }
 
-  // NOVO MÉTODO para ajustar a quantidade
   adjustQuantity(delta: number): void {
     this.quantity.update(currentQuantity => {
-      // Garante que a quantidade nunca seja menor que 1
       const newQuantity = currentQuantity + delta;
       return newQuantity > 0 ? newQuantity : 1;
     });
@@ -79,42 +80,36 @@ export class ProductDetailComponent implements OnInit {
     if (!isNaN(value) && value > 0) {
       this.quantity.set(value);
     } else {
-      // Se o usuário apagar tudo ou digitar 0, volta para 1
       this.quantity.set(1);
       input.value = '1'; 
     }
   }
 
-  // +++ ADICIONE O MÉTODO PARA FAVORITAR +++
   handleToggleFavorite(): void {
-    if (this.product) {
-      this.favoritesService.toggleFavorite(this.product);
+    const currentProduct = this.product(); // Acessando o valor do signal
+    if (currentProduct) {
+      this.favoritesService.toggleFavorite(currentProduct);
     }
   }
 
   addToCart(): void {
-    if (this.product) {
+    const currentProduct = this.product(); // Acessando o valor do signal
+    
+    if (currentProduct) {
       const size = this.selectedSize();
       
-      // Validação: Se o produto tem tamanhos, o usuário PRECISA escolher um
-      if (this.product.sizes && this.product.sizes.length > 0 && !size) {
+      if (currentProduct.sizes && currentProduct.sizes.length > 0 && !size) {
         alert('Por favor, selecione um tamanho.');
         return;
       }
 
-      this.cartService.addToCart(this.product, size, this.quantity());
-      
-      // Feedback visual simples (opcional) ou abrir o overlay automaticamente
-      // Vamos fazer um alerta simples por enquanto ou você pode emitir um evento para abrir o overlay
+      this.cartService.addToCart(currentProduct, size, this.quantity());
       alert('Produto adicionado à sacola!');
     }
   }
 
   shareProduct(): void {
-    // Pega a URL completa do navegador
     const url = window.location.href;
-
-    // Usa a API do navegador para copiar o texto
     navigator.clipboard.writeText(url).then(() => {
       alert('Link copiado para a área de transferência!');
     }).catch(err => {
@@ -122,5 +117,4 @@ export class ProductDetailComponent implements OnInit {
       alert('Erro ao copiar o link.');
     });
   }
-
 }

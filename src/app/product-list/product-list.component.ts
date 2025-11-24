@@ -1,64 +1,53 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router'; // Adicionado ParamMap e RouterModule
-import { ProductDataService } from '../product-data.service'; // Importar o novo serviço
+import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
+import { ProductDataService } from '../product-data.service';
 
-// (Copie a interface Product do serviço para este arquivo, se quiser manter a tipagem forte)
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  images: string[];
-  sizes?: string[];
-  category: string; 
-}
-
+// IMPORTANTE: Importe a interface centralizada para manter consistência
+import { Product } from '../core/types/types'; 
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  // Adicione RouterModule para que o [routerLink] do template funcione
-  imports: [CommonModule, RouterModule], 
-  templateUrl: './product-list.component.html', // Usaremos um arquivo HTML separado (próximo passo)
-  // Reutilize o CSS do PopularProductsComponent para o estilo do card
+  imports: [CommonModule, RouterModule], // O RouterModule está aqui, isso faz o clique funcionar!
+  templateUrl: './product-list.component.html',
   styleUrls: [
       '../popular-products/popular-products.component.css', 
-      './product-list.component.css' // O NOVO CSS com o grid
+      './product-list.component.css'
   ]
 })
 export class ProductListComponent implements OnInit {
   categoryName = signal<string>('');
-  // NOVA PROPRIEDADE: Lista de produtos para a categoria
   products = signal<Product[]>([]);
 
-  // Injetar ActivatedRoute e ProductDataService
   constructor(
     private route: ActivatedRoute, 
-    private productDataService: ProductDataService // Injeção
+    private productDataService: ProductDataService
   ) { }
 
   ngOnInit(): void {
-    // Escuta as mudanças no parâmetro da rota
     this.route.paramMap.subscribe((params: ParamMap) => {
       const category = params.get('categoryName');
       
       if (category) {
-        // 1. Formata o nome da categoria para exibição
+        // Formata o nome para exibição (Ex: "Correntes")
         let formattedName = category.charAt(0).toUpperCase() + category.slice(1);
         formattedName = formattedName.replace(/-/g, ' ');
         this.categoryName.set(formattedName);
         
-        // 2. Busca e define os produtos filtrados usando o serviço
-        const filteredProducts = this.productDataService.getProductsByCategory(category);
-        this.products.set(filteredProducts as Product[]); // Define a lista de produtos
+        // Busca os produtos
+        this.productDataService.getProductsByCategory(category).subscribe({
+          next: (data) => {
+            this.products.set(data);
+            console.log('Produtos carregados:', data); // Ajuda a debugar se vier vazio
+          },
+          error: (err) => console.error('Erro ao buscar produtos', err)
+        });
+        
       } else {
          this.products.set([]);
          this.categoryName.set('Categoria não encontrada');
       }
     });
   }
-  
-  // Opcional: Remova os métodos scroll, pois essa página não será um carrossel.
-  // Se quiser manter o layout de carrossel fixo, mantenha os métodos e o ViewChild.
 }
