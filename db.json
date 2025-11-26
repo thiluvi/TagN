@@ -602,35 +602,6 @@
       "category": "pingentes"
     },
     {
-      "name": "Anel do Pinloway",
-      "description": "Anel top 18k",
-      "price": "1000,99",
-      "category": "aneis",
-      "images": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1UbhxAWmZ004ktZyt0raTvUjVoqCzUGB5lA&s",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1UbhxAWmZ004ktZyt0raTvUjVoqCzUGB5lA&s"
-      ],
-      "sizes": [
-        "GG"
-      ],
-      "id": "edb2"
-    },
-    {
-      "name": "Bibba balls",
-      "description": "Apenas os reais manos podem usa-la. Somente os Bibba balls",
-      "price": "157,00",
-      "category": "correntes",
-      "images": [
-        "https://lastfm.freetls.fastly.net/i/u/ar0/8e2d16152bd0a723224e8cb3123c3da2",
-        "https://i1.sndcdn.com/avatars-LXlmqCwHszz5LWOw-jekgUA-t1080x1080.jpg"
-      ],
-      "sizes": [
-        "GG"
-      ],
-      "id": "896e"
-    },
-    {
-      "id": "41ef",
       "name": "Pingente gorila",
       "description": "Pingente cravejado em homenagem ao Nigorila",
       "price": "1799,99",
@@ -639,7 +610,24 @@
         "https://m.media-amazon.com/images/I/71x-LKl89BL._AC_SX569_.jpg"
       ],
       "sizes": [
-        "GG"
+        "Unico"
+      ],
+      "id": "41ef"
+    },
+    {
+      "id": "1a4b",
+      "name": "Pulseira Life Riviera em Prata 925 com Pedras Incolores",
+      "description": "A Pulseira Life Riviera é a definição de elegância atemporal. Confeccionada em Prata 925 de alta qualidade, esta joia apresenta um design clássico com uma sequência contínua de pedras incolores que proporcionam um brilho intenso e sofisticado. Seu acabamento refinado e fecho seguro garantem conforto e durabilidade, tornando-a a peça perfeita para iluminar qualquer look, do casual ao gala",
+      "price": "699,00",
+      "category": "pulseiras",
+      "images": [
+        "https://lojavivarafsv3.vtexassets.com/arquivos/ids/861593-1600-1600/Pulseira-Life-Riviera-em-Prata-925-com-Pedras-Incolores-79618_1_set.jpg?v=638518283089230000",
+        "https://lojavivarafsv3.vtexassets.com/arquivos/ids/861594-1600-1600/Pulseira-Life-Riviera-em-Prata-925-com-Pedras-Incolores-79619_2_set.jpg?v=638518283095170000"
+      ],
+      "sizes": [
+        "16",
+        "18",
+        "20"
       ]
     }
   ]

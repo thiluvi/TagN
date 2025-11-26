@@ -2,12 +2,13 @@
   <div class="topbar-content">
     
     <form class="search-container" (ngSubmit)="onSearchSubmit()">
-      <img class="SearchIcon" src="../../assets/images/Lupa.png" alt="Ícone de pesquisa" />
+      <img class="SearchIcon" src="assets/images/Lupa.png" alt="Ícone de pesquisa" />
       
       <input type="text" 
              class="SearchInput" 
              placeholder="Pesquise por um produto" 
-             [(ngModel)]="searchTerm"
+             [ngModel]="searchTerm()" 
+             (ngModelChange)="searchTerm.set($event)"
              name="search-term"
       />
       
@@ -15,23 +16,23 @@
     </form>
 
     <a [routerLink]="['/']" class="logo-link">
-      <img class="Logo" src="../../assets/images/Tag-N.png" alt="Logo principal" />
+      <img class="Logo" src="assets/images/Tag-N.png" alt="Logo principal" />
     </a>
 
     <div class="actions-container">
       
       <div class="icon-wrapper" (click)="onFavoritesClick()">
-        <img src="../../assets/images/Favoritos.png" alt="Ícone de favoritos" />
+        <img src="assets/images/Favoritos.png" alt="Ícone de favoritos" />
         <span class="badge" *ngIf="favoritesCount() > 0">{{ favoritesCount() }}</span>
       </div>
 
       <div class="icon-wrapper" (click)="onCartClick()">
-        <img src="../../assets/images/Sacola.png" alt="Ícone da sacola de compras"/>
+        <img src="assets/images/Sacola.png" alt="Ícone da sacola de compras"/>
         <span class="badge" *ngIf="cartService.totalItemsCount() > 0">{{ cartService.totalItemsCount() }}</span>
       </div>
 
       <div class="icon-wrapper" (click)="onProfileClick()">
-        <img src="../../assets/images/Perfil.png" alt="Ícone do perfil de usuário" />
+        <img src="assets/images/Perfil.png" alt="Ícone do perfil de usuário" />
       </div>
 
     </div>
