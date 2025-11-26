@@ -36,6 +36,7 @@ export class AdminComponent implements OnInit {
   availableSizes = ['Unico', 'PP', 'P', 'M', 'G', 'GG', '12', '14', '16', '18', '20', '22', '24', '35cm', '40cm', '45cm', '50cm', '60cm', '70cm'];
   selectedSizes = signal<string[]>(['Unico']); 
 
+  /////////// Campo para preencher o CPF com validação ///////////
   registerForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),

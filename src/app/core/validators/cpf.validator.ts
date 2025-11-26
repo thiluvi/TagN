@@ -58,6 +58,6 @@ export function cpfValidator(): ValidatorFn {
     }
 
     // Se passou por todas as verificações, o CPF é válido!
-    return null;
+    return null; // Retorna 'null' para indicar que o campo é válido.
   };
 }

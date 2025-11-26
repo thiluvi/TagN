@@ -26,7 +26,7 @@ export class ScrollFadeDirective implements OnInit, OnDestroy {
         });
       },
       {
-        threshold: 0.2, // Dispara quando 10% do elemento estiver visível
+        threshold: 0.2, // Dispara quando 20% do elemento estiver visível
       }
     );
 
