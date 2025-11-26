@@ -404,67 +404,97 @@
       "id": "64"
     },
     {
-      "id": "80",
       "name": "Anel Square em Prata 925",
       "description": "O Anel Square em Prata 925 da Argennti é uma joia que expressa força, estabilidade e elegância minimalista. Seu formato quadrado, de linhas precisas e acabamento polido, cria uma estética contemporânea e imponente, perfeita para homens que apreciam acessórios com identidade e proporção. Produzido em prata maciça, o anel traduz a harmonia entre simplicidade e presença.",
       "price": "280,00",
+      "category": "aneis",
       "images": [
         "assets/images/anel1.png",
         "assets/images/doanel1.png"
       ],
-      "category": "aneis"
+      "sizes": [
+        "P",
+        "M",
+        "G"
+      ],
+      "id": "80"
     },
     {
-      "id": "81",
       "name": "Anel de São Bento Cravejado em Prata 925",
       "description": " Anel de São Bento Cravejado em Prata 925 da Argennti é uma joia que une espiritualidade e sofisticação em uma só peça. Com a tradicional medalha de São Bento em destaque e cravejamento delicado de zircônias cristalinas ao redor, o anel simboliza proteção divina e força interior. A joia ideal para quem carrega a fé como parte do seu estilo.",
       "price": "320,00",
+      "category": "aneis",
       "images": [
         "assets/images/anel2.png",
         "assets/images/doanel2.png"
       ],
-      "category": "aneis"
+      "sizes": [
+        "P",
+        "M",
+        "G"
+      ],
+      "id": "81"
     },
     {
-      "id": "82",
       "name": "Anel Coroa Slim em Prata 925",
       "description": "O Anel Coroa Slim Facetado em Prata 925 da Argennti é uma joia que une força simbólica e elegância contemporânea. Inspirado na forma de uma coroa, o anel apresenta facetas delicadas que refletem a luz de forma sutil, criando um brilho refinado e cheio de personalidade. Produzido em prata legítima, é um símbolo de poder interior e estilo autêntico, ideal para homens que lideram com confiança e presença.",
       "price": "199,00",
+      "category": "aneis",
       "images": [
         "assets/images/anel3.png",
         "assets/images/doanel3.png"
       ],
-      "category": "aneis"
+      "sizes": [
+        "P",
+        "M",
+        "G"
+      ],
+      "id": "82"
     },
     {
-      "id": "83",
       "name": "Anel Square Preto em Prata 925",
       "description": "O Anel Square Preto em Prata 925 da Argennti combina design arquitetônico e estilo contemporâneo em uma peça de presença inconfundível. Seu topo quadrado com detalhe retangular em acetato preto cria um contraste sofisticado entre brilho e profundidade, resultando em uma joia moderna e equilibrada.",
       "price": "320,00",
+      "category": "aneis",
       "images": [
         "assets/images/anel4.png"
       ],
-      "category": "aneis"
+      "sizes": [
+        "P",
+        "M",
+        "G"
+      ],
+      "id": "83"
     },
     {
-      "id": "84",
       "name": "Anel de Prata Cravejado Preto Slim",
       "description": "Nossas joias são fabricadas de prata 925 maciça. Não trabalhamos com peças banhadas ou folheadas. Garantimos a qualidade e autenticidade de cada peça.",
       "price": "297,00",
+      "category": "aneis",
       "images": [
         "assets/images/anel5.png"
       ],
-      "category": "aneis"
+      "sizes": [
+        "P",
+        "M",
+        "G"
+      ],
+      "id": "84"
     },
     {
-      "id": "85",
       "name": "Anel de Sinete Pássaro em Prata 925",
       "description": "O Anel de Sinete Pássaro em Prata 925 da Argennti é uma joia que une espiritualidade e estilo em um formato clássico de sinete. Seu topo apresenta o desenho de um pássaro em voo, símbolo de liberdade, fé e elevação espiritual. Produzido em prata maciça 925, o anel combina presença e sutileza em uma peça que expressa força interior e propósito em cada detalhe.",
       "price": "197,00",
+      "category": "aneis",
       "images": [
         "assets/images/anel6.png"
       ],
-      "category": "aneis"
+      "sizes": [
+        "P",
+        "M",
+        "G"
+      ],
+      "id": "85"
     },
     {
       "id": "100",
@@ -592,18 +622,21 @@
       "category": "pingentes"
     },
     {
-      "id": "126",
       "name": "Pingente Medalha de São Bento em Prata 925",
       "description": "O Pingente São Bento em prata 925 une espiritualidade, tradição e estilo em uma peça minimalista. Conhecido como um dos maiores símbolos de proteção da Igreja Católica, o pingente traz a medalha de São Bento em alto-relevo, marcada por detalhes precisos e significados profundos.",
       "price": "59,90",
+      "category": "pingentes",
       "images": [
         "assets/images/pingente7.png"
       ],
-      "category": "pingentes"
+      "sizes": [
+        "Unico"
+      ],
+      "id": "126"
     },
     {
-      "name": "Pingente gorila",
-      "description": "Pingente cravejado em homenagem ao Nigorila",
+      "name": "Pingente Gorila em Prata 925 Cravejado",
+      "description": "Pingente cravejado gorila em homenagem ao Nigorila.",
       "price": "1799,99",
       "category": "pingentes",
       "images": [
