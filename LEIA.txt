@@ -1,0 +1,14 @@
+Primeiro, instalamos a base do React Navigation. Cole o seguinte comando no terminal e aperte Enter:
+npm install @react-navigation/native
+
+
+Instalando as dependências de tela
+npx expo install react-native-screens react-native-safe-area-context
+
+
+Como no nosso código de exemplo nós usamos o createNativeStackNavigator (que é o modelo de navegação que "empilha" uma tela sobre a outra,
+ permitindo o efeito do botão de "voltar"), precisamos instalar esse pacote específico também:
+ npm install @react-navigation/native-stack
+
+
+ Tudo pronto! 🚀 (Por enquanto)
