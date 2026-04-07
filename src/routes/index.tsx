@@ -12,8 +12,8 @@ export function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Cadastro" component={Cadastro} />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
