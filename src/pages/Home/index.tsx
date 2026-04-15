@@ -19,7 +19,7 @@ const { width, height } = Dimensions.get("window");
 export function Home() {
   const renderBanner = () => (
     <ImageBackground
-      source={require("../../assets/Utilitarios/fundo banner1.png")}
+      source={require("../../assets/Utilitarios/ThiagsonRevamp.png")}
       style={styles.bannerContainer}
       resizeMode="cover"
     >
