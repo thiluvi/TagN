@@ -12,7 +12,7 @@ export function Routes() {
   return (
     <NavigationContainer>
       {/* initialRoute como "home" para definir a nossa tela inicial */}
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
