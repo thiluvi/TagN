@@ -13,7 +13,8 @@ npx expo install react-native-screens react-native-safe-area-context
  4. Instalação do AsyncStorage
  npm install @react-native-async-storage/async-storage
 
-
+5. Instalação do blur (efeito de vidro fosco)
+npx expo install expo-blur
 
  Tudo pronto! 🚀 (Por enquanto)
 

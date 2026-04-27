@@ -1,27 +1,26 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-    Dimensions,
-    FlatList,
-    Image,
-    ImageBackground,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
-export function Home() {
+export function Home({ navigation }: any) {
   const renderBanner = () => (
     <ImageBackground
       source={require("../../assets/Utilitarios/fundo banner1.png")}
       style={styles.bannerContainer}
-      resizeMode="cover"
+      resizeMode="stretch"
     >
       <View style={styles.overlay} />
       <View style={styles.header}>
@@ -116,7 +115,7 @@ export function Home() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
@@ -132,32 +131,7 @@ export function Home() {
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
       />
-
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNavWrapper}>
-        <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="home" size={24} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
-            <MaterialCommunityIcons
-              name="checkbox-marked-outline"
-              size={24}
-              color="#fff"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="heart-outline" size={24} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="search-outline" size={24} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
-            <Ionicons name="person-outline" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -168,7 +142,7 @@ const styles = StyleSheet.create({
   },
   bannerContainer: {
     width: width,
-    height: height * 0.9,
+    height: height,
     justifyContent: "flex-start",
   },
   overlay: {
@@ -191,36 +165,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 6,
-  },
-  bottomNavWrapper: {
-    position: "absolute",
-    bottom: 50,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    height: 60,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    borderRadius: 30,
-    paddingHorizontal: 20,
-    width: "100%",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 12,
-  },
-  navItem: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    height: "100%",
-    padding: 8,
+    marginTop: "10%",
   },
   contentWrapper: {
     width: width,

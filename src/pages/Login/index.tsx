@@ -15,7 +15,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export function Login({ navigation }) {
+export function Login({ navigation }: any) {
   // Estados para guardar o que o usuário digita
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -164,6 +164,10 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     // O flex abaixo controla a altura da parte branca. Aumente se quiser que ela suba mais.
     flex: 2,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   title: {
     fontSize: 28,

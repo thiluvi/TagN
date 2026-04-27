@@ -5,8 +5,8 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 import { Cadastro } from "../pages/Cadastro";
-import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { TabRoutes } from "./tab.routes";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,7 +59,7 @@ export function Routes() {
       <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={TabRoutes}
           options={{ headerShown: false }}
         />
         <Stack.Screen
