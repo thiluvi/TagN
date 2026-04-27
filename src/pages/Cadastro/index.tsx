@@ -1,38 +1,91 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  StyleSheet, 
+import React, { useState } from "react";
+import {
+  Alert,
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
-} from 'react-native';
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Feather } from "@expo/vector-icons";
 
 export function Cadastro({ navigation }) {
   // Estados para os campos do formulário
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [confirmaSenha, setConfirmaSenha] = useState('');
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmaSenha, setConfirmaSenha] = useState("");
+
+  const handleCadastro = async () => {
+    // Validação simples
+    if (!nome || !email || !senha) {
+      Alert.alert("Atenção", "Por favor, preencha todos os campos.");
+      return;
+    } 
+    
+    // 1. Validação de Email (Regex para formato padrão)
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      Alert.alert(
+        "Erro",
+        "Por favor, insira um e-mail válido (exemplo@email.com).",
+      );
+      return;
+    }
+
+    // 2. Validação de Senha (Mínimo 6 caracteres)
+    if (senha.length < 6) {
+      Alert.alert("Erro", "A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    // 3. Verificação de confirmação de senha
+    if (senha !== confirmaSenha) {
+      Alert.alert("Erro", "As senhas não coincidem!");
+      return;
+    }
+
+    try {
+      const IP_DO_COMPUTADOR = "192.168.15.4";
+      const response = await fetch(
+        `http://${IP_DO_COMPUTADOR}:8080/api/auth/cadastro`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email, senha }),
+        },
+      );
+
+      if (response.status === 201) {
+        Alert.alert("Sucesso", "Conta criada com sucesso!");
+        navigation.goBack();
+      } else {
+        const erro = await response.text();
+        Alert.alert("Erro", erro || "Falha no cadastro.");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível conectar ao servidor.");
+    }
+  };
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ImageBackground 
-        source={require('../../assets/Utilitarios/plano de fundo.png')} 
+      <ImageBackground
+        source={require("../../assets/Utilitarios/plano de fundo.png")}
         style={styles.backgroundImage}
       >
-        
         {/* Área superior (botão de voltar) */}
         <View style={styles.topSection}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
@@ -42,8 +95,8 @@ export function Cadastro({ navigation }) {
 
         {/* Área inferior branca (Bottom Sheet) */}
         <View style={styles.bottomSheet}>
-          <ScrollView 
-            showsVerticalScrollIndicator={false} 
+          <ScrollView
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
           >
             <Text style={styles.title}>Cadastre-se</Text>
@@ -51,7 +104,7 @@ export function Cadastro({ navigation }) {
             {/* Input de Nome */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Nome</Text>
-              <TextInput 
+              <TextInput
                 style={styles.input}
                 placeholder="digite seu nome"
                 placeholderTextColor="#A0A0A0"
@@ -63,7 +116,7 @@ export function Cadastro({ navigation }) {
             {/* Input de Email */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Email</Text>
-              <TextInput 
+              <TextInput
                 style={styles.input}
                 placeholder="digite seu e-mail"
                 placeholderTextColor="#A0A0A0"
@@ -77,7 +130,7 @@ export function Cadastro({ navigation }) {
             {/* Input de Senha */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Senha</Text>
-              <TextInput 
+              <TextInput
                 style={styles.input}
                 placeholder="digite sua senha"
                 placeholderTextColor="#A0A0A0"
@@ -90,7 +143,7 @@ export function Cadastro({ navigation }) {
             {/* Input de Confirmar Senha */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Confirme a senha</Text>
-              <TextInput 
+              <TextInput
                 style={styles.input}
                 placeholder="digite novamente sua senha"
                 placeholderTextColor="#A0A0A0"
@@ -101,10 +154,12 @@ export function Cadastro({ navigation }) {
             </View>
 
             {/* Botão de Cadastro */}
-            <TouchableOpacity style={styles.registerButton}>
+            <TouchableOpacity
+              style={styles.registerButton}
+              onPress={handleCadastro}
+            >
               <Text style={styles.registerButtonText}>Cadastre-se</Text>
             </TouchableOpacity>
-
           </ScrollView>
         </View>
       </ImageBackground>
@@ -118,8 +173,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'space-between',
+    resizeMode: "cover",
+    justifyContent: "space-between",
   },
   topSection: {
     flex: 1,
@@ -129,10 +184,10 @@ const styles = StyleSheet.create({
   backButton: {
     width: 40,
     height: 40,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   bottomSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingHorizontal: 30,
@@ -145,14 +200,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
     marginBottom: 30,
-    textAlign: 'center', // Centralizado como na imagem
+    textAlign: "center", // Centralizado como na imagem
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: '#C0C0C0',
+    borderColor: "#C0C0C0",
     borderRadius: 20,
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -160,24 +215,24 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 14,
-    color: '#000',
+    color: "#000",
     marginBottom: 2,
   },
   input: {
     fontSize: 16,
-    color: '#333',
+    color: "#333",
     padding: 0,
   },
   registerButton: {
-    backgroundColor: '#5C4033', // Cor marrom baseada na imagem/login
+    backgroundColor: "#5C4033", // Cor marrom baseada na imagem/login
     borderRadius: 20,
     paddingVertical: 18,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   registerButtonText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 });

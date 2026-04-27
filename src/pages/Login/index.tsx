@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Alert,
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
@@ -12,11 +13,45 @@ import {
 } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Login({ navigation }) {
   // Estados para guardar o que o usuário digita
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      Alert.alert("Erro", "Preencha todos os campos");
+      return;
+    }
+
+    try {
+      const IP_DO_COMPUTADOR = "192.168.15.4";
+      const response = await fetch(
+        `http://${IP_DO_COMPUTADOR}:8080/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, senha }),
+        },
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+
+        // SALVANDO O USUÁRIO: Transformamos o objeto em string para guardar
+        await AsyncStorage.setItem("@tagn_user", JSON.stringify(userData));
+
+        Alert.alert("Bem-vindo!", `Olá, ${userData.nome}`);
+        navigation.replace("Home"); // 'replace' impede que o usuário volte para a tela de login
+      } else {
+        Alert.alert("Erro", "E-mail ou senha inválidos.");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível conectar ao servidor.");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -76,7 +111,7 @@ export function Login({ navigation }) {
             </View>
 
             {/* Botão de Entrar */}
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
               <Text style={styles.loginButtonText}>Entrar</Text>
             </TouchableOpacity>
 
