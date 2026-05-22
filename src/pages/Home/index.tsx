@@ -52,7 +52,7 @@ export function Home({ navigation }: any) {
   // Produtos de Fallback para exibir na Home caso a API do backend não esteja ativa/conectada
   const fallbackProducts = [
     {
-      name: "Anel Masculino Linha Silver",
+      name: "Anel Masculino Linha Silverrrr",
       price: "R$ 199,99",
       image: require("../../assets/Utilitarios/banner anel.png"),
       category: "Anéis",
@@ -99,7 +99,7 @@ export function Home({ navigation }: any) {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const URL_BACKEND = "http://localhost:8080";
+        const URL_BACKEND = "http://192.168.15.4:8080";
         const response = await fetch(`${URL_BACKEND}/produtos`);
         if (response.ok) {
           const data = await response.json();

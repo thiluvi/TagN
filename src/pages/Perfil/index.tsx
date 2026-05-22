@@ -69,7 +69,7 @@ export function Perfil({ navigation }: any) {
           style={styles.profileIcon}
         />
         <Text style={styles.greetingText}>
-          Olá, {userData ? userData.nome : "(nome do usuário)"}
+          Olá, {userData ? userData.nome : "Visitante"}
         </Text>
       </View>
 

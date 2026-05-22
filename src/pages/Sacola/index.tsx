@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform, StatusBar, FlatList, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useShop } from "../../context/ShopContext";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Sacola({ navigation }: any) {
   const { cartItems, removeFromCart, updateQuantity } = useShop();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      const checkUser = async () => {
+        const storedUser = await AsyncStorage.getItem("@tagn_user");
+        setIsLoggedIn(!!storedUser);
+      };
+      checkUser();
+    }, [])
+  );
 
   // faz a conta de quanto vai dar essa brincadeira toda (subtotal)
   const subtotal = cartItems.reduce((acc, item) => {
@@ -63,7 +76,18 @@ export function Sacola({ navigation }: any) {
       </View>
 
    
-      {cartItems.length === 0 ? (
+      {!isLoggedIn ? (
+        <View style={styles.content}>
+          <View style={styles.iconCircle}>
+            <Feather name="user" size={40} color="#fff" />
+          </View>
+          <Text style={styles.emptyTitle}>Faça Login para Comprar</Text>
+          <Text style={styles.emptyText}>Você precisa estar conectado para adicionar produtos e finalizar compras.</Text>
+          <TouchableOpacity style={styles.exploreBtn} onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.exploreBtnText}>Fazer Login</Text>
+          </TouchableOpacity>
+        </View>
+      ) : cartItems.length === 0 ? (
         <View style={styles.content}>
           <View style={styles.iconCircle}>
             <Feather name="shopping-bag" size={40} color="#fff" />

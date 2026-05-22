@@ -22,6 +22,7 @@ export function Login({ navigation }: any) {
   // guardando email e senha q o cara digita
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [showSenha, setShowSenha] = useState(false);
 
   const handleLogin = async () => {
     // bloqueia se tentar logar com campo vazio
@@ -32,7 +33,7 @@ export function Login({ navigation }: any) {
 
     try {
       // tenta mandar pro backend no meu ip local pq no emulador as vezes buga
-      const URL_BACKEND = "http://localhost:8080";
+      const URL_BACKEND = "http://192.168.15.4:8080";
       const response = await fetch(
         `${URL_BACKEND}/api/auth/login`,
         {
@@ -64,19 +65,16 @@ export function Login({ navigation }: any) {
   };
 
   return (
-    // esse avoidingview salva a vida pro teclado nao cobrir o botao de login
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
-
-
       <ImageBackground
         source={require("../../assets/Utilitarios/banner.png")}
         style={styles.backgroundImage}
       >
-
-        {/* botaozin de voltar pro inicio */}
+        {/* Fixed back button */}
         <View style={styles.topSection}>
           <TouchableOpacity
             style={styles.backButton}
@@ -86,14 +84,14 @@ export function Login({ navigation }: any) {
           </TouchableOpacity>
         </View>
 
-
+        {/* Scrollable Bottom Sheet */}
         <View style={styles.bottomSheet}>
           <ScrollView
             showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
             contentContainerStyle={styles.scrollContent}
           >
             <Text style={styles.title}>Bem vindo(a) de volta</Text>
-
 
             {/* digita o email aqui */}
             <View style={styles.inputContainer}>
@@ -109,26 +107,36 @@ export function Login({ navigation }: any) {
               />
             </View>
 
-
-
+            {/* digita a senha aqui */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Senha</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="digite sua senha"
-                placeholderTextColor="#A0A0A0"
-                value={senha}
-                onChangeText={setSenha}
-                secureTextEntry
-              />
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="digite sua senha"
+                  placeholderTextColor="#A0A0A0"
+                  value={senha}
+                  onChangeText={setSenha}
+                  secureTextEntry={!showSenha}
+                  autoCapitalize="none"
+                />
+                <TouchableOpacity
+                  onPress={() => setShowSenha(!showSenha)}
+                  style={styles.eyeButton}
+                >
+                  <Feather
+                    name={showSenha ? "eye-off" : "eye"}
+                    size={20}
+                    color="#777"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-
 
             {/* manda bala no login */}
             <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
               <Text style={styles.loginButtonText}>Entrar</Text>
             </TouchableOpacity>
-
 
             {/* linkzinho pra quem n tem conta ir pro cadastro q eu fiz antes */}
             <View style={styles.footer}>
@@ -137,8 +145,6 @@ export function Login({ navigation }: any) {
                 <Text style={styles.footerLink}>Crie uma</Text>
               </TouchableOpacity>
             </View>
-
-            <View style={{ height: 50 }} />
           </ScrollView>
         </View>
       </ImageBackground>
@@ -153,22 +159,18 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
   topSection: {
-    flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 20,
+    position: "absolute",
+    top: Platform.OS === "ios" ? 60 : 40,
+    left: 20,
+    zIndex: 10,
   },
   backButton: {
     width: 40,
     height: 40,
     justifyContent: "center",
-  },
-  backArrow: {
-    color: "#FFF",
-    fontSize: 28,
-    fontWeight: "bold",
   },
   bottomSheet: {
     backgroundColor: "#FFFFFF",
@@ -176,12 +178,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     paddingHorizontal: 30,
     paddingTop: 40,
-    paddingBottom: 50,
-
-    flex: 2,
+    paddingBottom: Platform.OS === "ios" ? 40 : 20,
+    maxHeight: "80%",
+    width: "100%",
   },
   scrollContent: {
-    flexGrow: 1,
     paddingBottom: 20,
   },
   title: {
@@ -204,10 +205,18 @@ const styles = StyleSheet.create({
     color: "#000",
     marginBottom: 2,
   },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   input: {
+    flex: 1,
     fontSize: 16,
     color: "#333",
     padding: 0,
+  },
+  eyeButton: {
+    padding: 5,
   },
   loginButton: {
     backgroundColor: "#5C4033",

@@ -74,7 +74,7 @@ export function Conta({ navigation }: any) {
 
     try {
       setIsLoading(true);
-      const URL_BACKEND = "http://localhost:8080";
+      const URL_BACKEND = "http://192.168.15.4:8080";
 
       const updateData = {
         nome: nome.trim(),
@@ -296,13 +296,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+    paddingTop: Platform.OS === "android" ? (StatusBar.currentHeight || 0) : 0,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingTop: Platform.OS === "android" ? (StatusBar.currentHeight || 0) + 16 : 50,
+    paddingTop: 16,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#EEEEEE",

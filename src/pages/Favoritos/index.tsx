@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform, StatusBar, FlatList, Image, Dimensions, Alert } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { useShop } from "../../context/ShopContext";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = (width - 60) / 2; 
@@ -9,11 +11,24 @@ const CARD_WIDTH = (width - 60) / 2;
 export function Favoritos({ navigation }: any) {
   // pegando as funcoes e a lista do carrinho global
   const { favoriteItems, toggleFavorite, addToCart } = useShop();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      const checkUser = async () => {
+        const storedUser = await AsyncStorage.getItem("@tagn_user");
+        setIsLoggedIn(!!storedUser);
+      };
+      checkUser();
+    }, [])
+  );
 
   // joga o item pra sacola e mostra um alerta
-  const handleAddToCart = (item: any) => {
-    addToCart(item, 1);
-    Alert.alert("Na Sacola!", `${item.name} foi adicionado à sacola.`);
+  const handleAddToCart = async (item: any) => {
+    const success = await addToCart(item, 1);
+    if (success) {
+      Alert.alert("Na Sacola!", `${item.name} foi adicionado à sacola.`);
+    }
   };
 
   const renderItem = ({ item }: any) => (
@@ -60,7 +75,18 @@ export function Favoritos({ navigation }: any) {
       </View>
 
       {/* se a lista tiver vazia mostra a telinha de aviso */}
-      {favoriteItems.length === 0 ? (
+      {!isLoggedIn ? (
+        <View style={styles.content}>
+          <View style={styles.iconCircle}>
+            <Ionicons name="heart" size={40} color="#fff" />
+          </View>
+          <Text style={styles.emptyTitle}>Faça Login para Favoritar</Text>
+          <Text style={styles.emptyText}>Conecte-se para salvar suas joias e peças favoritas em sua conta.</Text>
+          <TouchableOpacity style={styles.exploreBtn} onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.exploreBtnText}>Fazer Login</Text>
+          </TouchableOpacity>
+        </View>
+      ) : favoriteItems.length === 0 ? (
         <View style={styles.content}>
           <View style={styles.iconCircle}>
             <Ionicons name="heart" size={40} color="#fff" />

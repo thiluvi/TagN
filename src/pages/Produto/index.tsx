@@ -31,14 +31,18 @@ export function Produto({ route, navigation }: any) {
   const decreaseQuantity = () => setQuantity(q => (q > 1 ? q - 1 : 1));
 
   // joga pra sacola passando a quantidade certinha
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
-    Alert.alert("Sucesso", "Produto adicionado à sacola!");
+  const handleAddToCart = async () => {
+    const success = await addToCart(product, quantity);
+    if (success) {
+      Alert.alert("Sucesso", "Produto adicionado à sacola!");
+    }
   };
 
   const handleBuyNow = async () => {
-    await addToCart(product, quantity);
-    navigation.navigate("Pagamento");
+    const success = await addToCart(product, quantity);
+    if (success) {
+      navigation.navigate("Pagamento");
+    }
   };
 
   const isFav = isFavorite(product.name);
@@ -60,9 +64,6 @@ export function Produto({ route, navigation }: any) {
             ) : (
               <Ionicons name="heart-outline" size={24} color="#000" />
             )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Feather name="share" size={24} color="#000" />
           </TouchableOpacity>
         </View>
       </View>

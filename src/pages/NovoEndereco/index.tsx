@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Modal,
   Platform,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -93,7 +94,7 @@ export function NovoEndereco({ route, navigation }: any) {
             setRua(data.logradouro || "");
             setBairro(data.bairro || "");
             setCidade(data.localidade || "");
-            
+
             // Check if returned state (uf) exists in our list
             const foundState = ESTADOS_BRASIL.find(
               (item) => item.uf.toUpperCase() === data.uf?.toUpperCase()
@@ -126,7 +127,7 @@ export function NovoEndereco({ route, navigation }: any) {
         return;
       }
       const user = JSON.parse(storedUser);
-      const URL_BACKEND = "http://localhost:8080";
+      const URL_BACKEND = "http://192.168.15.4:8080";
 
       const addressData = {
         id: addressToEdit ? addressToEdit.id : null,
@@ -161,14 +162,15 @@ export function NovoEndereco({ route, navigation }: any) {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
-      {/* Header */}
-      <View style={styles.header}>
+        {/* Header */}
+        <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Feather name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
@@ -343,7 +345,8 @@ export function NovoEndereco({ route, navigation }: any) {
           </View>
         </View>
       </Modal>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -351,13 +354,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 20,
+    paddingTop: 20,
     paddingBottom: 15,
     backgroundColor: "#fff",
     borderBottomWidth: 1,

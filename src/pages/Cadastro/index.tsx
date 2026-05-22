@@ -20,6 +20,8 @@ export function Cadastro({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
+  const [showSenha, setShowSenha] = useState(false);
+  const [showConfirmaSenha, setShowConfirmaSenha] = useState(false);
 
   // funcao que roda quando clica no botao de cadastrar
   const handleCadastro = async () => {
@@ -53,7 +55,7 @@ export function Cadastro({ navigation }: any) {
 
     try {
       // url da api (coloquei meu ip fixo pq o localhost tava bugando no emulador)
-      const URL_BACKEND = "http://localhost:8080";
+      const URL_BACKEND = "http://192.168.15.4:8080";
       const response = await fetch(
         `${URL_BACKEND}/api/auth/cadastro`,
         {
@@ -77,16 +79,16 @@ export function Cadastro({ navigation }: any) {
   };
 
   return (
-    // keyboardavoidingview pra nao deixar o teclado cobrir a tela qdo abre
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
       <ImageBackground
         source={require("../../assets/Utilitarios/banner.png")}
         style={styles.backgroundImage}
       >
-
+        {/* Fixed back button */}
         <View style={styles.topSection}>
           <TouchableOpacity
             style={styles.backButton}
@@ -96,10 +98,11 @@ export function Cadastro({ navigation }: any) {
           </TouchableOpacity>
         </View>
 
-
+        {/* Scrollable Bottom Sheet */}
         <View style={styles.bottomSheet}>
           <ScrollView
             showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
             contentContainerStyle={styles.scrollContent}
           >
             <Text style={styles.title}>Cadastre-se</Text>
@@ -133,27 +136,53 @@ export function Cadastro({ navigation }: any) {
             {/* campo da senha q esconde as letrinhas */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Senha</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="digite sua senha"
-                placeholderTextColor="#A0A0A0"
-                value={senha}
-                onChangeText={setSenha}
-                secureTextEntry
-              />
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="digite sua senha"
+                  placeholderTextColor="#A0A0A0"
+                  value={senha}
+                  onChangeText={setSenha}
+                  secureTextEntry={!showSenha}
+                  autoCapitalize="none"
+                />
+                <TouchableOpacity
+                  onPress={() => setShowSenha(!showSenha)}
+                  style={styles.eyeButton}
+                >
+                  <Feather
+                    name={showSenha ? "eye-off" : "eye"}
+                    size={20}
+                    color="#777"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
 
-
+            {/* campo de confirmar senha */}
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Confirme a senha</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="digite novamente sua senha"
-                placeholderTextColor="#A0A0A0"
-                value={confirmaSenha}
-                onChangeText={setConfirmaSenha}
-                secureTextEntry
-              />
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="digite novamente sua senha"
+                  placeholderTextColor="#A0A0A0"
+                  value={confirmaSenha}
+                  onChangeText={setConfirmaSenha}
+                  secureTextEntry={!showConfirmaSenha}
+                  autoCapitalize="none"
+                />
+                <TouchableOpacity
+                  onPress={() => setShowConfirmaSenha(!showConfirmaSenha)}
+                  style={styles.eyeButton}
+                >
+                  <Feather
+                    name={showConfirmaSenha ? "eye-off" : "eye"}
+                    size={20}
+                    color="#777"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
 
             {/* botao q manda pro banco */}
@@ -177,12 +206,13 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
   topSection: {
-    flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 20,
+    position: "absolute",
+    top: Platform.OS === "ios" ? 60 : 40,
+    left: 20,
+    zIndex: 10,
   },
   backButton: {
     width: 40,
@@ -195,11 +225,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     paddingHorizontal: 30,
     paddingTop: 40,
-    paddingBottom: 20,
-    flex: 3,
+    paddingBottom: Platform.OS === "ios" ? 40 : 20,
+    maxHeight: "80%",
+    width: "100%",
   },
   scrollContent: {
-    paddingBottom: 40,
+    paddingBottom: 20,
   },
   title: {
     fontSize: 28,
@@ -221,10 +252,18 @@ const styles = StyleSheet.create({
     color: "#000",
     marginBottom: 2,
   },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   input: {
+    flex: 1,
     fontSize: 16,
     color: "#333",
     padding: 0,
+  },
+  eyeButton: {
+    padding: 5,
   },
   registerButton: {
     backgroundColor: "#5C4033",
