@@ -52,7 +52,7 @@ export function Home({ navigation }: any) {
   // Produtos de Fallback para exibir na Home caso a API do backend não esteja ativa/conectada
   const fallbackProducts = [
     {
-      name: "Anel Masculino Linha Silverrrr",
+      name: "Anel Masculino Linha Silver",
       price: "R$ 199,99",
       image: require("../../assets/Utilitarios/banner anel.png"),
       category: "Anéis",
