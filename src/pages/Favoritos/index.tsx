@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform, StatusBar, FlatList, Image, Dimensions, Alert } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { useShop } from "../../context/ShopContext";
 
 const { width } = Dimensions.get("window");
@@ -23,7 +23,7 @@ export function Favoritos({ navigation }: any) {
         style={styles.heartBtn} 
         onPress={() => toggleFavorite(item)}
       >
-        <Feather name="heart" size={20} color="red" style={{ fill: "red" }} />
+        <Ionicons name="heart" size={20} color="red" />
       </TouchableOpacity>
 
       <View style={styles.imageContainer}>
@@ -63,7 +63,7 @@ export function Favoritos({ navigation }: any) {
       {favoriteItems.length === 0 ? (
         <View style={styles.content}>
           <View style={styles.iconCircle}>
-            <Feather name="heart" size={40} color="#fff" style={{ fill: "#fff" }} />
+            <Ionicons name="heart" size={40} color="#fff" />
           </View>
           <Text style={styles.emptyTitle}>Nenhum Favorito Ainda</Text>
           <Text style={styles.emptyText}>Que tal explorar as novidades e salvar as peças que você mais gostar?</Text>

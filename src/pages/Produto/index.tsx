@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   Alert,
@@ -36,6 +36,11 @@ export function Produto({ route, navigation }: any) {
     Alert.alert("Sucesso", "Produto adicionado à sacola!");
   };
 
+  const handleBuyNow = async () => {
+    await addToCart(product, quantity);
+    navigation.navigate("Pagamento");
+  };
+
   const isFav = isFavorite(product.name);
 
   return (
@@ -51,9 +56,9 @@ export function Produto({ route, navigation }: any) {
         <View style={styles.headerRight}>
           <TouchableOpacity onPress={() => toggleFavorite(product)} style={styles.iconButton}>
             {isFav ? (
-              <Feather name="heart" size={24} color="red" style={{ fill: "red" }} />
+              <Ionicons name="heart" size={24} color="red" />
             ) : (
-              <Feather name="heart" size={24} color="#000" />
+              <Ionicons name="heart-outline" size={24} color="#000" />
             )}
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
@@ -83,15 +88,9 @@ export function Produto({ route, navigation }: any) {
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productPrice}>{product.price}</Text>
 
-          {/* botoes pra escolher o tamanho e se quer mais de 1 (qtd) */}
+          {/* botoes pra escolher se quer mais de 1 (qtd) */}
           <View style={styles.selectorsRow}>
-            <View style={styles.sizeSelector}>
-              <Text style={styles.selectorLabel}>Tamanho:</Text>
-              <TouchableOpacity style={styles.sizeButton}>
-                <Text style={styles.sizeButtonText}>Selecione</Text>
-              </TouchableOpacity>
-            </View>
-
+            <Text style={styles.selectorLabel}>Quantidade:</Text>
             <View style={styles.quantitySelector}>
               <TouchableOpacity onPress={decreaseQuantity} style={styles.qtyButton}>
                 <Feather name="minus" size={16} color="#000" />
@@ -112,7 +111,7 @@ export function Produto({ route, navigation }: any) {
             <TouchableOpacity onPress={handleAddToCart} style={styles.addToCartButton}>
               <Text style={styles.addToCartText}>ADICIONAR AO CARRINHO</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buyNowButton}>
+            <TouchableOpacity onPress={handleBuyNow} style={styles.buyNowButton}>
               <Text style={styles.buyNowText}>COMPRAR AGORA</Text>
             </TouchableOpacity>
           </View>

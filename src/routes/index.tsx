@@ -7,6 +7,11 @@ import { ActivityIndicator, View } from "react-native";
 import { Cadastro } from "../pages/Cadastro";
 import { Login } from "../pages/Login";
 import { Produto } from "../pages/Produto";
+import { Pedidos } from "../pages/Pedidos";
+import { Enderecos } from "../pages/Enderecos";
+import { NovoEndereco } from "../pages/NovoEndereco";
+import { Pagamento } from "../pages/Pagamento";
+import { Conta } from "../pages/Conta";
 import { TabRoutes } from "./tab.routes";
 
 const Stack = createNativeStackNavigator();
@@ -76,6 +81,31 @@ export function Routes() {
         <Stack.Screen
           name="Produto"
           component={Produto}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Pedidos"
+          component={Pedidos}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Enderecos"
+          component={Enderecos}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NovoEndereco"
+          component={NovoEndereco}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Pagamento"
+          component={Pagamento}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Conta"
+          component={Conta}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -14,8 +14,10 @@ import {
 
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useShop } from "../../context/ShopContext";
 
 export function Login({ navigation }: any) {
+  const { refreshUserData } = useShop();
 
   // guardando email e senha q o cara digita
   const [email, setEmail] = useState("");
@@ -46,6 +48,9 @@ export function Login({ navigation }: any) {
 
         // salva no asyncstorage pro app lembrar q ele ta logado
         await AsyncStorage.setItem("@tagn_user", JSON.stringify(userData));
+
+        // Atualiza os dados de sacola e favoritos no contexto
+        await refreshUserData();
 
         Alert.alert("Bem-vindo!", `Olá, ${userData.nome}`);
         navigation.replace("Home");

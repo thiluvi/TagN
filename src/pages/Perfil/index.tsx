@@ -11,10 +11,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useShop } from "../../context/ShopContext";
 
 const { width } = Dimensions.get("window");
 
 export function Perfil({ navigation }: any) {
+  const { refreshUserData } = useShop();
   // estado pra guardar os dados do cara que ta logado
   const [userData, setUserData] = useState<any>(null);
 
@@ -37,6 +39,8 @@ export function Perfil({ navigation }: any) {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("@tagn_user");
+      // Limpa os dados da sacola e favoritos no contexto
+      await refreshUserData();
       navigation.replace("Login");
     } catch (error) {
       console.error("Erro ao sair:", error);
@@ -75,7 +79,10 @@ export function Perfil({ navigation }: any) {
         {userData && (
           <View style={styles.menuList}>
            
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => navigation.navigate("Pedidos")}
+            >
               <View style={styles.menuIconContainer}>
                 <Feather name="clipboard" size={24} color="#000" />
               </View>
@@ -85,8 +92,10 @@ export function Perfil({ navigation }: any) {
               </View>
             </TouchableOpacity>
 
-            
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => navigation.navigate("Enderecos")}
+            >
               <View style={styles.menuIconContainer}>
                 <Feather name="map-pin" size={24} color="#000" />
               </View>
@@ -97,7 +106,10 @@ export function Perfil({ navigation }: any) {
             </TouchableOpacity>
 
             
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => navigation.navigate("Conta")}
+            >
               <View style={styles.menuIconContainer}>
                 <Feather name="file-text" size={24} color="#000" />
               </View>

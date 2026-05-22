@@ -94,7 +94,10 @@ export function Sacola({ navigation }: any) {
               <Text style={styles.subtotalValue}>{formattedSubtotal}</Text>
             </View>
             
-            <TouchableOpacity style={styles.checkoutBtn} onPress={() => {}}>
+            <TouchableOpacity 
+              style={styles.checkoutBtn} 
+              onPress={() => navigation.navigate("Pagamento")}
+            >
               <Text style={styles.checkoutBtnText}>Seguir para o Pagamento</Text>
             </TouchableOpacity>
           </View>

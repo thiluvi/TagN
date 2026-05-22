@@ -1,6 +1,7 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -16,7 +17,148 @@ import {
 const { width, height } = Dimensions.get("window");
 
 export function Home({ navigation }: any) {
+  // 1. Definições de Estado da Página
+  const [produtos, setProdutos] = useState<any[]>([]); // Produtos recebidos do backend
+  const [isLoading, setIsLoading] = useState(true); // Controla o indicador de carregamento
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Categoria selecionada para filtro
 
+  /**
+   * Helper: Normaliza strings removendo acentuações e caracteres especiais
+   * para fazer comparações de busca de forma robusta e limpa.
+   */
+  const normalizeString = (str: string) => {
+    if (!str) return "";
+    return str
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "");
+  };
+
+  /**
+   * Helper: Verifica se a categoria do produto bate com a categoria selecionada.
+   * Contempla sinônimos como 'Colares' e 'Correntes' para melhor usabilidade.
+   */
+  const isCategoryMatch = (productCategory: string | undefined, selectedCat: string) => {
+    if (!productCategory) return false;
+    const pCat = normalizeString(productCategory);
+    const sCat = normalizeString(selectedCat);
+    if (pCat === sCat) return true;
+    if (sCat === "colares" && pCat === "correntes") return true;
+    if (sCat === "correntes" && pCat === "colares") return true;
+    return false;
+  };
+
+  // Produtos de Fallback para exibir na Home caso a API do backend não esteja ativa/conectada
+  const fallbackProducts = [
+    {
+      name: "Anel Masculino Linha Silver",
+      price: "R$ 199,99",
+      image: require("../../assets/Utilitarios/banner anel.png"),
+      category: "Anéis",
+      description: "Anel Masculino Linha Silver em Aço Inoxidável.\nAltura: 6,00(mm)",
+    },
+    {
+      name: "Pulseira Clássica Gold",
+      price: "R$ 179,99",
+      image: require("../../assets/Utilitarios/banner pulseira.png"),
+      category: "Pulseiras",
+      description: "Pulseira Clássica Gold Banhada a Ouro 18k.\nComprimento: 19cm",
+    },
+    {
+      name: "Relógio Classic Black",
+      price: "R$ 349,90",
+      image: require("../../assets/Utilitarios/banner relogio.png"),
+      category: "Relógios",
+      description: "Relógio Analógico Masculino Premium.\nResistente à água 5ATM.",
+    },
+    {
+      name: "Corrente Aço Inoxidável",
+      price: "R$ 129,90",
+      image: require("../../assets/Utilitarios/banner colar.png"),
+      category: "Colares",
+      description: "Corrente Masculina em Aço Inoxidável 316L.\nComprimento: 60cm.",
+    },
+    {
+      name: "Brinco Argola Ouro 18k",
+      price: "R$ 259,90",
+      image: require("../../assets/Utilitarios/banner brinco.png"),
+      category: "Brincos",
+      description: "Brinco Feminino estilo Argola com banho de Ouro 18k.",
+    },
+    {
+      name: "Anel Solitário Prata 925",
+      price: "R$ 149,90",
+      image: require("../../assets/Utilitarios/banner anel.png"),
+      category: "Anéis",
+      description: "Anel Solitário Feminino em Prata 925 com zircônia central.",
+    },
+  ];
+
+  // 2. Busca inicial de produtos do banco de dados (Spring Boot)
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const URL_BACKEND = "http://localhost:8080";
+        const response = await fetch(`${URL_BACKEND}/produtos`);
+        if (response.ok) {
+          const data = await response.json();
+          setProdutos(data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar produtos da API:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProdutos();
+  }, []);
+
+  // 3. Mapeamento de Produtos da API (para bater com o formato consumido pelo layout)
+  const mappedProducts = produtos.length > 0
+    ? produtos.map((prod: any) => ({
+      id: prod.id,
+      name: prod.nome,
+      price: `R$ ${Number(prod.preco).toFixed(2).replace(".", ",")}`,
+      image: { uri: prod.imagem },
+      category: prod.categoria,
+      description: prod.descricao,
+    }))
+    : fallbackProducts;
+
+  // 4. Separação de Listas Específicas para Seções da Home
+  const destaques = mappedProducts.slice(0, 4);
+
+  const masculino = mappedProducts.filter((p: any) =>
+    p.name.toLowerCase().includes("masculin") ||
+    p.name.toLowerCase().includes("hunter") ||
+    p.name.toLowerCase().includes("medalhão")
+  );
+
+  const feminino = mappedProducts.filter((p: any) =>
+    (p.name.toLowerCase().includes("feminin") ||
+      p.name.toLowerCase().includes("solitári") ||
+      p.name.toLowerCase().includes("argola") ||
+      p.name.toLowerCase().includes("seiko dourado") ||
+      p.name.toLowerCase().includes("seiko minimalista")) &&
+    !p.name.toLowerCase().includes("masculin")
+  );
+
+  // 5. Função de Renderização dos Cards Individuais de Produto
+  const renderProductCard = (product: any, index: number) => (
+    <TouchableOpacity
+      key={index}
+      style={styles.productCard}
+      onPress={() => navigation.navigate("Produto", { product })}
+    >
+      <Image source={product.image} style={styles.productImage} />
+      <Text style={styles.productName}>{product.name}</Text>
+      <Text style={styles.productPrice}>{product.price}</Text>
+    </TouchableOpacity>
+  );
+
+  // 6. Sub-renderizador: Banner Superior de Promoção
   const renderBanner = () => (
     <ImageBackground
       source={require("../../assets/Utilitarios/fundo_banner3.png")}
@@ -24,11 +166,7 @@ export function Home({ navigation }: any) {
       resizeMode="stretch"
     >
       <View style={styles.overlay} />
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.menuButton}>
-          <Ionicons name="menu" size={28} color="#ffffff" />
-        </TouchableOpacity>
-      </View>
+      <View style={styles.header} />
 
       <View style={styles.heroTextContainer}>
         <Text style={styles.heroSubtitle}>PRIMEIRA COMPRA</Text>
@@ -42,12 +180,10 @@ export function Home({ navigation }: any) {
     </ImageBackground>
   );
 
-
+  // 7. Sub-renderizador: Conteúdo Principal (Categorias e Grades de Produtos)
   const renderContent = () => (
     <View style={styles.contentWrapper}>
-
-
-      {/* faixinha de promocao do frete */}
+      {/* Faixa promocional preta */}
       <View style={styles.promoBanner}>
         <MaterialCommunityIcons name="truck" size={24} color="#fff" />
         <Text style={styles.promoText}>
@@ -55,8 +191,7 @@ export function Home({ navigation }: any) {
         </Text>
       </View>
 
-
-      {/* barra de categorias q rola pro lado */}
+      {/* Lista horizontal de seleção de categorias */}
       <Text style={styles.sectionTitle}>Categorias</Text>
       <ScrollView
         horizontal
@@ -64,149 +199,115 @@ export function Home({ navigation }: any) {
         style={styles.categoriesScroll}
       >
         {[
+          { name: "Todos", isAll: true },
           { name: "Relógios", img: require("../../assets/Utilitarios/banner relogio.png") },
           { name: "Anéis", img: require("../../assets/Utilitarios/banner anel.png") },
           { name: "Pulseiras", img: require("../../assets/Utilitarios/banner pulseira.png") },
           { name: "Colares", img: require("../../assets/Utilitarios/banner colar.png") },
           { name: "Brincos", img: require("../../assets/Utilitarios/banner brinco.png") },
-        ].map((item, index) => (
-          <View key={index} style={styles.categoryCard}>
-            <Image source={item.img} style={styles.categoryImage} />
-            <Text style={styles.categoryName}>{item.name}</Text>
-          </View>
-        ))}
+        ].map((item, index) => {
+          const isActive = item.isAll ? (selectedCategory === null) : (selectedCategory === item.name);
+          return (
+            <TouchableOpacity
+              key={index}
+              style={styles.categoryCard}
+              onPress={() => setSelectedCategory(item.isAll ? null : item.name)}
+            >
+              {item.isAll ? (
+                <View style={[
+                  styles.categoryIconContainer,
+                  isActive && styles.categoryIconContainerActive
+                ]}>
+                  <Ionicons name="grid-outline" size={28} color={isActive ? "#000" : "#333"} />
+                </View>
+              ) : (
+                <Image
+                  source={item.img}
+                  style={[
+                    styles.categoryImage,
+                    isActive && styles.categoryImageActive
+                  ]}
+                />
+              )}
+              <Text style={[
+                styles.categoryName,
+                isActive && styles.categoryNameActive
+              ]}>
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
 
-      
-      <View style={styles.destaqueSection}>
-        <Text style={styles.destaqueTitulo}>DESTAQUES</Text>
-        <View style={styles.destaqueLine} />
-      </View>
+      {/* Exibição condicional da lista de produtos de acordo com a categoria selecionada */}
+      {isLoading ? (
+        <View style={{ paddingVertical: 50, justifyContent: "center", alignItems: "center" }}>
+          <ActivityIndicator size="large" color="#5C4033" />
+        </View>
+      ) : (
+        <>
+          {selectedCategory ? (
+            <>
+              {/* Layout para categoria selecionada individualmente */}
+              <View style={styles.destaqueSection}>
+                <Text style={styles.destaqueTitulo}>{selectedCategory.toUpperCase()}</Text>
+                <View style={styles.destaqueLine} />
+              </View>
 
-      <View style={styles.productsGrid}>
-        <TouchableOpacity
-          style={styles.productCard}
-          onPress={() => navigation.navigate("Produto", {
-            product: {
-              name: "Anel Masculino Linha Silver",
-              price: "R$ 199,99",
-              image: require("../../assets/Utilitarios/banner anel.png"),
-              category: "Anéis",
-              description: "Anel Masculino Linha Silver em Aço Inoxidável.\nAltura: 6,00(mm)",
-            }
-          })}
-        >
-          <Image source={require("../../assets/Utilitarios/banner anel.png")} style={styles.productImage} />
-          <Text style={styles.productName}>Anel Masculino Linha Silver</Text>
-          <Text style={styles.productPrice}>R$ 199,99</Text>
-        </TouchableOpacity>
+              {mappedProducts.filter((p: any) => isCategoryMatch(p.category, selectedCategory)).length > 0 ? (
+                <View style={styles.productsGrid}>
+                  {mappedProducts
+                    .filter((p: any) => isCategoryMatch(p.category, selectedCategory))
+                    .map((prod, index) => renderProductCard(prod, index))}
+                </View>
+              ) : (
+                <View style={{ paddingVertical: 50, alignItems: "center" }}>
+                  <Text style={{ color: "#666", fontSize: 16 }}>Nenhum produto encontrado nesta categoria.</Text>
+                </View>
+              )}
+            </>
+          ) : (
+            <>
+              {/* Layout padrão da Home com divisões Destaques, Masculino e Feminino */}
+              {/* DESTAQUES */}
+              <View style={styles.destaqueSection}>
+                <Text style={styles.destaqueTitulo}>DESTAQUES</Text>
+                <View style={styles.destaqueLine} />
+              </View>
 
-        <TouchableOpacity
-          style={styles.productCard}
-          onPress={() => navigation.navigate("Produto", {
-            product: {
-              name: "Pulseira Clássica Gold",
-              price: "R$ 179,99",
-              image: require("../../assets/Utilitarios/banner pulseira.png"),
-              category: "Pulseiras",
-              description: "Pulseira Clássica Gold Banhada a Ouro 18k.\nComprimento: 19cm",
-            }
-          })}
-        >
-          <Image source={require("../../assets/Utilitarios/banner pulseira.png")} style={styles.productImage} />
-          <Text style={styles.productName}>Pulseira Clássica Gold</Text>
-          <Text style={styles.productPrice}>R$ 179,99</Text>
-        </TouchableOpacity>
-      </View>
+              <View style={styles.productsGrid}>
+                {destaques.map((prod, index) => renderProductCard(prod, index))}
+              </View>
 
-      {/* produtos pra homem (relogios e correntes) */}
-      <View style={styles.destaqueSection}>
-        <Text style={styles.destaqueTitulo}>MASCULINO</Text>
-        <View style={styles.destaqueLine} />
-      </View>
+              {/* MASCULINO */}
+              <View style={styles.destaqueSection}>
+                <Text style={styles.destaqueTitulo}>MASCULINO</Text>
+                <View style={styles.destaqueLine} />
+              </View>
 
-      <View style={styles.productsGrid}>
-        <TouchableOpacity
-          style={styles.productCard}
-          onPress={() => navigation.navigate("Produto", {
-            product: {
-              name: "Relógio Classic Black",
-              price: "R$ 349,90",
-              image: require("../../assets/Utilitarios/banner relogio.png"),
-              category: "Relógios",
-              description: "Relógio Analógico Masculino Premium.\nResistente à água 5ATM.",
-            }
-          })}
-        >
-          <Image source={require("../../assets/Utilitarios/banner relogio.png")} style={styles.productImage} />
-          <Text style={styles.productName}>Relógio Classic Black</Text>
-          <Text style={styles.productPrice}>R$ 349,90</Text>
-        </TouchableOpacity>
+              <View style={styles.productsGrid}>
+                {masculino.map((prod, index) => renderProductCard(prod, index))}
+              </View>
 
-        <TouchableOpacity
-          style={styles.productCard}
-          onPress={() => navigation.navigate("Produto", {
-            product: {
-              name: "Corrente Aço Inoxidável",
-              price: "R$ 129,90",
-              image: require("../../assets/Utilitarios/banner colar.png"),
-              category: "Colares",
-              description: "Corrente Masculina em Aço Inoxidável 316L.\nComprimento: 60cm.",
-            }
-          })}
-        >
-          <Image source={require("../../assets/Utilitarios/banner colar.png")} style={styles.productImage} />
-          <Text style={styles.productName}>Corrente Aço Inoxidável</Text>
-          <Text style={styles.productPrice}>R$ 129,90</Text>
-        </TouchableOpacity>
-      </View>
+              {/* FEMININO */}
+              <View style={styles.destaqueSection}>
+                <Text style={styles.destaqueTitulo}>FEMININO</Text>
+                <View style={styles.destaqueLine} />
+              </View>
 
-      {/* produtos pra mulher (brincos e aneis) */}
-      <View style={styles.destaqueSection}>
-        <Text style={styles.destaqueTitulo}>FEMININO</Text>
-        <View style={styles.destaqueLine} />
-      </View>
+              <View style={styles.productsGrid}>
+                {feminino.map((prod, index) => renderProductCard(prod, index))}
+              </View>
+            </>
+          )}
+        </>
+      )}
 
-      <View style={styles.productsGrid}>
-        <TouchableOpacity
-          style={styles.productCard}
-          onPress={() => navigation.navigate("Produto", {
-            product: {
-              name: "Brinco Argola Ouro 18k",
-              price: "R$ 259,90",
-              image: require("../../assets/Utilitarios/banner brinco.png"),
-              category: "Brincos",
-              description: "Brinco Feminino estilo Argola com banho de Ouro 18k.",
-            }
-          })}
-        >
-          <Image source={require("../../assets/Utilitarios/banner brinco.png")} style={styles.productImage} />
-          <Text style={styles.productName}>Brinco Argola Ouro 18k</Text>
-          <Text style={styles.productPrice}>R$ 259,90</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.productCard}
-          onPress={() => navigation.navigate("Produto", {
-            product: {
-              name: "Anel Solitário Prata 925",
-              price: "R$ 149,90",
-              image: require("../../assets/Utilitarios/banner anel.png"),
-              category: "Anéis",
-              description: "Anel Solitário Feminino em Prata 925 com zircônia central.",
-            }
-          })}
-        >
-          <Image source={require("../../assets/Utilitarios/banner anel.png")} style={styles.productImage} />
-          <Text style={styles.productName}>Anel Solitário Prata 925</Text>
-          <Text style={styles.productPrice}>R$ 149,90</Text>
-        </TouchableOpacity>
-      </View>
-
-
+      {/* Rodapé institucional com informações autorais */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>test</Text>
-        <Text style={styles.footerSubText}>test</Text>
+        <Text style={styles.footerText}>TagN Joias</Text>
+        <Text style={styles.footerSubText}>Coleções exclusivas para todos os momentos © 2026 TagN</Text>
       </View>
     </View>
   );
@@ -215,6 +316,7 @@ export function Home({ navigation }: any) {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
 
+      {/* FlatList geral empilhando o banner de topo e o conteúdo abaixo */}
       <FlatList
         data={[{ id: "banner" }, { id: "content" }]}
         renderItem={({ item }) => (item.id === "banner" ? renderBanner() : renderContent())}
@@ -332,10 +434,29 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     backgroundColor: "#f0f0f0",
   },
+  categoryImageActive: {
+    borderWidth: 2.5,
+    borderColor: "#d4af37",
+  },
   categoryName: {
     fontSize: 12,
     color: "#333",
     marginTop: 5,
+  },
+  categoryNameActive: {
+    color: "#d4af37",
+    fontWeight: "bold",
+  },
+  categoryIconContainer: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: "#f0f0f0",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  categoryIconContainerActive: {
+    backgroundColor: "#d4af37",
   },
 
 
@@ -356,6 +477,7 @@ const styles = StyleSheet.create({
   },
   productsGrid: {
     flexDirection: "row",
+    flexWrap: "wrap",
     paddingHorizontal: 12,
     justifyContent: "space-between",
   },

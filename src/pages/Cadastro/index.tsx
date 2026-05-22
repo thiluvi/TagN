@@ -63,10 +63,10 @@ export function Cadastro({ navigation }: any) {
         },
       );
 
-      // se voltar status 201 quer dizer q criou no banco de dados e pode voltar
+      // se voltar status 201 quer dizer q criou no banco de dados e redireciona para o login
       if (response.status === 201) {
         Alert.alert("Sucesso", "Conta criada com sucesso!");
-        navigation.goBack();
+        navigation.navigate("Login");
       } else {
         const erro = await response.text();
         Alert.alert("Erro", erro || "Falha no cadastro.");
