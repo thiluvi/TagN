@@ -127,7 +127,7 @@ export function NovoEndereco({ route, navigation }: any) {
         return;
       }
       const user = JSON.parse(storedUser);
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
 
       const addressData = {
         id: addressToEdit ? addressToEdit.id : null,

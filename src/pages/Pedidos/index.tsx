@@ -41,7 +41,7 @@ export function Pedidos({ navigation }: any) {
       const storedUser = await AsyncStorage.getItem("@tagn_user");
       if (!storedUser) return;
       const user = JSON.parse(storedUser);
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       
       const response = await fetch(`${URL_BACKEND}/pedidos/usuario/${user.id}`);
       if (response.ok) {

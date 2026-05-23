@@ -74,7 +74,7 @@ export function Conta({ navigation }: any) {
 
     try {
       setIsLoading(true);
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
 
       const updateData = {
         nome: nome.trim(),

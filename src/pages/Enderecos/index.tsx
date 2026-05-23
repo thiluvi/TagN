@@ -29,7 +29,7 @@ export function Enderecos({ navigation }: any) {
         return;
       }
       const user = JSON.parse(storedUser);
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       const response = await fetch(`${URL_BACKEND}/enderecos/usuario/${user.id}`);
       if (response.ok) {
         const data = await response.json();
@@ -53,7 +53,7 @@ export function Enderecos({ navigation }: any) {
   const handleDelete = (id: number) => {
     const performDelete = async () => {
       try {
-        const URL_BACKEND = "http://192.168.15.4:8080";
+        const URL_BACKEND = "http://localhost:8080";
         const response = await fetch(`${URL_BACKEND}/enderecos/${id}`, {
           method: "DELETE",
         });

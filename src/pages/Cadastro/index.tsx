@@ -55,7 +55,7 @@ export function Cadastro({ navigation }: any) {
 
     try {
       // url da api (coloquei meu ip fixo pq o localhost tava bugando no emulador)
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       const response = await fetch(
         `${URL_BACKEND}/api/auth/cadastro`,
         {

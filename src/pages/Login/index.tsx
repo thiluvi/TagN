@@ -33,7 +33,7 @@ export function Login({ navigation }: any) {
 
     try {
       // tenta mandar pro backend no meu ip local pq no emulador as vezes buga
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       const response = await fetch(
         `${URL_BACKEND}/api/auth/login`,
         {

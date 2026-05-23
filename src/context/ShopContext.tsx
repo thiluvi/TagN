@@ -54,7 +54,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
    */
   const loadCart = async (userId: number) => {
     try {
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       const response = await fetch(`${URL_BACKEND}/sacola/usuario/${userId}`);
       if (response.ok) {
         const data = await response.json();
@@ -80,7 +80,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
    */
   const loadFavorites = async (userId: number) => {
     try {
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       const response = await fetch(`${URL_BACKEND}/favoritos/usuario/${userId}`);
       if (response.ok) {
         const data = await response.json();
@@ -132,7 +132,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     try {
-      const URL_BACKEND = "http://192.168.15.4:8080";
+      const URL_BACKEND = "http://localhost:8080";
       const existingItem = cartItems.find((item) => item.name === product.name);
 
       if (existingItem && existingItem.cartItemId) {
@@ -184,7 +184,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const itemToDelete = cartItems.find((item) => item.name === productName);
     if (itemToDelete && itemToDelete.cartItemId) {
       try {
-        const URL_BACKEND = "http://192.168.15.4:8080";
+        const URL_BACKEND = "http://localhost:8080";
         const response = await fetch(`${URL_BACKEND}/sacola/${itemToDelete.cartItemId}`, {
           method: "DELETE",
         });
@@ -208,7 +208,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const itemToUpdate = cartItems.find((item) => item.name === productName);
     if (itemToUpdate && itemToUpdate.cartItemId) {
       try {
-        const URL_BACKEND = "http://192.168.15.4:8080";
+        const URL_BACKEND = "http://localhost:8080";
         const response = await fetch(`${URL_BACKEND}/sacola/${itemToUpdate.cartItemId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -233,7 +233,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    const URL_BACKEND = "http://192.168.15.4:8080";
+    const URL_BACKEND = "http://localhost:8080";
     const existingFav = favoriteItems.find((item: any) => item.name === product.name) as any;
 
     try {
