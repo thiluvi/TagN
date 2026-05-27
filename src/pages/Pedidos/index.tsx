@@ -23,12 +23,23 @@ type OrderItem = {
   image: any;
 };
 
+type OrderAddress = {
+  rua: string;
+  numero: string;
+  complemento?: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  cep: string;
+};
+
 type Order = {
   id: string;
   date: string;
   items: OrderItem[];
   total: string;
   formaPagamento: string;
+  endereco?: OrderAddress | null;
 };
 
 export function Pedidos({ navigation }: any) {
@@ -69,6 +80,15 @@ export function Pedidos({ navigation }: any) {
             total: `R$ ${Number(order.total).toFixed(2).replace(".", ",")}`,
             items: orderItems,
             formaPagamento: order.formaPagamento,
+            endereco: order.endereco ? {
+              rua: order.endereco.rua,
+              numero: order.endereco.numero,
+              complemento: order.endereco.complemento,
+              bairro: order.endereco.bairro,
+              cidade: order.endereco.cidade,
+              estado: order.endereco.estado,
+              cep: order.endereco.cep,
+            } : null,
           };
         });
         
@@ -140,6 +160,27 @@ export function Pedidos({ navigation }: any) {
 
         {/* Divisor */}
         <View style={styles.divider} />
+
+        {/* Endereço de entrega */}
+        {item.endereco && (
+          <>
+            <View style={styles.addressContainer}>
+              <View style={styles.addressHeaderRow}>
+                <Feather name="map-pin" size={12} color="#5C4033" />
+                <Text style={styles.addressTitle}>Endereço de Entrega</Text>
+              </View>
+              <Text style={styles.addressText}>
+                {item.endereco.rua}, {item.endereco.numero}
+                {item.endereco.complemento ? ` - ${item.endereco.complemento}` : ""}
+              </Text>
+              <Text style={styles.addressSubtext}>
+                {item.endereco.bairro} • {item.endereco.cidade}/{item.endereco.estado} • CEP: {item.endereco.cep}
+              </Text>
+            </View>
+            {/* Divisor */}
+            <View style={styles.divider} />
+          </>
+        )}
 
         {/* Rodapé do card com Total */}
         <View style={styles.orderCardFooter}>
@@ -354,5 +395,32 @@ const styles = StyleSheet.create({
     color: "#868E96",
     textAlign: "center",
     lineHeight: 20,
+  },
+  addressContainer: {
+    padding: 16,
+    backgroundColor: "#FAF9F8",
+  },
+  addressHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 6,
+  },
+  addressTitle: {
+    fontSize: 11,
+    fontWeight: "bold",
+    color: "#5C4033",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  addressText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#495057",
+    marginBottom: 2,
+  },
+  addressSubtext: {
+    fontSize: 12,
+    color: "#868E96",
   },
 });
