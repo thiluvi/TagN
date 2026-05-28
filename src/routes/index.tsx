@@ -12,6 +12,9 @@ import { Enderecos } from "../pages/Enderecos";
 import { NovoEndereco } from "../pages/NovoEndereco";
 import { Pagamento } from "../pages/Pagamento";
 import { Conta } from "../pages/Conta";
+import { AdminDashboard } from "../pages/AdminDashboard";
+import { AdminProdutos } from "../pages/AdminProdutos";
+import { AdminProdutoForm } from "../pages/AdminProdutoForm";
 import { TabRoutes } from "./tab.routes";
 
 const Stack = createNativeStackNavigator();
@@ -106,6 +109,21 @@ export function Routes() {
         <Stack.Screen
           name="Conta"
           component={Conta}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AdminDashboard"
+          component={AdminDashboard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AdminProdutos"
+          component={AdminProdutos}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AdminProdutoForm"
+          component={AdminProdutoForm}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

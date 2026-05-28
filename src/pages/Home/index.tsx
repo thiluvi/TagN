@@ -1,5 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   ActivityIndicator,
   Dimensions,
@@ -95,25 +96,27 @@ export function Home({ navigation }: any) {
     },
   ];
 
-  // 2. Busca inicial de produtos do banco de dados (Spring Boot)
-  useEffect(() => {
-    const fetchProdutos = async () => {
-      try {
-        const URL_BACKEND = "http://localhost:8080";
-        const response = await fetch(`${URL_BACKEND}/produtos`);
-        if (response.ok) {
-          const data = await response.json();
-          setProdutos(data);
+  // 2. Busca de produtos toda vez que a tela entra em foco (mantém o estoque sempre atualizado)
+  useFocusEffect(
+    useCallback(() => {
+      const fetchProdutos = async () => {
+        try {
+          const URL_BACKEND = "http://localhost:8080";
+          const response = await fetch(`${URL_BACKEND}/produtos`);
+          if (response.ok) {
+            const data = await response.json();
+            setProdutos(data);
+          }
+        } catch (error) {
+          console.error("Erro ao buscar produtos da API:", error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Erro ao buscar produtos da API:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      };
 
-    fetchProdutos();
-  }, []);
+      fetchProdutos();
+    }, [])
+  );
 
   // 3. Mapeamento de Produtos da API (para bater com o formato consumido pelo layout)
   const mappedProducts = produtos.length > 0
@@ -124,6 +127,7 @@ export function Home({ navigation }: any) {
       image: { uri: prod.imagem },
       category: prod.categoria,
       description: prod.descricao,
+      stock: prod.quantidade, // Quantidade em estoque disponível
     }))
     : fallbackProducts;
 
@@ -152,7 +156,7 @@ export function Home({ navigation }: any) {
       style={styles.productCard}
       onPress={() => navigation.navigate("Produto", { product })}
     >
-      <Image source={product.image} style={styles.productImage} />
+      <Image source={product.image} style={styles.productImage} resizeMode="contain" />
       <Text style={styles.productName}>{product.name}</Text>
       <Text style={styles.productPrice}>{product.price}</Text>
     </TouchableOpacity>

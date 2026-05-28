@@ -78,6 +78,21 @@ export function Perfil({ navigation }: any) {
         {/* so mostra esse menu de opcoes se o cara tiver logado de vdd */}
         {userData && (
           <View style={styles.menuList}>
+            {/* Opção exclusiva para administradores */}
+            {userData.role === "ADMIN" && (
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => navigation.navigate("AdminDashboard")}
+              >
+                <View style={styles.menuIconContainer}>
+                  <Feather name="shield" size={24} color="#CBA38E" />
+                </View>
+                <View style={styles.menuTextContainer}>
+                  <Text style={styles.menuTitle}>Painel do Administrador</Text>
+                  <Text style={styles.menuSubtitle}>Dashboard e gerenciar produtos</Text>
+                </View>
+              </TouchableOpacity>
+            )}
            
             <TouchableOpacity
               style={styles.menuItem}

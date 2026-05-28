@@ -1,5 +1,6 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   ActivityIndicator,
   Dimensions,
@@ -35,6 +36,7 @@ export function Pesquisa({ navigation }: any) {
       image: require("../../assets/Utilitarios/banner anel.png"),
       category: "Anéis",
       description: "Anel Masculino Linha Silver em Aço Inoxidável.\nAltura: 6,00(mm)",
+      stock: 10,
     },
     {
       name: "Pulseira Clássica Gold",
@@ -42,6 +44,7 @@ export function Pesquisa({ navigation }: any) {
       image: require("../../assets/Utilitarios/banner pulseira.png"),
       category: "Pulseiras",
       description: "Pulseira Clássica Gold Banhada a Ouro 18k.\nComprimento: 19cm",
+      stock: 5,
     },
     {
       name: "Relógio Classic Black",
@@ -49,6 +52,7 @@ export function Pesquisa({ navigation }: any) {
       image: require("../../assets/Utilitarios/banner relogio.png"),
       category: "Relógios",
       description: "Relógio Analógico Masculino Premium.\nResistente à água 5ATM.",
+      stock: 2,
     },
     {
       name: "Corrente Aço Inoxidável",
@@ -56,6 +60,7 @@ export function Pesquisa({ navigation }: any) {
       image: require("../../assets/Utilitarios/banner colar.png"),
       category: "Colares",
       description: "Corrente Masculina em Aço Inoxidável 316L.\nComprimento: 60cm.",
+      stock: 15,
     },
     {
       name: "Brinco Argola Ouro 18k",
@@ -63,6 +68,7 @@ export function Pesquisa({ navigation }: any) {
       image: require("../../assets/Utilitarios/banner brinco.png"),
       category: "Brincos",
       description: "Brinco Feminino estilo Argola com banho de Ouro 18k.",
+      stock: 8,
     },
     {
       name: "Anel Solitário Prata 925",
@@ -70,6 +76,7 @@ export function Pesquisa({ navigation }: any) {
       image: require("../../assets/Utilitarios/banner anel.png"),
       category: "Anéis",
       description: "Anel Solitário Feminino em Prata 925 com zircônia central.",
+      stock: 0, // Um exemplo fora de estoque
     },
   ];
 
@@ -99,26 +106,27 @@ export function Pesquisa({ navigation }: any) {
     return false;
   };
 
-  // 2. Efeito de carregamento: Busca todos os produtos do backend
-  useEffect(() => {
-    const fetchProdutos = async () => {
-      try {
-        const URL_BACKEND = "http://localhost:8080";
-        const response = await fetch(`${URL_BACKEND}/produtos`);
-        if (response.ok) {
-          const data = await response.json();
-          setProdutos(data);
+  // 2. Efeito de carregamento: Busca todos os produtos do backend toda vez que a tela entra em foco
+  useFocusEffect(
+    useCallback(() => {
+      const fetchProdutos = async () => {
+        try {
+          const URL_BACKEND = "http://localhost:8080";
+          const response = await fetch(`${URL_BACKEND}/produtos`);
+          if (response.ok) {
+            const data = await response.json();
+            setProdutos(data);
+          }
+        } catch (error) {
+          console.error("Erro ao buscar produtos para pesquisa:", error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Erro ao buscar produtos para pesquisa:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProdutos();
-  }, []);
+      };
+      fetchProdutos();
+    }, [])
+  );
 
-  // 3. Mapeador: Normaliza os produtos vindos da API ou adota os fallbacks premium
   const mappedProducts = produtos.length > 0
     ? produtos.map((prod: any) => ({
         id: prod.id,
@@ -127,6 +135,7 @@ export function Pesquisa({ navigation }: any) {
         image: { uri: prod.imagem },
         category: prod.categoria,
         description: prod.descricao,
+        stock: prod.quantidade, // <== Correção: passando o estoque!
       }))
     : fallbackProducts;
 
@@ -165,7 +174,7 @@ export function Pesquisa({ navigation }: any) {
       style={styles.productCard}
       onPress={() => navigation.navigate("Produto", { product })}
     >
-      <Image source={product.image} style={styles.productImage} />
+      <Image source={product.image} style={styles.productImage} resizeMode="contain" />
       <Text style={styles.productName} numberOfLines={2}>
         {product.name}
       </Text>

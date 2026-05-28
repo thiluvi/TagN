@@ -22,16 +22,28 @@ export function Produto({ route, navigation }: any) {
     image: require("../../assets/Utilitarios/banner anel.png"),
     category: "Anéis",
     description: "Anel Masculino Linha Dupla em Aço\nAltura: 6,00(mm)",
+    stock: 0,
   };
+
+  const stock = product.stock ?? 0;
+  const isOutOfStock = stock === 0;
+  const isLowStock = stock > 0 && stock <= 5;
 
   const [quantity, setQuantity] = useState(1);
   const { addToCart, toggleFavorite, isFavorite } = useShop();
 
-  const increaseQuantity = () => setQuantity(q => q + 1);
+  const increaseQuantity = () => {
+    if (quantity >= stock) {
+      Alert.alert("Limite de Estoque", `Apenas ${stock} unidade(s) disponível(is) em estoque.`);
+      return;
+    }
+    setQuantity(q => q + 1);
+  };
   const decreaseQuantity = () => setQuantity(q => (q > 1 ? q - 1 : 1));
 
   // joga pra sacola passando a quantidade certinha
   const handleAddToCart = async () => {
+    if (isOutOfStock) return;
     const success = await addToCart(product, quantity);
     if (success) {
       Alert.alert("Sucesso", "Produto adicionado à sacola!");
@@ -39,6 +51,7 @@ export function Produto({ route, navigation }: any) {
   };
 
   const handleBuyNow = async () => {
+    if (isOutOfStock) return;
     const success = await addToCart(product, quantity);
     if (success) {
       navigation.navigate("Pagamento");
@@ -69,18 +82,26 @@ export function Produto({ route, navigation }: any) {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        {/* fotona principal do produto */}
+        {/* fotona principal do produto com badge de fora de estoque */}
         <View style={styles.imageContainer}>
-          <Image source={product.image} style={styles.mainImage} resizeMode="cover" />
+          <Image source={product.image} style={styles.mainImage} resizeMode="contain" />
+          {isOutOfStock && (
+            <View style={styles.outOfStockOverlay}>
+              <View style={styles.outOfStockBadge}>
+                <Feather name="x-circle" size={20} color="#fff" style={{ marginRight: 6 }} />
+                <Text style={styles.outOfStockText}>FORA DE ESTOQUE</Text>
+              </View>
+            </View>
+          )}
         </View>
 
 
         <View style={styles.thumbnailContainer}>
           <View style={[styles.thumbnailWrapper, styles.thumbnailActive]}>
-            <Image source={product.image} style={styles.thumbnail} resizeMode="cover" />
+            <Image source={product.image} style={styles.thumbnail} resizeMode="contain" />
           </View>
           <View style={styles.thumbnailWrapper}>
-            <Image source={product.image} style={styles.thumbnail} resizeMode="cover" />
+            <Image source={product.image} style={styles.thumbnail} resizeMode="contain" />
           </View>
         </View>
 
@@ -89,19 +110,48 @@ export function Produto({ route, navigation }: any) {
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productPrice}>{product.price}</Text>
 
-          {/* botoes pra escolher se quer mais de 1 (qtd) */}
-          <View style={styles.selectorsRow}>
-            <Text style={styles.selectorLabel}>Quantidade:</Text>
-            <View style={styles.quantitySelector}>
-              <TouchableOpacity onPress={decreaseQuantity} style={styles.qtyButton}>
-                <Feather name="minus" size={16} color="#000" />
-              </TouchableOpacity>
-              <Text style={styles.qtyText}>{quantity}</Text>
-              <TouchableOpacity onPress={increaseQuantity} style={styles.qtyButton}>
-                <Feather name="plus" size={16} color="#000" />
-              </TouchableOpacity>
+          {/* Indicador de estoque */}
+          {isOutOfStock ? (
+            <View style={styles.stockBadgeContainer}>
+              <View style={styles.stockBadgeRed}>
+                <Feather name="alert-circle" size={14} color="#fff" />
+                <Text style={styles.stockBadgeText}>Produto indisponível no momento</Text>
+              </View>
             </View>
-          </View>
+          ) : isLowStock ? (
+            <View style={styles.stockBadgeContainer}>
+              <View style={styles.stockBadgeOrange}>
+                <Feather name="alert-triangle" size={14} color="#fff" />
+                <Text style={styles.stockBadgeText}>Restam apenas {stock} unidade(s)!</Text>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.stockBadgeContainer}>
+              <View style={styles.stockBadgeGreen}>
+                <Feather name="check-circle" size={14} color="#fff" />
+                <Text style={styles.stockBadgeText}>Em estoque</Text>
+              </View>
+            </View>
+          )}
+
+          {/* botoes pra escolher se quer mais de 1 (qtd) */}
+          {!isOutOfStock && (
+            <View style={styles.selectorsRow}>
+              <Text style={styles.selectorLabel}>Quantidade:</Text>
+              <View style={styles.quantitySelector}>
+                <TouchableOpacity onPress={decreaseQuantity} style={styles.qtyButton}>
+                  <Feather name="minus" size={16} color="#000" />
+                </TouchableOpacity>
+                <Text style={styles.qtyText}>{quantity}</Text>
+                <TouchableOpacity
+                  onPress={increaseQuantity}
+                  style={[styles.qtyButton, quantity >= stock && styles.qtyButtonDisabled]}
+                >
+                  <Feather name="plus" size={16} color={quantity >= stock ? "#ccc" : "#000"} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
 
 
           <Text style={styles.description}>{product.description}</Text>
@@ -109,11 +159,23 @@ export function Produto({ route, navigation }: any) {
 
 
           <View style={styles.actionButtonsRow}>
-            <TouchableOpacity onPress={handleAddToCart} style={styles.addToCartButton}>
-              <Text style={styles.addToCartText}>ADICIONAR AO CARRINHO</Text>
+            <TouchableOpacity
+              onPress={handleAddToCart}
+              style={[styles.addToCartButton, isOutOfStock && styles.buttonDisabled]}
+              disabled={isOutOfStock}
+            >
+              <Text style={[styles.addToCartText, isOutOfStock && styles.buttonTextDisabled]}>
+                {isOutOfStock ? "INDISPONÍVEL" : "ADICIONAR AO CARRINHO"}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleBuyNow} style={styles.buyNowButton}>
-              <Text style={styles.buyNowText}>COMPRAR AGORA</Text>
+            <TouchableOpacity
+              onPress={handleBuyNow}
+              style={[styles.buyNowButton, isOutOfStock && styles.buttonDisabled]}
+              disabled={isOutOfStock}
+            >
+              <Text style={[styles.buyNowText, isOutOfStock && styles.buttonTextDisabled]}>
+                {isOutOfStock ? "INDISPONÍVEL" : "COMPRAR AGORA"}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -159,10 +221,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   mainImage: {
     width: "100%",
     height: "100%",
+  },
+  outOfStockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.45)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  outOfStockBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(204, 0, 0, 0.85)",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  outOfStockText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "900",
+    letterSpacing: 2,
   },
   thumbnailContainer: {
     flexDirection: "row",
@@ -202,7 +285,45 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#000",
-    marginBottom: 20,
+    marginBottom: 12,
+  },
+  stockBadgeContainer: {
+    marginBottom: 16,
+  },
+  stockBadgeRed: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#cc0000",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: "flex-start",
+    gap: 6,
+  },
+  stockBadgeOrange: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#E67E22",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: "flex-start",
+    gap: 6,
+  },
+  stockBadgeGreen: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#27AE60",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: "flex-start",
+    gap: 6,
+  },
+  stockBadgeText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
   },
   selectorsRow: {
     flexDirection: "row",
@@ -240,6 +361,9 @@ const styles = StyleSheet.create({
   qtyButton: {
     paddingHorizontal: 12,
     paddingVertical: 8,
+  },
+  qtyButtonDisabled: {
+    opacity: 0.4,
   },
   qtyText: {
     fontSize: 14,
@@ -282,4 +406,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
   },
+  buttonDisabled: {
+    backgroundColor: "#d0d0d0",
+  },
+  buttonTextDisabled: {
+    color: "#999",
+  },
 });
+

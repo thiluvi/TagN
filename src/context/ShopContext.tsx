@@ -9,6 +9,7 @@ export type Product = {
   image: any;
   category: string;
   description: string;
+  stock?: number;  // Quantidade em estoque disponível
 };
 
 export type CartItem = Product & {
@@ -67,6 +68,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
           category: item.produto.categoria,
           description: item.produto.descricao,
           quantity: item.quantidade,
+          stock: item.produto.quantidade, // Estoque disponível do produto
         }));
         setCartItems(mapped);
       }
@@ -92,6 +94,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
           image: { uri: fav.produto.imagem },
           category: fav.produto.categoria,
           description: fav.produto.descricao,
+          stock: fav.produto.quantidade, // Estoque disponível do produto
         }));
         setFavoriteItems(mapped);
       }
@@ -145,6 +148,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (response.ok) {
           await loadCart(user.id);
           return true;
+        } else if (response.status === 400) {
+          const errorMsg = await response.text();
+          Alert.alert("Estoque Insuficiente", errorMsg || "Quantidade solicitada excede o estoque disponível.");
+          return false;
         } else {
           Alert.alert("Erro", "Não foi possível atualizar a quantidade do produto.");
           return false;
@@ -162,6 +169,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (response.ok) {
           await loadCart(user.id);
           return true;
+        } else if (response.status === 400) {
+          const errorMsg = await response.text();
+          Alert.alert("Estoque Insuficiente", errorMsg || "Quantidade solicitada excede o estoque disponível.");
+          return false;
         } else {
           Alert.alert("Erro", "Não foi possível adicionar o produto à sacola.");
           return false;
@@ -216,6 +227,9 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
         if (response.ok) {
           await loadCart(user.id);
+        } else if (response.status === 400) {
+          const errorMsg = await response.text();
+          Alert.alert("Estoque Insuficiente", errorMsg || "Quantidade solicitada excede o estoque disponível.");
         }
       } catch (error) {
         console.error("Erro ao atualizar quantidade:", error);

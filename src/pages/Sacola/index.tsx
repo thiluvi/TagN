@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform, StatusBar, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform, StatusBar, FlatList, Image, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useShop } from "../../context/ShopContext";
 import { useFocusEffect } from "@react-navigation/native";
@@ -30,37 +30,56 @@ export function Sacola({ navigation }: any) {
   const formattedSubtotal = `R$ ${subtotal.toFixed(2).replace(".", ",")}`;
 
   // desenha o cardzinho pra cada item q tiver na sacola
-  const renderItem = ({ item }: any) => (
-    <View style={styles.cartCard}>
-      {/* botaozin de apagar da sacola se desistir de comprar */}
-      <TouchableOpacity 
-        style={styles.trashBtn} 
-        onPress={() => removeFromCart(item.name)}
-      >
-        <Feather name="trash-2" size={18} color="#cc0000" />
-      </TouchableOpacity>
+  const renderItem = ({ item }: any) => {
+    const itemStock = item.stock ?? Infinity;
+    const atStockLimit = item.quantity >= itemStock;
 
-      <View style={styles.imageContainer}>
-        <Image source={item.image} style={styles.itemImage} resizeMode="contain" />
-      </View>
-      
-      <View style={styles.itemInfo}>
-        <Text style={styles.itemName} numberOfLines={2}>{item.name}</Text>
-        <Text style={styles.itemPrice}>{item.price}</Text>
+    return (
+      <View style={styles.cartCard}>
+        {/* botaozin de apagar da sacola se desistir de comprar */}
+        <TouchableOpacity 
+          style={styles.trashBtn} 
+          onPress={() => removeFromCart(item.name)}
+        >
+          <Feather name="trash-2" size={18} color="#cc0000" />
+        </TouchableOpacity>
+
+        <View style={styles.imageContainer}>
+          <Image source={item.image} style={styles.itemImage} resizeMode="contain" />
+        </View>
         
-        {/* botoes de mais e menos pra aumentar qtd do msm produto */}
-        <View style={styles.qtyContainer}>
-          <TouchableOpacity onPress={() => updateQuantity(item.name, item.quantity - 1)} style={styles.qtyBtn}>
-            <Feather name="minus" size={16} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.qtyText}>{item.quantity}</Text>
-          <TouchableOpacity onPress={() => updateQuantity(item.name, item.quantity + 1)} style={styles.qtyBtn}>
-            <Feather name="plus" size={16} color="#000" />
-          </TouchableOpacity>
+        <View style={styles.itemInfo}>
+          <Text style={styles.itemName} numberOfLines={2}>{item.name}</Text>
+          <Text style={styles.itemPrice}>{item.price}</Text>
+          
+          {/* botoes de mais e menos pra aumentar qtd do msm produto */}
+          <View style={styles.qtyContainer}>
+            <TouchableOpacity onPress={() => updateQuantity(item.name, item.quantity - 1)} style={styles.qtyBtn}>
+              <Feather name="minus" size={16} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.qtyText}>{item.quantity}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                if (atStockLimit) {
+                  Alert.alert("Limite de Estoque", `Apenas ${itemStock} unidade(s) disponível(is) em estoque.`);
+                  return;
+                }
+                updateQuantity(item.name, item.quantity + 1);
+              }}
+              style={[styles.qtyBtn, atStockLimit && styles.qtyBtnDisabled]}
+            >
+              <Feather name="plus" size={16} color={atStockLimit ? "#ccc" : "#000"} />
+            </TouchableOpacity>
+          </View>
+
+          {/* Indicador de estoque baixo */}
+          {itemStock <= 5 && itemStock > 0 && (
+            <Text style={styles.lowStockText}>Restam {itemStock} em estoque</Text>
+          )}
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -273,6 +292,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
+  qtyBtnDisabled: {
+    opacity: 0.4,
+  },
   qtyText: {
     fontSize: 14,
     fontWeight: "bold",
@@ -322,5 +344,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  lowStockText: {
+    fontSize: 11,
+    color: "#E67E22",
+    fontWeight: "bold",
+    marginTop: 4,
   },
 });

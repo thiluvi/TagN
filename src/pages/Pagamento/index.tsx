@@ -144,6 +144,10 @@ export function Pagamento({ navigation }: any) {
           index: 0,
           routes: [{ name: "Home" }, { name: "Pedidos" }],
         });
+      } else if (response.status === 400) {
+        const errorMsg = await response.text();
+        Alert.alert("Estoque Insuficiente", errorMsg || "Não foi possível finalizar o pedido. Verifique a disponibilidade dos produtos.");
+        await refreshUserData(); // Recarrega dados para refletir estoque atualizado
       } else {
         Alert.alert("Erro", "Não foi possível finalizar o pedido. Tente novamente.");
       }
